@@ -34,10 +34,25 @@ interface AppItem {
 const getFullUrl = (relativePath: string) => {
   if (relativePath.startsWith("http")) return relativePath;
   const loc = window.location;
-  const basePath = loc.pathname.endsWith("/")
-    ? loc.pathname
-    : loc.pathname.slice(0, loc.pathname.lastIndexOf("/") + 1);
-  return `${basePath}${relativePath}`;
+  let base = "/";
+  if (loc.hostname.endsWith("github.io")) {
+    const segments = loc.pathname.split("/").filter(Boolean);
+    if (segments.length > 0) {
+      base = `/${segments[0]}/`;
+    }
+  } else {
+    const path = loc.pathname;
+    if (path.endsWith("/")) {
+      base = path;
+    } else {
+      const lastSlashIndex = path.lastIndexOf("/");
+      if (lastSlashIndex > 0) {
+        base = path.slice(0, lastSlashIndex + 1);
+      }
+    }
+  }
+  const cleanRelative = relativePath.startsWith("/") ? relativePath.slice(1) : relativePath;
+  return `${base}${cleanRelative}`;
 };
 
 export default function App() {
