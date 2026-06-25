@@ -39,17 +39,36 @@ export default function App() {
   const [iframeKey, setIframeKey] = useState(0); // For reloading the iframe
 
   useEffect(() => {
-    fetch("/api/apps")
-      .then((res) => res.json())
+    // Try fetching static apps.json first (ideal for GitHub Pages/Actions static hosting), with API fallback
+    fetch("/apps.json")
+      .then((res) => {
+        if (!res.ok) throw new Error("Static apps.json not found, trying API");
+        return res.json();
+      })
       .then((data) => {
-        if (data.success) {
+        if (Array.isArray(data)) {
+          setApps(data);
+        } else if (data && Array.isArray(data.apps)) {
           setApps(data.apps);
         }
         setLoading(false);
       })
       .catch((err) => {
-        console.error("Error fetching apps:", err);
-        setLoading(false);
+        console.log("Static apps.json fallback triggered:", err.message);
+        fetch("/api/apps")
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.success && Array.isArray(data.apps)) {
+              setApps(data.apps);
+            } else if (Array.isArray(data)) {
+              setApps(data);
+            }
+            setLoading(false);
+          })
+          .catch((apiErr) => {
+            console.error("Error fetching apps list:", apiErr);
+            setLoading(false);
+          });
       });
   }, []);
 

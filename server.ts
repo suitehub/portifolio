@@ -7,7 +7,8 @@ import { createServer as createViteServer } from "vite";
 
 const app = express();
 const PORT = 3000;
-const EXTRACTED_DIR = path.join(process.cwd(), "extracted_apps");
+const PUBLIC_DIR = path.join(process.cwd(), "public");
+const EXTRACTED_DIR = path.join(PUBLIC_DIR, "apps");
 
 interface AppItem {
   id: string;
@@ -95,7 +96,10 @@ async function extractRarArchive(archivePath: string, destDir: string) {
 async function extractAllArchives() {
   console.log("Starting archive extraction...");
   
-  // Ensure target extraction directory exists
+  // Ensure target extraction directories exist
+  if (!fs.existsSync(PUBLIC_DIR)) {
+    fs.mkdirSync(PUBLIC_DIR, { recursive: true });
+  }
   if (!fs.existsSync(EXTRACTED_DIR)) {
     fs.mkdirSync(EXTRACTED_DIR, { recursive: true });
   }
@@ -161,6 +165,12 @@ async function extractAllArchives() {
   }
 
   discoveredApps = tempApps;
+  try {
+    fs.writeFileSync(path.join(PUBLIC_DIR, "apps.json"), JSON.stringify(discoveredApps, null, 2));
+    console.log("Successfully wrote public/apps.json from server.ts");
+  } catch (err) {
+    console.error("Failed to write public/apps.json:", err);
+  }
   console.log(`Extraction complete. Discovered ${discoveredApps.length} interactive app(s).`);
 }
 

@@ -7,3 +7,5 @@ coverage/
 .env*
 !.env.example
 extracted_apps/
+public/apps/
+public/apps.json
