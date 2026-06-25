@@ -1,0 +1,6 @@
+{
+  "name": "Portfólio Interativo",
+  "description": "Um portfólio dinâmico para demonstração e navegação interativa de aplicativos integrados na própria página.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
