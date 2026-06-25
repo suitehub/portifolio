@@ -121,7 +121,7 @@ async function build() {
           id: slug,
           name: prettifyName(archive),
           archiveName: archive,
-          entryPath: `/apps/${slug}/${relativeIndexPath.replace(/\\/g, "/")}`,
+          entryPath: `apps/${slug}/${relativeIndexPath.replace(/\\/g, "/")}`,
           type: isZip ? "zip" : "rar",
           size: stats.size
         });

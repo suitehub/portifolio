@@ -30,6 +30,16 @@ interface AppItem {
   size: number;
 }
 
+// Helper to get full URL responsive to subfolder hosting like GitHub Pages
+const getFullUrl = (relativePath: string) => {
+  if (relativePath.startsWith("http")) return relativePath;
+  const loc = window.location;
+  const basePath = loc.pathname.endsWith("/")
+    ? loc.pathname
+    : loc.pathname.slice(0, loc.pathname.lastIndexOf("/") + 1);
+  return `${basePath}${relativePath}`;
+};
+
 export default function App() {
   const [apps, setApps] = useState<AppItem[]>([]);
   const [selectedApp, setSelectedApp] = useState<AppItem | null>(null);
@@ -40,7 +50,7 @@ export default function App() {
 
   useEffect(() => {
     // Try fetching static apps.json first (ideal for GitHub Pages/Actions static hosting), with API fallback
-    fetch("/apps.json")
+    fetch(getFullUrl("apps.json"))
       .then((res) => {
         if (!res.ok) throw new Error("Static apps.json not found, trying API");
         return res.json();
@@ -55,7 +65,7 @@ export default function App() {
       })
       .catch((err) => {
         console.log("Static apps.json fallback triggered:", err.message);
-        fetch("/api/apps")
+        fetch(getFullUrl("api/apps"))
           .then((res) => res.json())
           .then((data) => {
             if (data.success && Array.isArray(data.apps)) {
@@ -327,7 +337,7 @@ export default function App() {
                   <RefreshCw className="w-4 h-4" />
                 </button>
                 <a
-                  href={selectedApp.entryPath}
+                  href={getFullUrl(selectedApp.entryPath)}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-purple-400 hover:text-purple-300 hover:bg-purple-950/30 rounded-lg transition-colors"
@@ -363,7 +373,7 @@ export default function App() {
                   </div>
                   {/* Simulated URL bar */}
                   <div className="flex-1 bg-slate-950/80 rounded-lg py-1 px-3 text-[11px] text-slate-500 font-mono flex items-center justify-between border border-slate-850/60 truncate select-all">
-                    <span className="truncate">{window.location.origin}{selectedApp.entryPath}</span>
+                    <span className="truncate">{window.location.origin}{getFullUrl(selectedApp.entryPath)}</span>
                     <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-semibold border border-emerald-500/20 ml-2">HTTPS</span>
                   </div>
                 </div>
@@ -372,7 +382,7 @@ export default function App() {
                 <div className="flex-1 w-full h-full bg-white relative">
                   <iframe
                     key={iframeKey}
-                    src={selectedApp.entryPath}
+                    src={getFullUrl(selectedApp.entryPath)}
                     title={selectedApp.name}
                     className="w-full h-full border-none"
                     sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
