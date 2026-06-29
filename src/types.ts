@@ -18,7 +18,6 @@ export interface Solution {
   modules: string[];
   integrations: string[];
   faqs: { question: string; answer: string }[];
-  basePriceEstimate: number;
 }
 
 export interface ModuleItem {
@@ -27,7 +26,6 @@ export interface ModuleItem {
   icon: string;
   category: "core" | "features" | "integrations" | "advanced";
   description: string;
-  priceWeight: number; // For budget calculator
 }
 
 export interface Project {

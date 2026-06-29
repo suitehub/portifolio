@@ -26,10 +26,9 @@ import { modulesData } from "../data";
 interface SolutionDetailsProps {
   solution: Solution;
   onBack: () => void;
-  onQuote: (solutionId: string) => void;
 }
 
-export function SolutionDetails({ solution, onBack, onQuote }: SolutionDetailsProps) {
+export function SolutionDetails({ solution, onBack }: SolutionDetailsProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   // Map solution icon string to actual Lucide component
@@ -69,7 +68,7 @@ export function SolutionDetails({ solution, onBack, onQuote }: SolutionDetailsPr
       </div>
 
       {/* 2. Hero Solution Banner */}
-      <div className="relative rounded-3xl overflow-hidden border border-slate-800 bg-slate-900/40 p-6 md:p-12 shadow-2xl">
+      <div className="relative rounded-3xl overflow-hidden border border-slate-880 bg-slate-900/40 p-6 md:p-12 shadow-2xl">
         <div className="absolute top-0 right-0 w-96 h-96 bg-sky-500/5 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -90,17 +89,19 @@ export function SolutionDetails({ solution, onBack, onQuote }: SolutionDetailsPr
             </p>
 
             <div className="flex flex-wrap gap-3">
-              <button
-                onClick={() => onQuote(solution.id)}
-                className="px-5 py-3 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl shadow-lg transition-all cursor-pointer"
-              >
-                Solicitar Orçamento Desta Solução
-              </button>
               <a
-                href={`https://wa.me/5551999999999?text=${encodeURIComponent(`Olá! Tenho interesse em saber mais sobre o ${solution.title} desenvolvido pela Suite Hub.`)}`}
+                href={`https://wa.me/5511972499370?text=${encodeURIComponent(`Olá! Gostaria de fazer um orçamento para o projeto de ${solution.title} desenvolvido pela Suite Hub.`)}`}
                 target="_blank"
                 rel="noreferrer"
-                className="px-5 py-3 bg-slate-950 hover:bg-slate-900 border border-slate-800 text-slate-300 font-bold text-xs rounded-xl transition-all"
+                className="px-5 py-3 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl shadow-lg transition-all cursor-pointer inline-flex items-center gap-1.5"
+              >
+                Solicitar Orçamento via WhatsApp
+              </a>
+              <a
+                href={`https://wa.me/5511972499370?text=${encodeURIComponent(`Olá! Tenho interesse em saber mais sobre o ${solution.title} desenvolvido pela Suite Hub.`)}`}
+                target="_blank"
+                rel="noreferrer"
+                className="px-5 py-3 bg-slate-950 hover:bg-slate-900 border border-slate-800 text-slate-300 font-bold text-xs rounded-xl transition-all cursor-pointer inline-flex items-center"
               >
                 Falar com Especialista
               </a>
@@ -123,18 +124,10 @@ export function SolutionDetails({ solution, onBack, onQuote }: SolutionDetailsPr
               </div>
 
               <div className="flex items-start gap-2 border-t border-slate-900 pt-3">
-                <Puzzle className="w-4.5 h-4.5 text-sky-400 shrink-0 mt-0.5" />
-                <div>
-                  <span className="text-[10px] text-slate-500 block uppercase font-bold">Integrações Prováveis</span>
-                  <p className="font-medium text-slate-300 mt-0.5">{solution.integrations.join(", ")}</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-2 border-t border-slate-900 pt-3">
                 <ShieldCheck className="w-4.5 h-4.5 text-sky-400 shrink-0 mt-0.5" />
                 <div>
-                  <span className="text-[10px] text-slate-500 block uppercase font-bold">Arquitetura de Nuvem</span>
-                  <p className="font-medium text-slate-300 mt-0.5">Google Cloud / AWS (Offline-First Ready)</p>
+                  <span className="text-[10px] text-slate-500 block uppercase font-bold">Banco de Dados</span>
+                  <p className="font-medium text-slate-300 mt-0.5">Google Firestore</p>
                 </div>
               </div>
             </div>
@@ -251,12 +244,14 @@ export function SolutionDetails({ solution, onBack, onQuote }: SolutionDetailsPr
           <h4 className="text-base font-bold text-white tracking-tight">Pronto para digitalizar seu negócio?</h4>
           <p className="text-xs text-slate-400">Leve de 6 a 8 semanas para colocar sua solução na Google Play e App Store.</p>
         </div>
-        <button
-          onClick={() => onQuote(solution.id)}
-          className="px-6 py-3 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl shadow-lg transition-all shrink-0 cursor-pointer"
+        <a
+          href={`https://wa.me/5511972499370?text=${encodeURIComponent(`Olá! Quero dar início ao projeto do aplicativo: ${solution.title}.`)}`}
+          target="_blank"
+          rel="noreferrer"
+          className="px-6 py-3 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl shadow-lg transition-all shrink-0 cursor-pointer inline-flex items-center"
         >
-          Ir para o Calculador de Orçamento
-        </button>
+          Falar no WhatsApp
+        </a>
       </div>
     </div>
   );

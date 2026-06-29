@@ -46,12 +46,11 @@ import {
   mockPortfolioProjects 
 } from "./data";
 import { AppSimulator } from "./components/AppSimulator";
-import { BudgetCalculator } from "./components/BudgetCalculator";
 import { SolutionDetails } from "./components/SolutionDetails";
 
 export default function App() {
   // Navigation states
-  const [activeTab, setActiveTab] = useState<"home" | "solutions" | "portfolio" | "quote">("home");
+  const [activeTab, setActiveTab] = useState<"home" | "solutions" | "portfolio">("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   // Real Apps loaded from disk
@@ -61,9 +60,6 @@ export default function App() {
   // Detail Sub-views
   const [selectedSolution, setSelectedSolution] = useState<Solution | null>(null);
   const [activeSimulatorProject, setActiveSimulatorProject] = useState<Project | null>(null);
-
-  // Preset selected for quote
-  const [quotePresetId, setQuotePresetId] = useState<string | undefined>(undefined);
 
   // Auto-scrolling helper
   const scrollToTop = () => {
@@ -144,12 +140,6 @@ export default function App() {
     scrollToTop();
   };
 
-  const handleOnQuotePreset = (solutionId: string) => {
-    setQuotePresetId(solutionId);
-    setActiveTab("quote");
-    scrollToTop();
-  };
-
   return (
     <div id="suite-hub-root" className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-sky-500 selection:text-white overflow-x-hidden relative">
       
@@ -181,8 +171,7 @@ export default function App() {
             {[
               { id: "home", label: "Início" },
               { id: "solutions", label: "Soluções" },
-              { id: "portfolio", label: "Portfólio & Demos" },
-              { id: "quote", label: "Montar Orçamento" }
+              { id: "portfolio", label: "Portfólio & Demos" }
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -206,7 +195,7 @@ export default function App() {
           {/* Contact Actions Button */}
           <div className="hidden md:flex items-center gap-3">
             <a
-              href="https://wa.me/5551999999999"
+              href={`https://wa.me/5511972499370?text=${encodeURIComponent("Olá! Gostaria de conversar sobre um projeto com a Suite Hub.")}`}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2.5 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-sky-950/20 hover:shadow-sky-500/20 transition-all cursor-pointer"
@@ -237,8 +226,7 @@ export default function App() {
               {[
                 { id: "home", label: "Início" },
                 { id: "solutions", label: "Soluções" },
-                { id: "portfolio", label: "Portfólio & Demos" },
-                { id: "quote", label: "Montar Orçamento" }
+                { id: "portfolio", label: "Portfólio & Demos" }
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -260,7 +248,7 @@ export default function App() {
               ))}
               <div className="pt-4 border-t border-slate-900">
                 <a
-                  href="https://wa.me/5551999999999"
+                  href={`https://wa.me/5511972499370?text=${encodeURIComponent("Olá! Gostaria de falar com o atendimento da Suite Hub.")}`}
                   target="_blank"
                   rel="noreferrer"
                   className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl"
@@ -312,13 +300,15 @@ export default function App() {
                   </p>
 
                   <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
-                    <button
-                      onClick={() => { setActiveTab("quote"); scrollToTop(); }}
+                    <a
+                      href={`https://wa.me/5511972499370?text=${encodeURIComponent("Olá! Gostaria de solicitar um orçamento para meu projeto com a Suite Hub.")}`}
+                      target="_blank"
+                      rel="noreferrer"
                       className="w-full sm:w-auto px-6 py-3.5 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-sky-950/20 hover:shadow-sky-500/20 transition-all cursor-pointer flex items-center justify-center gap-2"
                     >
-                      Solicitar Orçamento
+                      Solicitar Orçamento via WhatsApp
                       <ArrowRight className="w-4 h-4" />
-                    </button>
+                    </a>
                     <button
                       onClick={() => { setActiveTab("solutions"); setSelectedSolution(null); scrollToTop(); }}
                       className="w-full sm:w-auto px-6 py-3.5 bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-300 font-bold text-xs rounded-xl transition-all cursor-pointer"
@@ -662,18 +652,20 @@ export default function App() {
                 </h2>
 
                 <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-                  Conte com a Suite Hub para desenvolver uma solução moderna, intuitiva e preparada para crescer junto com o seu negócio.
+                  Conte com a Suite Hub para desenvolver uma solução moderna, inovadora e robusta para seu negócio.
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-sm mx-auto">
-                  <button
-                    onClick={() => { setActiveTab("quote"); scrollToTop(); }}
-                    className="w-full sm:w-auto px-6 py-3 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl shadow-lg transition-all cursor-pointer"
+                  <a
+                    href={`https://wa.me/5511972499370?text=${encodeURIComponent("Olá! Gostaria de solicitar um orçamento para meu aplicativo personalizado com a Suite Hub.")}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-full sm:w-auto px-6 py-3 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl shadow-lg transition-all cursor-pointer inline-flex items-center justify-center"
                   >
                     Solicitar Orçamento
-                  </button>
+                  </a>
                   <a
-                    href="https://wa.me/5551999999999"
+                    href={`https://wa.me/5511972499370?text=${encodeURIComponent("Olá! Gostaria de falar no WhatsApp com a Suite Hub.")}`}
                     target="_blank"
                     rel="noreferrer"
                     className="w-full sm:w-auto px-6 py-3 bg-slate-950 hover:bg-slate-900 border border-slate-850 text-slate-300 font-bold text-xs rounded-xl transition-all inline-flex items-center justify-center gap-1.5"
@@ -703,7 +695,6 @@ export default function App() {
                 <SolutionDetails 
                   solution={selectedSolution} 
                   onBack={() => setSelectedSolution(null)} 
-                  onQuote={handleOnQuotePreset}
                 />
               ) : (
                 // Standard Grid of solutions catalog
@@ -714,7 +705,7 @@ export default function App() {
                       Explore Nosso Catálogo de Soluções
                     </h2>
                     <p className="text-slate-400 text-sm max-w-3xl leading-relaxed">
-                      Selecione uma das nossas soluções robustas de baseline para entender suas funcionalidades fundamentais, benefícios, integrações sugeridas e estimativas de preço de desenvolvimento.
+                      Selecione uma das nossas soluções robustas de baseline para entender suas funcionalidades fundamentais, benefícios e recursos de destaque.
                     </p>
                   </header>
 
@@ -736,11 +727,7 @@ export default function App() {
                           </div>
                         </div>
 
-                        <div className="space-y-3 border-t border-slate-900/60 pt-4 text-xs">
-                          <div className="flex justify-between text-slate-400">
-                            <span>Estimativa de entrada:</span>
-                            <span className="font-bold text-white">R$ {sol.basePriceEstimate.toLocaleString("pt-BR")},00</span>
-                          </div>
+                        <div className="border-t border-slate-900/60 pt-4 text-xs">
                           <button
                             onClick={() => { setSelectedSolution(sol); scrollToTop(); }}
                             className="w-full py-2 bg-sky-600 hover:bg-sky-500 text-white font-bold text-[11px] rounded-lg transition-all cursor-pointer"
@@ -874,18 +861,7 @@ export default function App() {
             </motion.div>
           )}
 
-          {/* TAB 4: INTERACTIVE BUDGET CALCULATOR */}
-          {activeTab === "quote" && (
-            <motion.div
-              key="quote"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.3 }}
-            >
-              <BudgetCalculator initialSolutionId={quotePresetId} />
-            </motion.div>
-          )}
+          {/* TAB 4: INTERACTIVE BUDGET CALCULATOR REMOVED */}
 
         </AnimatePresence>
 
@@ -907,7 +883,7 @@ export default function App() {
               Desenvolvemos aplicativos sob medida para negócios digitais, igrejas, clínicas e startups que desejam crescer através da engenharia de software premium.
             </p>
             <div className="flex items-center gap-3 text-slate-500 text-xs">
-              <a href="https://wa.me/5551999999999" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">WhatsApp</a>
+              <a href="https://wa.me/5511972499370" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">WhatsApp</a>
               <span>•</span>
               <a href="mailto:contato@suitehub.com" className="hover:text-white transition-colors">contato@suitehub.com</a>
             </div>
@@ -930,11 +906,6 @@ export default function App() {
               <li>
                 <button onClick={() => { setActiveTab("portfolio"); setActiveSimulatorProject(null); scrollToTop(); }} className="hover:text-white transition-colors cursor-pointer text-left">
                   Portfólio & Demonstrações
-                </button>
-              </li>
-              <li>
-                <button onClick={() => { setActiveTab("quote"); scrollToTop(); }} className="hover:text-white transition-colors cursor-pointer text-left">
-                  Montar Orçamento
                 </button>
               </li>
             </ul>
