@@ -1,6 +1,6 @@
 {
-  "name": "Portfólio Interativo",
-  "description": "Um portfólio dinâmico para demonstração e navegação interativa de aplicativos integrados na própria página.",
+  "name": "Suite Hub",
+  "description": "Site institucional moderno e catálogo de soluções interativas da Suite Hub, com simuladores de aplicativos ativos e gerador de orçamentos para WhatsApp.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
