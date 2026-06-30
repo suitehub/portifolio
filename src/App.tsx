@@ -154,9 +154,9 @@ export default function App() {
         return res.json();
       })
       .then((data) => {
-        if (Array.isArray(data)) {
+        if (Array.isArray(data) && data.length > 0) {
           setApps(data);
-        } else if (data && Array.isArray(data.apps)) {
+        } else if (data && Array.isArray(data.apps) && data.apps.length > 0) {
           setApps(data.apps);
         }
         setLoadingApps(false);
@@ -167,9 +167,9 @@ export default function App() {
         fetch(`${baseUrl}api/apps`)
           .then((res) => res.json())
           .then((data) => {
-            if (data.success && Array.isArray(data.apps)) {
+            if (data.success && Array.isArray(data.apps) && data.apps.length > 0) {
               setApps(data.apps);
-            } else if (Array.isArray(data)) {
+            } else if (Array.isArray(data) && data.length > 0) {
               setApps(data);
             }
             setLoadingApps(false);
@@ -842,7 +842,14 @@ export default function App() {
                 // Immersive Device Simulation panel active
                 <AppSimulator 
                   project={activeSimulatorProject}
-                  realApp={activeSimulatorProject.iframeAppId ? apps.find(a => a.id === activeSimulatorProject.iframeAppId) : null}
+                  realApp={activeSimulatorProject.iframeAppId ? (apps.find(a => a.id === activeSimulatorProject.iframeAppId) || {
+                    id: activeSimulatorProject.iframeAppId,
+                    name: activeSimulatorProject.name,
+                    archiveName: activeSimulatorProject.iframeAppId === "meu-casamento" ? "indexcasamento.html" : "8ª-convenção-de-quartetos",
+                    entryPath: activeSimulatorProject.iframeAppId === "meu-casamento" ? "indexcasamento.html" : "apps/8-convencao-de-quartetos/index.html",
+                    type: "zip",
+                    size: 0
+                  }) : null}
                   onBack={() => setActiveSimulatorProject(null)}
                 />
               ) : (
