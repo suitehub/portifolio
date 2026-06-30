@@ -110,6 +110,14 @@ export default function App() {
       entryPath: "indexcasamento.html",
       type: "zip",
       size: 0
+    },
+    {
+      id: "app-painel-academico",
+      name: "Painel Acadêmico",
+      archiveName: "app-painel-academico",
+      entryPath: "apps/app-painel-academico/index.html",
+      type: "zip",
+      size: 0
     }
   ]);
   const [loadingApps, setLoadingApps] = useState(true);
@@ -845,8 +853,16 @@ export default function App() {
                   realApp={activeSimulatorProject.iframeAppId ? (apps.find(a => a.id === activeSimulatorProject.iframeAppId) || {
                     id: activeSimulatorProject.iframeAppId,
                     name: activeSimulatorProject.name,
-                    archiveName: activeSimulatorProject.iframeAppId === "meu-casamento" ? "indexcasamento.html" : "8ª-convenção-de-quartetos",
-                    entryPath: activeSimulatorProject.iframeAppId === "meu-casamento" ? "indexcasamento.html" : "apps/8-convencao-de-quartetos/index.html",
+                    archiveName: activeSimulatorProject.iframeAppId === "meu-casamento" 
+                      ? "indexcasamento.html" 
+                      : activeSimulatorProject.iframeAppId === "app-painel-academico"
+                        ? "app-painel-academico"
+                        : "8ª-convenção-de-quartetos",
+                    entryPath: activeSimulatorProject.iframeAppId === "meu-casamento" 
+                      ? "indexcasamento.html" 
+                      : activeSimulatorProject.iframeAppId === "app-painel-academico"
+                        ? "apps/app-painel-academico/index.html"
+                        : "apps/8-convencao-de-quartetos/index.html",
                     type: "zip",
                     size: 0
                   }) : null}

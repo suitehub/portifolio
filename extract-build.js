@@ -1340,6 +1340,16 @@ async function build() {
     }
   }
 
+  // Always inject the custom "Meu Casamento" app pointing to /indexcasamento.html
+  discoveredApps.push({
+    id: "meu-casamento",
+    name: "Meu Casamento",
+    archiveName: "indexcasamento.html",
+    entryPath: "indexcasamento.html",
+    type: "zip",
+    size: 0
+  });
+
   fs.writeFileSync(path.join(PUBLIC_DIR, "apps.json"), JSON.stringify(discoveredApps, null, 2));
   console.log(`\nSuccessfully generated public/apps.json with ${discoveredApps.length} apps!`);
 }

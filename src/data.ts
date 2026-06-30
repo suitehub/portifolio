@@ -339,5 +339,23 @@ export const mockPortfolioProjects: Project[] = [
     demoType: "iframe",
     iframeAppId: "8-convencao-de-quartetos",
     image: "/quarteto.PNG"
+  },
+  {
+    id: "painel-academico-app",
+    name: "Painel Acadêmico",
+    description: "Organizador e planner acadêmico para gerenciar cronogramas, provas, trabalhos, ementas e anotações de aulas offline.",
+    fullDescription: "Um aplicativo planner completo projetado para estudantes organizarem toda a sua jornada acadêmica com máxima eficiência e total segurança offline. Permite registrar e monitorar cronogramas, marcar datas de provas e prazos de trabalhos com alertas visuais de prazo, criar e organizar ementas de disciplinas com leitura direta de arquivos, estruturar anotações detalhadas de aulas por disciplina, e salvar PDFs de horários e calendários diretamente no aparelho usando IndexedDB.",
+    category: "Educação",
+    tech: ["HTML5", "CSS3 Variables", "Vanilla JavaScript", "IndexedDB Offline", "PDF Viewer Engine"],
+    features: [
+      "Organizador de Trabalhos & Provas",
+      "Anotações Estruturadas por Disciplina",
+      "Upload e Leitor Integrado de PDFs",
+      "Gerenciador de Ementas do Curso",
+      "Backup Completo do Aparelho (JSON com PDFs)"
+    ],
+    demoType: "iframe",
+    iframeAppId: "app-painel-academico",
+    image: "/painel.PNG"
   }
 ];

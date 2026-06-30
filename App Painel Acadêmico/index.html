@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Painel Acadêmico Operacional</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.05);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(34, 197, 94, 0.3);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(34, 197, 94, 0.6);
+    }
+    
+    /* Fade-in Animation */
+    .fade-in {
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
+
+  <!-- Header / Navigation Bar -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="p-2 bg-brand-100 text-brand-700 rounded-xl">
+          <!-- Calendar/Education Icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold text-slate-900 tracking-tight">Painel Acadêmico</h1>
+          <p class="text-xs text-slate-500">Planner & Organizador de Estudos Integrado</p>
+        </div>
+      </div>
+      
+      <!-- Stats Summary Desktop -->
+      <div class="hidden md:flex items-center gap-6 text-sm">
+        <div class="flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span>
+          <span id="header-pending-tasks" class="font-semibold text-slate-700">0 Pendentes</span>
+        </div>
+        <div class="flex items-center gap-2 bg-brand-50 px-3 py-1.5 rounded-lg border border-brand-100">
+          <span class="w-2.5 h-2.5 rounded-full bg-brand-500"></span>
+          <span id="header-completed-notes" class="font-semibold text-brand-700">0 Anotações</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full flex flex-col md:flex-row gap-6">
+    
+    <!-- Sidebar / Tab Menu -->
+    <aside class="w-full md:w-64 flex-shrink-0">
+      <nav class="bg-white rounded-2xl border border-slate-200 p-3 space-y-1.5 shadow-sm sticky top-22">
+        <p class="text-[10px] font-bold text-slate-400 px-3 uppercase tracking-wider mb-2">Navegação</p>
+        
+        <button onclick="switchTab('dashboard')" id="btn-tab-dashboard" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all cursor-pointer bg-brand-50 text-brand-700">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
+          </svg>
+          <span>Painel Inicial</span>
+        </button>
+
+        <button onclick="switchTab('tasks')" id="btn-tab-tasks" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all cursor-pointer text-slate-600 hover:bg-slate-50 hover:text-slate-900">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+          </svg>
+          <span>Trabalhos & Provas</span>
+        </button>
+
+        <button onclick="switchTab('notes')" id="btn-tab-notes" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all cursor-pointer text-slate-600 hover:bg-slate-50 hover:text-slate-900">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+          </svg>
+          <span>Anotações de Aulas</span>
+        </button>
+
+        <button onclick="switchTab('ementas')" id="btn-tab-ementas" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all cursor-pointer text-slate-600 hover:bg-slate-50 hover:text-slate-900">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
+          </svg>
+          <span>Ementas & Temas</span>
+        </button>
+
+        <button onclick="switchTab('files')" id="btn-tab-files" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all cursor-pointer text-slate-600 hover:bg-slate-50 hover:text-slate-900">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <span>Meus PDFs & Cronogramas</span>
+        </button>
+
+        <button onclick="switchTab('backup')" id="btn-tab-backup" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all cursor-pointer text-slate-600 hover:bg-slate-50 hover:text-slate-900">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+          </svg>
+          <span>Backup & Configurações</span>
+        </button>
+
+        <div class="h-[1px] bg-slate-200 my-4" />
+
+        <div class="p-3 bg-slate-50 rounded-xl">
+          <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Suas Disciplinas</p>
+          <div id="sidebar-disciplines" class="space-y-1 max-h-40 overflow-y-auto pr-1">
+            <!-- Loaded dynamically -->
+          </div>
+          <button onclick="openAddDisciplineModal()" class="w-full mt-2 inline-flex items-center justify-center gap-1.5 py-1 px-2 border border-dashed border-brand-500 text-[11px] font-semibold text-brand-700 hover:bg-brand-50 rounded-lg transition-all cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+            <span>Nova Disciplina</span>
+          </button>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content Stage -->
+    <main class="flex-1 space-y-6">
+
+      <!-- Toast Notification Alert container -->
+      <div id="toast" class="hidden fixed bottom-5 right-5 z-50 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 transition-opacity duration-300">
+        <span class="w-2.5 h-2.5 rounded-full bg-brand-500"></span>
+        <span id="toast-message" class="text-xs font-semibold">Alteração salva com sucesso!</span>
+      </div>
+
+      <!-- ==================== TAB: DASHBOARD ==================== -->
+      <section id="tab-dashboard" class="fade-in space-y-6">
+        <!-- Welcoming Hero Card -->
+        <div class="bg-gradient-to-r from-emerald-800 to-green-700 rounded-3xl p-6 text-white shadow-lg relative overflow-hidden">
+          <div class="absolute -right-10 -bottom-10 w-44 h-44 bg-green-600/20 rounded-full blur-2xl"></div>
+          <div class="relative z-10 space-y-2">
+            <h3 class="text-2xl font-bold tracking-tight">Bem-vindo ao seu Planejador Acadêmico</h3>
+            <p class="text-sm text-green-100 max-w-xl">
+              Organize seus horários, controle prazos de provas e trabalhos, guarde notas importantes das aulas e armazene arquivos em PDF com segurança 100% offline.
+            </p>
+            <div class="pt-2 flex flex-wrap gap-3">
+              <button onclick="switchTab('tasks')" class="px-4 py-2 bg-white text-emerald-800 text-xs font-bold rounded-xl shadow-sm hover:bg-slate-100 cursor-pointer transition-all">
+                Ver Meus Compromissos
+              </button>
+              <button onclick="openAddTaskModal()" class="px-4 py-2 bg-emerald-600 border border-emerald-500 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl cursor-pointer transition-all">
+                + Adicionar Trabalho/Prova
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento Grid Dashboard Stats -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div>
+              <p class="text-xs text-slate-500 font-medium">Trabalhos/Provas</p>
+              <h4 id="dash-stat-tasks" class="text-2xl font-bold text-slate-900 mt-1">0</h4>
+              <p class="text-[10px] text-amber-600 font-medium mt-1">Pendentes de entrega</p>
+            </div>
+            <div class="p-3 bg-amber-50 text-amber-500 rounded-xl">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+          </div>
+          
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div>
+              <p class="text-xs text-slate-500 font-medium">Notas de Aula</p>
+              <h4 id="dash-stat-notes" class="text-2xl font-bold text-slate-900 mt-1">0</h4>
+              <p class="text-[10px] text-brand-600 font-medium mt-1">Registradas</p>
+            </div>
+            <div class="p-3 bg-brand-50 text-brand-500 rounded-xl">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div>
+              <p class="text-xs text-slate-500 font-medium">Disciplinas Ativas</p>
+              <h4 id="dash-stat-disciplines" class="text-2xl font-bold text-slate-900 mt-1">0</h4>
+              <p class="text-[10px] text-slate-500 font-medium mt-1">No semestre atual</p>
+            </div>
+            <div class="p-3 bg-blue-50 text-blue-500 rounded-xl">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div>
+              <p class="text-xs text-slate-500 font-medium">Média de Notas</p>
+              <h4 id="dash-stat-average" class="text-2xl font-bold text-slate-900 mt-1">0.0</h4>
+              <p class="text-[10px] text-brand-600 font-medium mt-1">Desempenho Geral</p>
+            </div>
+            <div class="p-3 bg-emerald-50 text-emerald-500 rounded-xl">
+              <svg xmlns="http://www::w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Split Panel: Provas Próximas & Arquivos Recentes -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          
+          <!-- Upcoming deliverables -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="font-bold text-slate-900 text-sm">Prazos e Entregas Críticas</h4>
+              <button onclick="switchTab('tasks')" class="text-xs font-bold text-brand-600 hover:underline">Ver Todos</button>
+            </div>
+            <div id="dash-tasks-container" class="space-y-3">
+              <!-- Inserted dynamically -->
+            </div>
+          </div>
+
+          <!-- Quick Access Notes / PDFs -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="font-bold text-slate-900 text-sm">Últimos Arquivos & PDFs Salvos</h4>
+              <button onclick="switchTab('files')" class="text-xs font-bold text-brand-600 hover:underline">Ver Todos</button>
+            </div>
+            <div id="dash-files-container" class="space-y-3">
+              <!-- Inserted dynamically -->
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== TAB: TASKS (TRABALHOS & PROVAS) ==================== -->
+      <section id="tab-tasks" class="hidden fade-in space-y-6">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900">Agenda de Trabalhos & Provas</h3>
+            <p class="text-xs text-slate-500">Controle notas, pesos e cronometre os dias restantes até as provas e entregas.</p>
+          </div>
+          <button onclick="openAddTaskModal()" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl cursor-pointer transition-all flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+            <span>Adicionar Novo</span>
+          </button>
+        </div>
+
+        <!-- Filters and List -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="p-4 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-medium text-slate-500">Filtrar:</span>
+              <select id="task-filter-status" onchange="renderTasksList()" class="text-xs bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer">
+                <option value="todos">Todos os Status</option>
+                <option value="pendente">Pendente</option>
+                <option value="concluido">Concluído</option>
+              </select>
+              <select id="task-filter-discipline" onchange="renderTasksList()" class="text-xs bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer">
+                <option value="todos">Todas as Disciplinas</option>
+                <!-- Loaded dynamically -->
+              </select>
+            </div>
+            
+            <span id="task-count-badge" class="text-xs font-semibold bg-brand-100 text-brand-800 px-2.5 py-1 rounded-full">
+              0 Itens
+            </span>
+          </div>
+
+          <div class="divide-y divide-slate-100" id="tasks-list-container">
+            <!-- Loaded dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== TAB: NOTES (ANOTAÇÕES) ==================== -->
+      <section id="tab-notes" class="hidden fade-in space-y-6">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900">Anotações Estruturadas por Disciplina</h3>
+            <p class="text-xs text-slate-500">Crie resumos de matérias, anote tópicos de aulas e organize o conteúdo para revisões rápidas.</p>
+          </div>
+          <button onclick="createNewNote()" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl cursor-pointer transition-all flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+            <span>Nova Anotação</span>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Notes List sidebar -->
+          <div class="md:col-span-1 bg-white rounded-2xl border border-slate-200 p-4 shadow-sm space-y-3 h-[500px] flex flex-col">
+            <div class="relative flex-shrink-0">
+              <input type="text" id="note-search" oninput="renderNotesList()" placeholder="Buscar anotações..." class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 pl-8 focus:outline-none focus:ring-2 focus:ring-brand-500" />
+              <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-2.5 top-3 w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            
+            <div id="notes-sidebar-list" class="flex-1 overflow-y-auto space-y-1.5 pr-1">
+              <!-- Loaded dynamically -->
+            </div>
+          </div>
+
+          <!-- Note Editor viewport -->
+          <div class="md:col-span-2 bg-white rounded-2xl border border-slate-200 p-6 shadow-sm h-[500px] flex flex-col relative" id="note-editor-container">
+            <div id="editor-placeholder" class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center text-slate-400">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mb-3 text-slate-300 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
+              <h5 class="font-bold text-slate-700">Nenhuma anotação selecionada</h5>
+              <p class="text-xs max-w-xs mt-1">Selecione um resumo na barra lateral ou clique em "Nova Anotação" para começar a escrever.</p>
+            </div>
+
+            <!-- Active Editor Form -->
+            <div id="editor-active" class="hidden h-full flex flex-col space-y-4">
+              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 flex-shrink-0">
+                <div class="flex items-center gap-2">
+                  <span id="editor-save-indicator" class="text-[10px] font-semibold px-2 py-1 bg-brand-50 text-brand-700 border border-brand-100 rounded">Salvo Offline</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button onclick="saveActiveNote()" class="px-3.5 py-1.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-lg cursor-pointer transition-colors">
+                    Salvar
+                  </button>
+                  <button onclick="deleteActiveNote()" class="p-1.5 text-slate-400 hover:text-red-500 rounded-lg hover:bg-red-50 cursor-pointer transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Title, Class, and Body inputs -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-shrink-0">
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Título</label>
+                  <input type="text" id="editor-note-title" oninput="markNoteStale()" placeholder="Ex: Aula de Soteriologia I" class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500" />
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Disciplina</label>
+                  <select id="editor-note-discipline" onchange="markNoteStale()" class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer">
+                    <!-- Loaded dynamically -->
+                  </select>
+                </div>
+              </div>
+
+              <div class="flex-1 min-h-0 flex flex-col">
+                <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1 flex-shrink-0">Conteúdo da Aula / Resumo</label>
+                <textarea id="editor-note-content" oninput="markNoteStale()" placeholder="Comece a digitar o resumo de hoje..." class="w-full flex-1 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 resize-none font-mono"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== TAB: EMENTAS ==================== -->
+      <section id="tab-ementas" class="hidden fade-in space-y-6">
+        <div>
+          <h3 class="text-lg font-bold text-slate-900">Ementas e Temas do Curso</h3>
+          <p class="text-xs text-slate-500">Organize os tópicos, capítulos e conteúdos programáticos de cada disciplina e monitore sua evolução.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-6">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+            <div class="flex items-center gap-3">
+              <label class="text-xs font-semibold text-slate-600">Visualizar Disciplina:</label>
+              <select id="ementa-select-discipline" onchange="renderEmentas()" class="text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer">
+                <!-- Loaded dynamically -->
+              </select>
+            </div>
+            
+            <button onclick="openAddEmentaModal()" class="px-3.5 py-1.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl cursor-pointer transition-colors flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+              <span>Novo Tópico / Ementa</span>
+            </button>
+          </div>
+
+          <!-- Progress Bar of this Ementa -->
+          <div class="space-y-2">
+            <div class="flex justify-between text-xs font-medium text-slate-500">
+              <span>Progresso de Leitura e Estudos:</span>
+              <span id="ementa-progress-pct" class="font-bold text-brand-600">0%</span>
+            </div>
+            <div class="h-2.5 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
+              <div id="ementa-progress-bar" class="h-full bg-brand-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- List of Ementa Items -->
+          <div id="ementas-items-container" class="space-y-2.5 pt-4">
+            <!-- Loaded dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== TAB: FILES (PDFS) ==================== -->
+      <section id="tab-files" class="hidden fade-in space-y-6">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900">Meus PDFs, Calendários & Grades</h3>
+            <p class="text-xs text-slate-500">Suba arquivos e horários em PDF, salve-os localmente via IndexedDB e abra-os a qualquer momento.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          <!-- Upload Box and File list -->
+          <div class="lg:col-span-1 space-y-4">
+            <!-- Upload Container -->
+            <div id="pdf-drag-container" class="bg-white rounded-2xl border-2 border-dashed border-slate-300 p-6 shadow-sm hover:border-brand-500 transition-colors relative flex flex-col items-center justify-center text-center cursor-pointer">
+              <input type="file" id="pdf-file-input" onchange="handleFileSelect(event)" accept="application/pdf" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full" />
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-slate-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+              </svg>
+              <h5 class="text-xs font-bold text-slate-700">Upload de PDF</h5>
+              <p class="text-[10px] text-slate-400 mt-1">Arraste um PDF ou clique para selecionar</p>
+            </div>
+
+            <!-- List of uploaded PDF files -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm space-y-3">
+              <h4 class="font-bold text-xs text-slate-900 border-b border-slate-100 pb-2">Documentos Salvos</h4>
+              <div id="pdf-files-list" class="space-y-2 max-h-[300px] overflow-y-auto">
+                <!-- Loaded dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive PDF viewer frame -->
+          <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex flex-col h-[500px] relative">
+            <div id="pdf-viewer-placeholder" class="absolute inset-0 flex flex-col items-center justify-center text-slate-400 p-6 text-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mb-2 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+              </svg>
+              <h5 class="font-bold text-slate-700">Leitor de Arquivos PDF</h5>
+              <p class="text-xs max-w-xs mt-1">Selecione um documento da lista para ler o conteúdo ou faça um novo upload para visualizá-lo.</p>
+            </div>
+            
+            <div id="pdf-viewer-active" class="hidden w-full h-full flex flex-col">
+              <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3 flex-shrink-0">
+                <h4 id="pdf-viewer-title" class="font-bold text-sm text-slate-800 truncate pr-4">Documento Ativo</h4>
+                <button onclick="closePdfViewer()" class="text-xs font-bold text-slate-500 hover:text-slate-800">Fechar Leitor</button>
+              </div>
+              <iframe id="pdf-iframe" class="w-full flex-1 rounded-xl bg-slate-100 border border-slate-200" src=""></iframe>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== TAB: BACKUP & CONFIGURATIONS ==================== -->
+      <section id="tab-backup" class="hidden fade-in space-y-6">
+        <div>
+          <h3 class="text-lg font-bold text-slate-900">Backup & Configurações de Sistema</h3>
+          <p class="text-xs text-slate-500">Mantenha seus dados sempre seguros. Exporte ou importe as informações do seu Planner Acadêmico de forma manual.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Backup Card -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
+            <h4 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-brand-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-3-3m3 3V4" />
+              </svg>
+              <span>Exportar Dados (Backup)</span>
+            </h4>
+            <p class="text-xs text-slate-500">
+              Gere um arquivo JSON completo contendo todas as suas disciplinas, cronogramas, trabalhos, ementas, anotações de aulas e também as mídias em PDF codificadas. Guarde o arquivo em um local seguro.
+            </p>
+            <button onclick="exportFullBackup()" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl cursor-pointer transition-colors w-full sm:w-auto">
+              Baixar Backup (.JSON)
+            </button>
+          </div>
+
+          <!-- Restore Card -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4 relative">
+            <h4 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+              </svg>
+              <span>Importar Dados (Restaurar)</span>
+            </h4>
+            <p class="text-xs text-slate-500">
+              Carregue um arquivo de backup gerado anteriormente para restaurar todas as suas informações acadêmicas e PDFs instantaneamente no IndexedDB deste aparelho.
+            </p>
+            <div class="flex items-center gap-3">
+              <input type="file" id="import-backup-file" onchange="importFullBackup(event)" accept=".json" class="hidden" />
+              <button onclick="document.getElementById('import-backup-file').click()" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl cursor-pointer transition-colors w-full sm:w-auto">
+                Selecionar Arquivo Backup
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ==================== MODAL: ADD/EDIT TASK ==================== -->
+  <div id="modal-task" class="hidden fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl border border-slate-200 w-full max-w-md p-6 shadow-2xl relative fade-in">
+      <h4 class="text-base font-bold text-slate-900 mb-4" id="modal-task-title">Novo Compromisso</h4>
+      
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Título do Trabalho / Prova</label>
+          <input type="text" id="task-input-title" placeholder="Ex: Prova Final de Antigo Testamento" class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Tipo</label>
+            <select id="task-input-type" class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer">
+              <option value="trabalho">Trabalho</option>
+              <option value="prova">Prova</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Disciplina</label>
+            <select id="task-input-discipline" class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer">
+              <!-- Loaded dynamically -->
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Data Limite</label>
+            <input type="date" id="task-input-date" class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Peso (0 a 10)</label>
+            <input type="number" id="task-input-weight" placeholder="10.0" step="0.5" class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Nota Conquistada (Deixe vazio se pendente)</label>
+          <input type="number" id="task-input-grade" placeholder="Ainda não avaliado" step="0.1" class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Status</label>
+          <select id="task-input-status" class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer">
+            <option value="pendente">Pendente</option>
+            <option value="concluido">Concluído</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 mt-6">
+        <button onclick="closeTaskModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl cursor-pointer">
+          Cancelar
+        </button>
+        <button onclick="saveTaskFromModal()" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl cursor-pointer">
+          Confirmar Salvar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: ADD/EDIT DISCIPLINA ==================== -->
+  <div id="modal-discipline" class="hidden fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl border border-slate-200 w-full max-w-sm p-6 shadow-2xl relative fade-in">
+      <h4 class="text-base font-bold text-slate-900 mb-4">Adicionar Nova Disciplina</h4>
+      
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Nome da Disciplina</label>
+          <input type="text" id="discipline-input-name" placeholder="Ex: Teologia Sistemática II" class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2" />
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 mt-6">
+        <button onclick="closeDisciplineModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl cursor-pointer">
+          Cancelar
+        </button>
+        <button onclick="saveNewDiscipline()" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl cursor-pointer">
+          Adicionar Disciplina
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: ADD/EDIT EMENTA ==================== -->
+  <div id="modal-ementa" class="hidden fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl border border-slate-200 w-full max-w-md p-6 shadow-2xl relative fade-in">
+      <h4 class="text-base font-bold text-slate-900 mb-4">Novo Tópico de Estudo (Ementa)</h4>
+      
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Título do Tema ou Conteúdo</label>
+          <input type="text" id="ementa-input-topic" placeholder="Ex: Unidade I - Doutrina de Deus" class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-3 py-2" />
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 mt-6">
+        <button onclick="closeEmentaModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl cursor-pointer">
+          Cancelar
+        </button>
+        <button onclick="saveNewEmenta()" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl cursor-pointer">
+          Salvar Tema
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== APPLICATION CORE LOGIC (VANILLA JS / INDEXEDDB) ==================== -->
+  <script>
+    // Database and State Setup
+    const DB_NAME = "AcademicPlannerDB";
+    const DB_VERSION = 1;
+    let dbInstance = null;
+
+    // Local Storage Fallback & Initial State
+    let state = {
+      disciplines: [
+        { id: "d1", name: "Soteriologia I" },
+        { id: "d2", name: "Teologia Sistemática" },
+        { id: "d3", name: "Grego Bíblico" }
+      ],
+      tasks: [
+        { id: "t1", title: "Prova Parcial Escrita", disciplineId: "d1", date: "2026-07-10", type: "prova", weight: 3.0, grade: null, status: "pendente" },
+        { id: "t2", title: "Resenha do Livro 'Salvação'", disciplineId: "d1", date: "2026-07-20", type: "trabalho", weight: 4.0, grade: null, status: "pendente" },
+        { id: "t3", title: "Análise Sintática de João 3:16", disciplineId: "d3", date: "2026-06-25", type: "trabalho", weight: 3.0, grade: 9.5, status: "concluido" }
+      ],
+      notes: [
+        { id: "n1", title: "Aula 1 - Introdução Geral", disciplineId: "d1", date: "2026-06-15", content: "Anotação da aula introdutória de Soteriologia.\nAbordamos os principais conceitos históricos de salvação nas tradições protestantes e patrísticas." }
+      ],
+      ementas: [
+        { id: "e1", disciplineId: "d1", topic: "História e Evolução do Conceito de Salvação", completed: true },
+        { id: "e2", disciplineId: "d1", topic: "Justificação por Meio da Fé Somente", completed: false },
+        { id: "e3", disciplineId: "d1", topic: "Graça Preveniente e Livre Arbítrio", completed: false },
+        { id: "e4", disciplineId: "d2", topic: "Atributos Divinos e Essência de Deus", completed: true }
+      ],
+      files: [] // File metadata list
+    };
+
+    let activeNoteId = null;
+    let editingTaskId = null;
+    let currentTab = 'dashboard';
+
+    // IndexedDB Operations
+    function getDB() {
+      return new Promise((resolve, reject) => {
+        if (dbInstance) return resolve(dbInstance);
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+        request.onerror = () => reject(request.error);
+        request.onsuccess = () => {
+          dbInstance = request.result;
+          resolve(dbInstance);
+        };
+        request.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains("state")) {
+            db.createObjectStore("state");
+          }
+          if (!db.objectStoreNames.contains("pdfs")) {
+            db.createObjectStore("pdfs");
+          }
+        };
+      });
+    }
+
+    async function saveStateToDB() {
+      try {
+        const db = await getDB();
+        const tx = db.transaction("state", "readwrite");
+        tx.objectStore("state").put(state, "planner-state");
+      } catch (err) {
+        console.error("IndexedDB Save State Error:", err);
+        // Fallback
+        localStorage.setItem("planner-state", JSON.stringify(state));
+      }
+    }
+
+    async function loadStateFromDB() {
+      try {
+        const db = await getDB();
+        const tx = db.transaction("state", "readonly");
+        const req = tx.objectStore("state").get("planner-state");
+        return new Promise((resolve) => {
+          req.onsuccess = () => {
+            if (req.result) {
+              state = req.result;
+            } else {
+              const local = localStorage.getItem("planner-state");
+              if (local) state = JSON.parse(local);
+            }
+            resolve();
+          };
+          req.onerror = () => {
+            const local = localStorage.getItem("planner-state");
+            if (local) state = JSON.parse(local);
+            resolve();
+          };
+        });
+      } catch (err) {
+        const local = localStorage.getItem("planner-state");
+        if (local) state = JSON.parse(local);
+      }
+    }
+
+    async function saveFileToDB(fileId, base64) {
+      const db = await getDB();
+      const tx = db.transaction("pdfs", "readwrite");
+      tx.objectStore("pdfs").put(base64, fileId);
+    }
+
+    async function getFileFromDB(fileId) {
+      const db = await getDB();
+      const tx = db.transaction("pdfs", "readonly");
+      return new Promise((resolve, reject) => {
+        const req = tx.objectStore("pdfs").get(fileId);
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    async function deleteFileFromDB(fileId) {
+      const db = await getDB();
+      const tx = db.transaction("pdfs", "readwrite");
+      tx.objectStore("pdfs").delete(fileId);
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', async () => {
+      await loadStateFromDB();
+      renderAll();
+    });
+
+    // Main Rendering Engine
+    function renderAll() {
+      // Counters & badging
+      const pendingCount = state.tasks.filter(t => t.status === 'pendente').length;
+      document.getElementById("header-pending-tasks").innerText = `${pendingCount} Pendentes`;
+      document.getElementById("header-completed-notes").innerText = `${state.notes.length} Anotações`;
+
+      // Update dropdown lists
+      updateDisciplineDropdowns();
+
+      // Render tab views
+      renderSidebarDisciplines();
+      renderDashboard();
+      renderTasksList();
+      renderNotesList();
+      renderEmentas();
+      renderFileList();
+    }
+
+    // Tab Switcher
+    function switchTab(tabId) {
+      currentTab = tabId;
+      const tabs = ['dashboard', 'tasks', 'notes', 'ementas', 'files', 'backup'];
+      tabs.forEach(t => {
+        const sect = document.getElementById(`tab-${t}`);
+        const btn = document.getElementById(`btn-tab-${t}`);
+        if (t === tabId) {
+          sect.classList.remove('hidden');
+          btn.classList.add('bg-brand-50', 'text-brand-700');
+          btn.classList.remove('text-slate-600', 'hover:bg-slate-50', 'hover:text-slate-900');
+        } else {
+          sect.classList.add('hidden');
+          btn.classList.remove('bg-brand-50', 'text-brand-700');
+          btn.classList.add('text-slate-600', 'hover:bg-slate-50', 'hover:text-slate-900');
+        }
+      });
+    }
+
+    // Notifications Toast helper
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      const text = document.getElementById("toast-message");
+      text.innerText = msg;
+      toast.classList.remove("hidden");
+      setTimeout(() => {
+        toast.classList.add("hidden");
+      }, 3000);
+    }
+
+    // Helpers
+    function getDisciplineName(id) {
+      const disc = state.disciplines.find(d => d.id === id);
+      return disc ? disc.name : "Sem disciplina";
+    }
+
+    function calculateDaysRemaining(targetDate) {
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      const target = new Date(targetDate);
+      target.setHours(0,0,0,0);
+      const diffTime = target - today;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays;
+    }
+
+    function updateDisciplineDropdowns() {
+      const selectHtml = state.disciplines.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+      
+      const editorSelect = document.getElementById("editor-note-discipline");
+      if (editorSelect) editorSelect.innerHTML = selectHtml;
+
+      const modalTaskSelect = document.getElementById("task-input-discipline");
+      if (modalTaskSelect) modalTaskSelect.innerHTML = selectHtml;
+
+      const filterTaskSelect = document.getElementById("task-filter-discipline");
+      if (filterTaskSelect) {
+        filterTaskSelect.innerHTML = `<option value="todos">Todas as Disciplinas</option>` + selectHtml;
+      }
+
+      const ementaSelect = document.getElementById("ementa-select-discipline");
+      if (ementaSelect) {
+        const prev = ementaSelect.value;
+        ementaSelect.innerHTML = selectHtml;
+        if (state.disciplines.find(d => d.id === prev)) {
+          ementaSelect.value = prev;
+        } else if (state.disciplines.length > 0) {
+          ementaSelect.value = state.disciplines[0].id;
+        }
+      }
+    }
+
+    // Sidebar Disciplines list
+    function renderSidebarDisciplines() {
+      const container = document.getElementById("sidebar-disciplines");
+      if (!container) return;
+
+      if (state.disciplines.length === 0) {
+        container.innerHTML = `<p class="text-[10px] text-slate-400">Nenhuma disciplina.</p>`;
+        return;
+      }
+
+      container.innerHTML = state.disciplines.map(d => {
+        return `
+          <div class="flex items-center justify-between group p-1 hover:bg-slate-100 rounded transition-all">
+            <span class="text-xs text-slate-600 truncate font-medium max-w-[120px]">${d.name}</span>
+            <button onclick="deleteDiscipline('${d.id}')" class="text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 1. DASHBOARD TAB RENDER
+    function renderDashboard() {
+      // Quick Stats calculations
+      const tasksPending = state.tasks.filter(t => t.status === 'pendente').length;
+      document.getElementById("dash-stat-tasks").innerText = tasksPending;
+      document.getElementById("dash-stat-notes").innerText = state.notes.length;
+      document.getElementById("dash-stat-disciplines").innerText = state.disciplines.length;
+
+      // Grade average
+      const completedTasksWithGrades = state.tasks.filter(t => t.status === 'concluido' && t.grade !== null && t.grade !== '');
+      if (completedTasksWithGrades.length > 0) {
+        const sum = completedTasksWithGrades.reduce((acc, curr) => acc + parseFloat(curr.grade), 0);
+        const avg = (sum / completedTasksWithGrades.length).toFixed(1);
+        document.getElementById("dash-stat-average").innerText = avg;
+      } else {
+        document.getElementById("dash-stat-average").innerText = "0.0";
+      }
+
+      // Provas Próximas (Sorted by date, pending only)
+      const dashTasksContainer = document.getElementById("dash-tasks-container");
+      const criticalTasks = state.tasks
+        .filter(t => t.status === 'pendente')
+        .sort((a,b) => new Date(a.date) - new Date(b.date))
+        .slice(0, 3);
+
+      if (criticalTasks.length === 0) {
+        dashTasksContainer.innerHTML = `
+          <div class="p-4 text-center text-xs text-slate-400 bg-slate-50 rounded-xl">
+            Nenhuma entrega ou prova pendente. Tudo em dia!
+          </div>
+        `;
+      } else {
+        dashTasksContainer.innerHTML = criticalTasks.map(t => {
+          const daysLeft = calculateDaysRemaining(t.date);
+          let badgeColor = 'bg-slate-100 text-slate-700';
+          if (daysLeft <= 3) {
+            badgeColor = 'bg-red-100 text-red-700 animate-pulse';
+          } else if (daysLeft <= 7) {
+            badgeColor = 'bg-amber-100 text-amber-700';
+          }
+          return `
+            <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+              <div class="min-w-0 pr-3">
+                <h5 class="text-xs font-semibold text-slate-800 truncate">${t.title}</h5>
+                <p class="text-[10px] text-slate-400 mt-0.5">${getDisciplineName(t.disciplineId)} • ${t.type.toUpperCase()}</p>
+              </div>
+              <span class="text-[10px] font-bold px-2 py-1 rounded-md ${badgeColor} shrink-0">
+                ${daysLeft < 0 ? 'Expirou' : daysLeft === 0 ? 'Hoje!' : daysLeft === 1 ? '1 dia' : `${daysLeft} dias`}
+              </span>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // PDFs Recentes
+      const dashFilesContainer = document.getElementById("dash-files-container");
+      if (state.files.length === 0) {
+        dashFilesContainer.innerHTML = `
+          <div class="p-4 text-center text-xs text-slate-400 bg-slate-50 rounded-xl">
+            Nenhum arquivo ou cronograma cadastrado.
+          </div>
+        `;
+      } else {
+        const recentFiles = state.files.slice(-3).reverse();
+        dashFilesContainer.innerHTML = recentFiles.map(f => {
+          return `
+            <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+              <div class="flex items-center gap-2 min-w-0 pr-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+                <span class="text-xs text-slate-700 truncate font-medium">${f.name}</span>
+              </div>
+              <button onclick="switchTab('files'); viewPdfFile('${f.id}')" class="text-[10px] font-bold text-brand-600 hover:underline shrink-0">Abrir</button>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    // 2. TASKS TAB RENDER
+    function renderTasksList() {
+      const filterStatus = document.getElementById("task-filter-status").value;
+      const filterDisc = document.getElementById("task-filter-discipline").value;
+      const container = document.getElementById("tasks-list-container");
+      
+      let filtered = [...state.tasks];
+      if (filterStatus !== 'todos') {
+        filtered = filtered.filter(t => t.status === filterStatus);
+      }
+      if (filterDisc !== 'todos') {
+        filtered = filtered.filter(t => t.disciplineId === filterDisc);
+      }
+
+      // Sort by date ascending
+      filtered.sort((a,b) => new Date(a.date) - new Date(b.date));
+
+      document.getElementById("task-count-badge").innerText = `${filtered.length} Itens`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="p-8 text-center text-slate-400 text-xs">
+            Nenhum compromisso ou prova cadastrada com os filtros selecionados.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(t => {
+        const daysLeft = calculateDaysRemaining(t.date);
+        const isDone = t.status === 'concluido';
+        return `
+          <div class="p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:bg-slate-50 transition-colors">
+            <div class="flex items-start gap-3 min-w-0">
+              <button onclick="toggleTaskStatus('${t.id}')" class="mt-1 flex-shrink-0 cursor-pointer">
+                ${isDone ? `
+                  <div class="p-1 bg-brand-100 text-brand-600 rounded-full border border-brand-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                ` : `
+                  <div class="w-6 h-6 rounded-full border-2 border-slate-300 hover:border-brand-500 transition-colors"></div>
+                `}
+              </button>
+              
+              <div class="min-w-0">
+                <h4 class="text-sm font-bold text-slate-800 truncate ${isDone ? 'line-through text-slate-400' : ''}">${t.title}</h4>
+                <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[11px] text-slate-400 mt-1">
+                  <span class="font-semibold text-slate-500">${getDisciplineName(t.disciplineId)}</span>
+                  <span>•</span>
+                  <span class="capitalize">${t.type}</span>
+                  <span>•</span>
+                  <span>Limite: ${t.date.split('-').reverse().join('/')}</span>
+                  ${t.weight ? `<span>• Peso: ${t.weight}</span>` : ''}
+                  ${t.grade !== null && t.grade !== '' ? `<span class="font-bold text-brand-600">Nota: ${t.grade}</span>` : ''}
+                </div>
+              </div>
+            </div>
+
+            <!-- Action controls -->
+            <div class="flex items-center gap-3 w-full sm:w-auto justify-end flex-shrink-0">
+              ${!isDone ? `
+                <span class="text-[10px] font-bold px-2 py-1 rounded ${daysLeft <= 3 ? 'bg-red-100 text-red-700 animate-pulse' : 'bg-slate-100 text-slate-600'}">
+                  ${daysLeft < 0 ? 'Expirou' : daysLeft === 0 ? 'Hoje!' : `${daysLeft} dias restantes`}
+                </span>
+              ` : `
+                <span class="text-[10px] font-bold px-2 py-1 rounded bg-brand-100 text-brand-700">Entregue</span>
+              `}
+              
+              <button onclick="editTask('${t.id}')" class="p-1.5 text-slate-400 hover:text-slate-800 rounded hover:bg-slate-100 cursor-pointer transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
+              </button>
+              
+              <button onclick="deleteTask('${t.id}')" class="p-1.5 text-slate-400 hover:text-red-500 rounded hover:bg-red-50 cursor-pointer transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 3. NOTES TAB RENDER
+    function renderNotesList() {
+      const search = document.getElementById("note-search").value.toLowerCase();
+      const sidebarContainer = document.getElementById("notes-sidebar-list");
+      
+      let filtered = [...state.notes];
+      if (search) {
+        filtered = filtered.filter(n => n.title.toLowerCase().includes(search) || n.content.toLowerCase().includes(search));
+      }
+
+      if (filtered.length === 0) {
+        sidebarContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Nenhuma anotação.</p>`;
+        return;
+      }
+
+      sidebarContainer.innerHTML = filtered.map(n => {
+        const isActive = activeNoteId === n.id;
+        return `
+          <button onclick="selectNote('${n.id}')" class="w-full text-left p-3 rounded-xl transition-all cursor-pointer ${isActive ? 'bg-slate-900 text-white shadow-md' : 'hover:bg-slate-50 text-slate-700'}">
+            <h5 class="text-xs font-bold truncate">${n.title || "Sem título"}</h5>
+            <p class="text-[10px] ${isActive ? 'text-slate-300' : 'text-slate-400'} truncate mt-1">${getDisciplineName(n.disciplineId)} • ${n.date.split('-').reverse().join('/')}</p>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectNote(id) {
+      activeNoteId = id;
+      const note = state.notes.find(n => n.id === id);
+      if (!note) return;
+
+      document.getElementById("editor-placeholder").classList.add("hidden");
+      document.getElementById("editor-active").classList.remove("hidden");
+
+      document.getElementById("editor-note-title").value = note.title;
+      document.getElementById("editor-note-discipline").value = note.disciplineId;
+      document.getElementById("editor-note-content").value = note.content;
+
+      // Update save status badge
+      const badge = document.getElementById("editor-save-indicator");
+      badge.innerText = "Salvo Offline";
+      badge.className = "text-[10px] font-semibold px-2 py-1 bg-brand-50 text-brand-700 border border-brand-100 rounded";
+
+      renderNotesList();
+    }
+
+    function createNewNote() {
+      if (state.disciplines.length === 0) {
+        showToast("Cadastre uma disciplina primeiro!");
+        return;
+      }
+      const newId = 'n_' + Math.random().toString(36).substring(2, 11);
+      const newNote = {
+        id: newId,
+        title: "Anotações da Aula",
+        disciplineId: state.disciplines[0].id,
+        date: new Date().toISOString().split('T')[0],
+        content: ""
+      };
+      state.notes.push(newNote);
+      saveStateToDB();
+      selectNote(newId);
+      renderAll();
+    }
+
+    function markNoteStale() {
+      const badge = document.getElementById("editor-save-indicator");
+      badge.innerText = "Alterações não salvas";
+      badge.className = "text-[10px] font-semibold px-2 py-1 bg-amber-50 text-amber-700 border border-amber-100 rounded";
+    }
+
+    function saveActiveNote() {
+      if (!activeNoteId) return;
+      const note = state.notes.find(n => n.id === activeNoteId);
+      if (!note) return;
+
+      note.title = document.getElementById("editor-note-title").value;
+      note.disciplineId = document.getElementById("editor-note-discipline").value;
+      note.content = document.getElementById("editor-note-content").value;
+
+      saveStateToDB();
+      selectNote(activeNoteId);
+      renderAll();
+      showToast("Resumo de aula salvo offline!");
+    }
+
+    function deleteActiveNote() {
+      if (!activeNoteId) return;
+      if (!confirm("Excluir anotação permanentemente?")) return;
+
+      state.notes = state.notes.filter(n => n.id !== activeNoteId);
+      saveStateToDB();
+      activeNoteId = null;
+
+      document.getElementById("editor-active").classList.add("hidden");
+      document.getElementById("editor-placeholder").classList.remove("hidden");
+
+      renderAll();
+      showToast("Anotação excluída.");
+    }
+
+    // 4. EMENTAS TAB RENDER
+    function renderEmentas() {
+      const container = document.getElementById("ementas-items-container");
+      const ementaSelect = document.getElementById("ementa-select-discipline");
+      if (!container || !ementaSelect) return;
+
+      const activeDiscId = ementaSelect.value;
+      if (!activeDiscId) {
+        container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Cadastre ou selecione uma disciplina.</p>`;
+        return;
+      }
+
+      const filtered = state.ementas.filter(e => e.disciplineId === activeDiscId);
+      
+      // Calculate progress percentage
+      const total = filtered.length;
+      const completed = filtered.filter(e => e.completed).length;
+      const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+      document.getElementById("ementa-progress-pct").innerText = `${pct}%`;
+      document.getElementById("ementa-progress-bar").style.width = `${pct}%`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="p-8 text-center text-slate-400 text-xs">
+            Nenhum tópico ou ementa programática cadastrada para esta disciplina.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(e => {
+        return `
+          <div class="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-100 rounded-xl hover:border-slate-200 transition-colors">
+            <div class="flex items-center gap-3">
+              <button onclick="toggleEmentaStatus('${e.id}')" class="cursor-pointer">
+                ${e.completed ? `
+                  <div class="p-0.5 bg-brand-100 text-brand-600 rounded-md border border-brand-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                ` : `
+                  <div class="w-5 h-5 rounded-md border border-slate-300 hover:border-brand-500 transition-colors"></div>
+                `}
+              </button>
+              <span class="text-xs font-semibold text-slate-700 ${e.completed ? 'line-through text-slate-400' : ''}">${e.topic}</span>
+            </div>
+            <button onclick="deleteEmenta('${e.id}')" class="text-slate-400 hover:text-red-500 cursor-pointer p-1">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleEmentaStatus(id) {
+      const e = state.ementas.find(item => item.id === id);
+      if (e) {
+        e.completed = !e.completed;
+        saveStateToDB();
+        renderEmentas();
+        renderDashboard();
+      }
+    }
+
+    function deleteEmenta(id) {
+      if (!confirm("Excluir este tópico de estudo?")) return;
+      state.ementas = state.ementas.filter(item => item.id !== id);
+      saveStateToDB();
+      renderEmentas();
+      renderDashboard();
+      showToast("Tópico removido.");
+    }
+
+    // 5. FILE (PDF) TAB RENDER & CONTROL
+    function renderFileList() {
+      const listContainer = document.getElementById("pdf-files-list");
+      if (!listContainer) return;
+
+      if (state.files.length === 0) {
+        listContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Nenhum PDF cadastrado.</p>`;
+        return;
+      }
+
+      listContainer.innerHTML = state.files.map(f => {
+        return `
+          <div class="p-2.5 bg-slate-50 border border-slate-100 hover:bg-slate-100 rounded-xl flex items-center justify-between gap-3 group">
+            <button onclick="viewPdfFile('${f.id}')" class="flex items-center gap-2 text-left min-w-0 flex-1 cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-brand-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+              </svg>
+              <div class="min-w-0">
+                <h5 class="text-xs font-bold text-slate-700 truncate">${f.name}</h5>
+                <p class="text-[10px] text-slate-400">${f.size} • ${f.uploadedAt.split('-').reverse().join('/')}</p>
+              </div>
+            </button>
+            <button onclick="deletePdfFile('${f.id}')" class="text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-1">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function handleFileSelect(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      if (file.type !== "application/pdf") {
+        showToast("Apenas arquivos PDF são aceitos!");
+        return;
+      }
+
+      // Read as base64
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const base64 = reader.result;
+        const fileId = 'pdf_' + Math.random().toString(36).substring(2, 11);
+        
+        // Metadata
+        const meta = {
+          id: fileId,
+          name: file.name,
+          size: `${Math.round(file.size / 1024)} KB`,
+          type: file.type,
+          uploadedAt: new Date().toISOString().split('T')[0]
+        };
+
+        state.files.push(meta);
+        await saveFileToDB(fileId, base64);
+        await saveStateToDB();
+        
+        renderAll();
+        viewPdfFile(fileId);
+        showToast("PDF salvo localmente com sucesso!");
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function viewPdfFile(id) {
+      try {
+        const fileData = await getFileFromDB(id);
+        const meta = state.files.find(f => f.id === id);
+        if (!fileData || !meta) {
+          showToast("Arquivo não encontrado!");
+          return;
+        }
+
+        document.getElementById("pdf-viewer-placeholder").classList.add("hidden");
+        const activeContainer = document.getElementById("pdf-viewer-active");
+        activeContainer.classList.remove("hidden");
+
+        document.getElementById("pdf-viewer-title").innerText = meta.name;
+        
+        // Load into iframe
+        const iframe = document.getElementById("pdf-iframe");
+        iframe.src = fileData;
+      } catch (err) {
+        console.error("View PDF Error:", err);
+        showToast("Erro ao abrir PDF.");
+      }
+    }
+
+    function closePdfViewer() {
+      document.getElementById("pdf-viewer-active").classList.add("hidden");
+      document.getElementById("pdf-viewer-placeholder").classList.remove("hidden");
+      const iframe = document.getElementById("pdf-iframe");
+      iframe.src = "";
+    }
+
+    async function deletePdfFile(id) {
+      if (!confirm("Tem certeza que deseja excluir este PDF do aparelho?")) return;
+      try {
+        await deleteFileFromDB(id);
+        state.files = state.files.filter(f => f.id !== id);
+        await saveStateToDB();
+        closePdfViewer();
+        renderAll();
+        showToast("Arquivo removido.");
+      } catch (err) {
+        console.error("Delete PDF Error:", err);
+      }
+    }
+
+
+    // ==================== FORM SUBMISSIONS & MODALS ====================
+
+    // A. Tasks modals
+    function openAddTaskModal() {
+      editingTaskId = null;
+      document.getElementById("modal-task-title").innerText = "Novo Compromisso";
+      document.getElementById("task-input-title").value = "";
+      document.getElementById("task-input-type").value = "trabalho";
+      document.getElementById("task-input-date").value = new Date().toISOString().split('T')[0];
+      document.getElementById("task-input-weight").value = "";
+      document.getElementById("task-input-grade").value = "";
+      document.getElementById("task-input-status").value = "pendente";
+
+      document.getElementById("modal-task").classList.remove("hidden");
+    }
+
+    function editTask(id) {
+      editingTaskId = id;
+      const t = state.tasks.find(x => x.id === id);
+      if (!t) return;
+
+      document.getElementById("modal-task-title").innerText = "Editar Compromisso";
+      document.getElementById("task-input-title").value = t.title;
+      document.getElementById("task-input-type").value = t.type;
+      document.getElementById("task-input-discipline").value = t.disciplineId;
+      document.getElementById("task-input-date").value = t.date;
+      document.getElementById("task-input-weight").value = t.weight || "";
+      document.getElementById("task-input-grade").value = t.grade !== null ? t.grade : "";
+      document.getElementById("task-input-status").value = t.status;
+
+      document.getElementById("modal-task").classList.remove("hidden");
+    }
+
+    function closeTaskModal() {
+      document.getElementById("modal-task").classList.add("hidden");
+    }
+
+    function saveTaskFromModal() {
+      const title = document.getElementById("task-input-title").value.trim();
+      const type = document.getElementById("task-input-type").value;
+      const disciplineId = document.getElementById("task-input-discipline").value;
+      const date = document.getElementById("task-input-date").value;
+      const weight = document.getElementById("task-input-weight").value;
+      const grade = document.getElementById("task-input-grade").value;
+      const status = document.getElementById("task-input-status").value;
+
+      if (!title) {
+        alert("Preencha o título!");
+        return;
+      }
+
+      if (editingTaskId) {
+        // Edit
+        const t = state.tasks.find(x => x.id === editingTaskId);
+        if (t) {
+          t.title = title;
+          t.type = type;
+          t.disciplineId = disciplineId;
+          t.date = date;
+          t.weight = weight ? parseFloat(weight) : null;
+          t.grade = grade !== "" ? parseFloat(grade) : null;
+          t.status = status;
+        }
+      } else {
+        // Add
+        const newId = 't_' + Math.random().toString(36).substring(2, 11);
+        state.tasks.push({
+          id: newId,
+          title,
+          type,
+          disciplineId,
+          date,
+          weight: weight ? parseFloat(weight) : null,
+          grade: grade !== "" ? parseFloat(grade) : null,
+          status
+        });
+      }
+
+      saveStateToDB();
+      closeTaskModal();
+      renderAll();
+      showToast("Agenda atualizada!");
+    }
+
+    function toggleTaskStatus(id) {
+      const t = state.tasks.find(x => x.id === id);
+      if (t) {
+        t.status = t.status === 'concluido' ? 'pendente' : 'concluido';
+        saveStateToDB();
+        renderAll();
+        showToast("Status da tarefa alterado.");
+      }
+    }
+
+    function deleteTask(id) {
+      if (!confirm("Tem certeza que deseja excluir esta entrega?")) return;
+      state.tasks = state.tasks.filter(x => x.id !== id);
+      saveStateToDB();
+      renderAll();
+      showToast("Compromisso removido.");
+    }
+
+    // B. Discipline modals
+    function openAddDisciplineModal() {
+      document.getElementById("discipline-input-name").value = "";
+      document.getElementById("modal-discipline").classList.remove("hidden");
+    }
+
+    function closeDisciplineModal() {
+      document.getElementById("modal-discipline").classList.add("hidden");
+    }
+
+    function saveNewDiscipline() {
+      const name = document.getElementById("discipline-input-name").value.trim();
+      if (!name) return;
+
+      const newId = 'd_' + Math.random().toString(36).substring(2, 11);
+      state.disciplines.push({ id: newId, name });
+      
+      saveStateToDB();
+      closeDisciplineModal();
+      renderAll();
+      showToast("Nova disciplina adicionada!");
+    }
+
+    function deleteDiscipline(id) {
+      if (!confirm("A exclusão da disciplina também apagará todas as tarefas, anotações e ementas vinculadas. Continuar?")) return;
+      
+      state.disciplines = state.disciplines.filter(d => d.id !== id);
+      state.tasks = state.tasks.filter(t => t.disciplineId !== id);
+      state.notes = state.notes.filter(n => n.disciplineId !== id);
+      state.ementas = state.ementas.filter(e => e.disciplineId !== id);
+
+      if (activeNoteId) {
+        const stillExists = state.notes.find(n => n.id === activeNoteId);
+        if (!stillExists) {
+          activeNoteId = null;
+          document.getElementById("editor-active").classList.add("hidden");
+          document.getElementById("editor-placeholder").classList.remove("hidden");
+        }
+      }
+
+      saveStateToDB();
+      renderAll();
+      showToast("Disciplina removida.");
+    }
+
+    // C. Ementa modals
+    function openAddEmentaModal() {
+      document.getElementById("ementa-input-topic").value = "";
+      document.getElementById("modal-ementa").classList.remove("hidden");
+    }
+
+    function closeEmentaModal() {
+      document.getElementById("modal-ementa").classList.add("hidden");
+    }
+
+    function saveNewEmenta() {
+      const topic = document.getElementById("ementa-input-topic").value.trim();
+      const discSelect = document.getElementById("ementa-select-discipline");
+      if (!topic || !discSelect) return;
+
+      const disciplineId = discSelect.value;
+      const newId = 'e_' + Math.random().toString(36).substring(2, 11);
+
+      state.ementas.push({
+        id: newId,
+        disciplineId,
+        topic,
+        completed: false
+      });
+
+      saveStateToDB();
+      closeEmentaModal();
+      renderEmentas();
+      renderDashboard();
+      showToast("Tópico de estudo criado!");
+    }
+
+
+    // ==================== SYSTEM BACKUP & RESTORE ENGINES ====================
+
+    async function exportFullBackup() {
+      try {
+        const fullBackupObj = {
+          state: state,
+          pdfs: {}
+        };
+
+        // Load all PDF files as Base64 to include in JSON
+        const db = await getDB();
+        const tx = db.transaction("pdfs", "readonly");
+        const store = tx.objectStore("pdfs");
+        
+        const keysReq = store.getAllKeys();
+        await new Promise((resolve) => {
+          keysReq.onsuccess = async () => {
+            const keys = keysReq.result;
+            for (const key of keys) {
+              const fileData = await getFileFromDB(key);
+              fullBackupObj.pdfs[key] = fileData;
+            }
+            resolve();
+          };
+        });
+
+        // Generate download
+        const blob = new Blob([JSON.stringify(fullBackupObj, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `backup_painel_academico_${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
+        showToast("Backup gerado com sucesso!");
+      } catch (err) {
+        console.error("Backup Export Error:", err);
+        showToast("Erro ao gerar backup.");
+      }
+    }
+
+    async function importFullBackup(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = async () => {
+        try {
+          const imported = JSON.parse(reader.result);
+          if (!imported || !imported.state) {
+            showToast("Arquivo de backup inválido.");
+            return;
+          }
+
+          // Restore state
+          state = imported.state;
+          await saveStateToDB();
+
+          // Restore PDFs
+          if (imported.pdfs) {
+            const db = await getDB();
+            const tx = db.transaction("pdfs", "readwrite");
+            const store = tx.objectStore("pdfs");
+            store.clear(); // Clear old PDFs first
+            
+            for (const [key, base64] of Object.entries(imported.pdfs)) {
+              await saveFileToDB(key, base64);
+            }
+          }
+
+          renderAll();
+          showToast("Dados e arquivos restaurados com sucesso!");
+          switchTab('dashboard');
+        } catch (err) {
+          console.error("Backup Import Error:", err);
+          showToast("Erro ao processar backup.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+  </script>
+</body>
+</html>
