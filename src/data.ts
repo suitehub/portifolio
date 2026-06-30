@@ -317,63 +317,27 @@ export const testimonialsData: Testimonial[] = [
 
 export const mockPortfolioProjects: Project[] = [
   {
-    id: "estudo-biblico",
-    name: "APP ESTUDO 2.0 (Igreja)",
-    description: "Aplicativo de estudos bíblicos, roteiros de pregações, mural de oração e devocionais.",
-    fullDescription: "Desenvolvido sob medida para facilitar o acesso de líderes e membros a devocionais diários, mural de pedidos de oração e estudos bíblicos estruturados no Google Firestore.",
-    category: "Igrejas",
-    tech: ["React Native", "Google Firestore", "Tailwind CSS"],
-    features: ["Bíblia Online", "Cadastro de Células", "Pedidos de Oração", "Notificações Push"],
-    demoType: "iframe",
-    iframeAppId: "app-estudo-2-0",
-    image: "https://images.unsplash.com/photo-1438029071396-1e831a7fa6d8?auto=format&fit=crop&w=600&h=400&q=80"
-  },
-  {
-    id: "clinica-sorria",
-    name: "App Med&Clin (Clínicas)",
-    description: "Solução prática para clínicas médicas, agendamentos interativos de consultas e controle de escalas.",
-    fullDescription: "Protótipo interativo mostrando o agendamento de consultas com médicos parceiros, visualização das especialidades disponíveis e consulta de prontuários simples no Firestore.",
-    category: "Clínicas",
-    tech: ["React Native", "Google Firestore", "Tailwind CSS"],
-    features: ["Agendamento Online", "Lembrete via WhatsApp", "Prontuário Digital", "Calendário de Escalas"],
-    demoType: "simulator",
-    simulatorPreset: "clinica",
-    image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=600&h=400&q=80"
-  },
-  {
     id: "meu-casamento-app",
-    name: "Meu Casamento (Eventos)",
-    description: "Aplicativo completo de lista de presentes sugeridos, confirmação de presença (RSVP), localização do evento e mural interativo de fotos.",
-    fullDescription: "Um aplicativo desenhado para engajar convidados, facilitar RSVP digital com estatísticas em tempo real, e permitir publicação de fotos dos convidados diretamente no feed do evento.",
-    category: "Eventos",
-    tech: ["React", "Google Firestore", "Tailwind CSS"],
-    features: ["RSVP Digital", "Como Chegar (Maps)", "Feed de Fotos", "Sugestão de Presentes"],
+    name: "Meu Casamento",
+    description: "Aplicativo completo para controle mensal de cofrinho, planos em fases e comparação de orçamentos de fornecedores.",
+    fullDescription: "Um aplicativo financeiro completo desenhado para casais gerenciarem o planejamento financeiro mensal do casamento, controlarem depósitos mensais de economia (cofrinho) e compararem cotações de fornecedores por categoria.",
+    category: "Financeiro",
+    tech: ["React", "PWA Offline", "Google Firestore", "Tailwind CSS"],
+    features: ["Cofrinho de Economias", "Comparação de Orçamentos", "Melhor Opção por Categoria", "Exportação/Importação JSON"],
     demoType: "iframe",
     iframeAppId: "meu-casamento",
-    image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&h=400&q=80"
+    image: "/casamento.PNG"
   },
   {
-    id: "esplanada-viva",
-    name: "Esplanadaviva (Empresarial)",
-    description: "Portal e aplicativo corporativo para registro de vistorias, checklists externos com fotos e ordens de serviço.",
-    fullDescription: "Projetado para digitalizar processos de vistorias, acompanhamento de progresso com coordenadas de localização de equipes externas, fotos e painel de controle administrativo.",
-    category: "Empresariais",
-    tech: ["React Native", "Google Firestore", "Tailwind CSS"],
-    features: ["Ordens de Serviço", "Checklist com Fotos", "Geolocalização OS", "Painel Administrativo"],
+    id: "evento-musical-app",
+    name: "Evento Musical",
+    description: "Reserva de ingressos, recepção com dados detalhados, organizador com panorama analítico completo e credenciamento ágil.",
+    fullDescription: "Protótipo interativo de alta fidelidade projetado para o aplicativo oficial da 8ª Convenção de Quartetos. Oferece fluxos completos de reserva de ingressos, painel da recepção para credenciamento com dados detalhados dos participantes, e portal do organizador com panorama geral e estatísticas em tempo real.",
+    category: "Evento",
+    tech: ["React", "Vite", "Tailwind CSS", "Motion/React"],
+    features: ["Reserva de Ingressos", "Portal de Recepção", "Panorama do Organizador", "Credenciamento por QR Code"],
     demoType: "iframe",
-    iframeAppId: "esplanadaviva-main",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&h=400&q=80"
-  },
-  {
-    id: "confirma-rsvp",
-    name: "Confirma RSVP (Eventos)",
-    description: "Aplicativo de credenciamento rápido e validação de ingressos ou convidados com leitor de QR Code integrado.",
-    fullDescription: "Permite a leitura instantânea de ingressos por câmera, controle de check-in na portaria em tempo real e sincronização automática no Firestore.",
-    category: "Eventos",
-    tech: ["React", "Google Firestore", "Tailwind CSS"],
-    features: ["Leitor QR Code", "Check-in Integrado", "Gestão de Convidados", "Banco em Tempo Real"],
-    demoType: "iframe",
-    iframeAppId: "confirma-main",
-    image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&h=400&q=80"
+    iframeAppId: "8-convencao-de-quartetos",
+    image: "/quarteto.PNG"
   }
 ];

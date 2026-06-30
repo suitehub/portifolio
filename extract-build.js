@@ -1136,6 +1136,24 @@ function applyPatches(destDir) {
   }
 }
 
+// Helper to copy directory recursively ignoring node_modules, dist and .git
+function copyDirRecursiveIgnoringNodeModulesAndDist(src, dest) {
+  fs.mkdirSync(dest, { recursive: true });
+  const entries = fs.readdirSync(src, { withFileTypes: true });
+  for (const entry of entries) {
+    if (entry.name === "node_modules" || entry.name === "dist" || entry.name === ".git") {
+      continue;
+    }
+    const srcPath = path.join(src, entry.name);
+    const destPath = path.join(dest, entry.name);
+    if (entry.isDirectory()) {
+      copyDirRecursiveIgnoringNodeModulesAndDist(srcPath, destPath);
+    } else {
+      fs.copyFileSync(srcPath, destPath);
+    }
+  }
+}
+
 async function build() {
   console.log("Preparing public directories...");
   if (!fs.existsSync(PUBLIC_DIR)) {
@@ -1155,6 +1173,7 @@ async function build() {
 
   const discoveredApps = [];
 
+  // 1. Process standard zip/rar archives
   for (const archive of archives) {
     const archivePath = path.join(process.cwd(), archive);
     const stats = fs.statSync(archivePath);
@@ -1238,6 +1257,86 @@ async function build() {
       }
     } catch (err) {
       console.error(`Failed to process ${archive}:`, err);
+    }
+  }
+
+  // 2. Process directory-based apps (like 8ª-convenção-de-quartetos)
+  const excludedDirs = ["public", "src", "node_modules", ".git", ".github", "dist", "assets"];
+  const subDirs = rootFiles.filter(file => {
+    const fullPath = path.join(process.cwd(), file);
+    if (!fs.statSync(fullPath).isDirectory()) return false;
+    if (excludedDirs.includes(file)) return false;
+    return fs.existsSync(path.join(fullPath, "package.json")) || fs.existsSync(path.join(fullPath, "index.html"));
+  });
+
+  for (const subDir of subDirs) {
+    const subDirPath = path.join(process.cwd(), subDir);
+    const slug = getSlug(subDir);
+    const destDir = path.join(APPS_DIR, slug);
+
+    console.log(`\n========================================`);
+    console.log(`Processing directory app: ${subDir} -> slug: ${slug}`);
+    console.log(`========================================`);
+
+    try {
+      removeDirRecursive(destDir);
+      fs.mkdirSync(destDir, { recursive: true });
+      copyDirRecursiveIgnoringNodeModulesAndDist(subDirPath, destDir);
+
+      // --- COMPILE AND CLEAN REACT/VITE APPLICATIONS ---
+      const pkgDirs = findPackageJsonDirs(destDir);
+      for (const pkgDir of pkgDirs) {
+        console.log(`\n--- Compiling sub-application in: ${pkgDir} ---`);
+        try {
+          console.log("Running npm install...");
+          execSync("npm install", { cwd: pkgDir, stdio: "inherit" });
+
+          console.log("Running npm run build...");
+          execSync("npm run build", { cwd: pkgDir, stdio: "inherit" });
+
+          const distPath = path.join(pkgDir, "dist");
+          if (fs.existsSync(distPath)) {
+            console.log("Build succeeded. Relocating built static assets...");
+            const tempDist = path.join(APPS_DIR, "temp-build");
+            removeDirRecursive(tempDist);
+            
+            // Copy dist to temp
+            copyDirRecursive(distPath, tempDist);
+            
+            // Clear entire source directory
+            removeDirRecursive(pkgDir);
+            
+            // Restore clean subdirectory with compiled assets
+            fs.mkdirSync(pkgDir, { recursive: true });
+            copyDirRecursive(tempDist, pkgDir);
+            
+            // Cleanup temp folder
+            removeDirRecursive(tempDist);
+            console.log(`Sub-application ${slug} compiled and cleaned successfully!`);
+          } else {
+            console.error(`Error: Build directory 'dist' was not found in ${pkgDir}`);
+          }
+        } catch (buildErr) {
+          console.error(`Failed to compile sub-application in ${pkgDir}:`, buildErr);
+        }
+      }
+
+      const relativeIndexPath = findIndexHtml(destDir);
+      if (relativeIndexPath) {
+        discoveredApps.push({
+          id: slug,
+          name: prettifyName(subDir),
+          archiveName: subDir,
+          entryPath: `apps/${slug}/${relativeIndexPath.replace(/\\/g, "/")}`,
+          type: "zip",
+          size: 0
+        });
+        console.log(`Found entry: /apps/${slug}/${relativeIndexPath}`);
+      } else {
+        console.warn(`Could not find index.html in ${slug}`);
+      }
+    } catch (err) {
+      console.error(`Failed to process directory app ${subDir}:`, err);
     }
   }
 

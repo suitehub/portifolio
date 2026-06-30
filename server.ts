@@ -93,6 +93,7 @@ async function extractRarArchive(archivePath: string, destDir: string) {
 }
 
 // Master extraction function run at startup
+// Master extraction function run at startup
 async function extractAllArchives() {
   console.log("Starting archive extraction...");
   
@@ -112,6 +113,7 @@ async function extractAllArchives() {
 
   const tempApps: AppItem[] = [];
 
+  // 1. Process standard archives
   for (const archive of archives) {
     const archivePath = path.join(process.cwd(), archive);
     const stats = fs.statSync(archivePath);
@@ -164,6 +166,118 @@ async function extractAllArchives() {
     }
   }
 
+  // 2. Process directory-based apps (like 8ª-convenção-de-quartetos)
+  const excludedDirs = ["public", "src", "node_modules", ".git", ".github", "dist", "assets"];
+  const subDirs = rootFiles.filter(file => {
+    const fullPath = path.join(process.cwd(), file);
+    if (!fs.statSync(fullPath).isDirectory()) return false;
+    if (excludedDirs.includes(file)) return false;
+    return fs.existsSync(path.join(fullPath, "package.json")) || fs.existsSync(path.join(fullPath, "index.html"));
+  });
+
+  const copyDirRecursiveIgnoringNodeModulesAndDist = (src: string, dest: string) => {
+    fs.mkdirSync(dest, { recursive: true });
+    const entries = fs.readdirSync(src, { withFileTypes: true });
+    for (const entry of entries) {
+      if (entry.name === "node_modules" || entry.name === "dist" || entry.name === ".git") {
+        continue;
+      }
+      const srcPath = path.join(src, entry.name);
+      const destPath = path.join(dest, entry.name);
+      if (entry.isDirectory()) {
+        copyDirRecursiveIgnoringNodeModulesAndDist(srcPath, destPath);
+      } else {
+        fs.copyFileSync(srcPath, destPath);
+      }
+    }
+  };
+
+  const copyDirRecursive = (src: string, dest: string) => {
+    fs.mkdirSync(dest, { recursive: true });
+    const entries = fs.readdirSync(src, { withFileTypes: true });
+    for (const entry of entries) {
+      const srcPath = path.join(src, entry.name);
+      const destPath = path.join(dest, entry.name);
+      if (entry.isDirectory()) {
+        copyDirRecursive(srcPath, destPath);
+      } else {
+        fs.copyFileSync(srcPath, destPath);
+      }
+    }
+  };
+
+  for (const subDir of subDirs) {
+    const slug = getSlug(subDir);
+    const destDir = path.join(EXTRACTED_DIR, slug);
+    console.log(`Processing directory-based app: ${subDir} -> slug: ${slug}`);
+
+    try {
+      // If the destination directory does not exist or index.html is missing, setup and build!
+      if (!fs.existsSync(destDir) || !fs.existsSync(path.join(destDir, "index.html"))) {
+        console.log(`Setting up and compiling directory app ${subDir} inside ${destDir}...`);
+        fs.mkdirSync(destDir, { recursive: true });
+        copyDirRecursiveIgnoringNodeModulesAndDist(path.join(process.cwd(), subDir), destDir);
+
+        // Check if package.json exists to determine if we should compile it
+        if (fs.existsSync(path.join(destDir, "package.json"))) {
+          console.log(`Compiling sub-app ${slug}...`);
+          const { execSync } = await import("child_process");
+          execSync("npm install", { cwd: destDir, stdio: "inherit" });
+          execSync("npm run build", { cwd: destDir, stdio: "inherit" });
+
+          const distPath = path.join(destDir, "dist");
+          if (fs.existsSync(distPath)) {
+            // Relocate built static assets
+            const tempDist = path.join(EXTRACTED_DIR, "temp-build");
+            if (fs.existsSync(tempDist)) {
+              fs.rmSync(tempDist, { recursive: true, force: true });
+            }
+            fs.mkdirSync(tempDist, { recursive: true });
+            copyDirRecursive(distPath, tempDist);
+            
+            // Clear entire destDir to place only compiled output
+            fs.rmSync(destDir, { recursive: true, force: true });
+            fs.mkdirSync(destDir, { recursive: true });
+            
+            // Restore from temp
+            copyDirRecursive(tempDist, destDir);
+            
+            // Cleanup temp
+            fs.rmSync(tempDist, { recursive: true, force: true });
+            console.log(`Directory app ${slug} compiled successfully!`);
+          }
+        }
+      }
+
+      const relativeIndexPath = findIndexHtml(destDir);
+      if (relativeIndexPath) {
+        tempApps.push({
+          id: slug,
+          name: prettifyName(subDir),
+          archiveName: subDir,
+          entryPath: `apps/${slug}/${relativeIndexPath.replace(/\\/g, "/")}`,
+          type: "zip",
+          size: 0
+        });
+        console.log(`Found directory-based app entry point: /apps/${slug}/${relativeIndexPath}`);
+      } else {
+        console.warn(`Could not find index.html for directory app: ${slug}`);
+      }
+    } catch (err) {
+      console.error(`Failed to process directory app ${subDir}:`, err);
+    }
+  }
+
+  // Always inject the custom "Meu Casamento" app pointing to /indexcasamento.html
+  tempApps.push({
+    id: "meu-casamento",
+    name: "Meu Casamento",
+    archiveName: "indexcasamento.html",
+    entryPath: "indexcasamento.html",
+    type: "zip",
+    size: 0
+  });
+
   discoveredApps = tempApps;
   try {
     fs.writeFileSync(path.join(PUBLIC_DIR, "apps.json"), JSON.stringify(discoveredApps, null, 2));
@@ -177,6 +291,11 @@ async function extractAllArchives() {
 async function startServer() {
   // Extract all user archives first
   await extractAllArchives();
+
+  // Serve indexcasamento.html directly from the root of the project
+  app.get("/indexcasamento.html", (req, res) => {
+    res.sendFile(path.join(process.cwd(), "indexcasamento.html"));
+  });
 
   // API endpoints
   app.get("/api/apps", (req, res) => {

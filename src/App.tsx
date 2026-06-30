@@ -48,10 +48,50 @@ import {
 import { AppSimulator } from "./components/AppSimulator";
 import { SolutionDetails } from "./components/SolutionDetails";
 
+const categoryStamps = [
+  {
+    id: "Saúde",
+    name: "Saúde",
+    icon: Stethoscope,
+    ideas: "Prontuário eletrônico offline, agendamento interativo de consultas médicas, controle de escalas de plantão de secretários e médicos parceiros, visualização rápida de especialidades e anamnese."
+  },
+  {
+    id: "Igreja",
+    name: "Igreja",
+    icon: Church,
+    ideas: "Estudos bíblicos estruturados, controle de reuniões de pequenos grupos ou células, pedidos de oração em tempo real, mural administrativo de avisos e distribuição de devocionais offline."
+  },
+  {
+    id: "Financeiro",
+    name: "Financeiro",
+    icon: LineChart,
+    ideas: "Fluxo de caixa preditivo, controle mensal de cofrinho, planos de investimento em fases com metas, faturamento recorrente, comparação inteligente de orçamentos e cotações por categorias de gastos."
+  },
+  {
+    id: "Evento",
+    name: "Evento",
+    icon: Ticket,
+    ideas: "Leitura rápida de QR Code de ingressos para credenciamento offline, validação instantânea na portaria, controle interativo de presença e RSVP, exportação de lista de convidados em tempo real."
+  },
+  {
+    id: "Educação",
+    name: "Educação",
+    icon: BookOpen,
+    ideas: "Acompanhamento pedagógico, agendas escolares compartilhadas, controle offline de presenças em salas de aula, entrega rápida de tarefas com fotos ou arquivos anexos."
+  },
+  {
+    id: "Empresa",
+    name: "Empresa",
+    icon: Building,
+    ideas: "Portal corporativo de vistorias com checklists de campo e fotos, ordens de serviço geolocalizadas em tempo real, acompanhamento do progresso de equipes externas offline."
+  }
+];
+
 export default function App() {
   // Navigation states
   const [activeTab, setActiveTab] = useState<"home" | "solutions" | "portfolio">("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>("Financeiro");
   
   // Real Apps loaded from disk
   const [apps, setApps] = useState<AppItem[]>([]);
@@ -139,6 +179,10 @@ export default function App() {
     setActiveSimulatorProject(project);
     scrollToTop();
   };
+
+  const filteredProjects = mockPortfolioProjects.filter(
+    (proj) => proj.category === selectedCategory
+  );
 
   return (
     <div id="suite-hub-root" className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-sky-500 selection:text-white overflow-x-hidden relative">
@@ -770,74 +814,149 @@ export default function App() {
                       Laboratório Interativo de Demos
                     </div>
                     <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-                      Nosso Portfólio de Demonstrações Ativas
+                      Explore Nossos Aplicativos por Verticais
                     </h2>
                     <p className="text-slate-400 text-sm max-w-4xl leading-relaxed">
-                      Toque em **Experimentar Demonstração** em qualquer um dos projetos abaixo para abrir um simulador completo no navegador! Você poderá clicar pelas telas reais, agendar consultas simuladas, ver códigos Pix dinâmicos e muito mais.
+                      Selecione um selo para visualizar nossas soluções. Toque em <strong className="text-sky-400">Experimentar Demonstração</strong> no aplicativo para abrir um simulador completo e interativo no seu navegador.
                     </p>
                   </header>
 
-                  {/* Grid of Projects */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {mockPortfolioProjects.map((proj) => (
-                      <div 
-                        key={proj.id} 
-                        className="group bg-slate-900/30 hover:bg-slate-900/60 border border-slate-850 hover:border-sky-500/30 rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300"
-                      >
-                        {/* Picture area */}
-                        <div className="relative h-44 overflow-hidden border-b border-slate-950">
-                          <img 
-                            src={proj.image} 
-                            alt={proj.name} 
-                            referrerPolicy="no-referrer"
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          />
-                          <span className="absolute top-3 left-3 px-2 py-0.5 bg-slate-950/90 border border-slate-800 rounded-md text-[9px] font-bold text-sky-400 uppercase">
-                            {proj.category}
-                          </span>
-                        </div>
-
-                        {/* Text details */}
-                        <div className="p-5 flex-1 flex flex-col justify-between space-y-6">
-                          <div className="space-y-2">
-                            <h4 className="text-base font-bold text-white group-hover:text-sky-400 transition-colors">
-                              {proj.name}
-                            </h4>
-                            <p className="text-xs text-slate-400 leading-relaxed line-clamp-3">
-                              {proj.description}
-                            </p>
+                  {/* Category Stamps Grid */}
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    {categoryStamps.map((stamp) => {
+                      const IconComponent = stamp.icon;
+                      const isSelected = selectedCategory === stamp.id;
+                      return (
+                        <button
+                          key={stamp.id}
+                          onClick={() => setSelectedCategory(stamp.id)}
+                          className={`flex flex-col items-center justify-center p-5 rounded-2xl border transition-all duration-300 text-center gap-3 group relative cursor-pointer ${
+                            isSelected
+                              ? "bg-sky-500/10 border-sky-500 text-white shadow-[0_0_20px_rgba(14,165,233,0.15)]"
+                              : "bg-slate-900/30 border-slate-850 hover:border-slate-700 text-slate-400 hover:text-white"
+                          }`}
+                        >
+                          <div className={`p-3 rounded-xl border transition-all ${
+                            isSelected
+                              ? "bg-sky-500/20 border-sky-400/30 text-sky-400 scale-110"
+                              : "bg-slate-950 border-slate-900 text-slate-500 group-hover:text-slate-300"
+                          }`}>
+                            <IconComponent className="w-6 h-6" />
                           </div>
-
-                          {/* Features bullets inside cards */}
-                          <div className="space-y-2">
-                            <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wide">Recursos Inclusos:</span>
-                            <div className="flex flex-wrap gap-1.5">
-                              {proj.features.slice(0, 3).map((f, i) => (
-                                <span key={i} className="px-2 py-0.5 bg-slate-950 rounded text-[9px] text-slate-300 border border-slate-900">
-                                  {f}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-
-                          <div className="pt-2 border-t border-slate-900/60 flex items-center justify-between text-xs gap-4">
-                            <div className="flex flex-wrap gap-1 shrink-0">
-                              {proj.tech.slice(0, 2).map((t, idx) => (
-                                <span key={idx} className="text-[8px] font-mono text-slate-500">#{t}</span>
-                              ))}
-                            </div>
-                            
-                            <button
-                              onClick={() => handleOpenDemo(proj)}
-                              className="px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white font-bold text-[10px] rounded-lg shadow-md transition-all shrink-0 cursor-pointer"
-                            >
-                              Experimentar Demonstração
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                          <span className="text-xs font-bold tracking-wide uppercase">{stamp.name}</span>
+                          
+                          {/* Selected indicator dot */}
+                          {isSelected && (
+                            <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5">
+                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-sky-500"></span>
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
                   </div>
+
+                  {/* Filtered Projects Grid or Empty State */}
+                  {filteredProjects.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
+                      {filteredProjects.map((proj) => (
+                        <div 
+                          key={proj.id} 
+                          className="group bg-slate-900/30 hover:bg-slate-900/60 border border-slate-850 hover:border-sky-500/30 rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300"
+                        >
+                          {/* Picture area */}
+                          <div className="relative h-44 overflow-hidden border-b border-slate-950">
+                            <img 
+                              src={proj.image} 
+                              alt={proj.name} 
+                              referrerPolicy="no-referrer"
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
+                            <span className="absolute top-3 left-3 px-2 py-0.5 bg-slate-950/90 border border-slate-800 rounded-md text-[9px] font-bold text-sky-400 uppercase">
+                              {proj.category}
+                            </span>
+                          </div>
+
+                          {/* Text details */}
+                          <div className="p-5 flex-1 flex flex-col justify-between space-y-6">
+                            <div className="space-y-2">
+                              <h4 className="text-base font-bold text-white group-hover:text-sky-400 transition-colors">
+                                {proj.name}
+                              </h4>
+                              <p className="text-xs text-slate-400 leading-relaxed line-clamp-3">
+                                {proj.description}
+                              </p>
+                            </div>
+
+                            {/* Features bullets inside cards */}
+                            <div className="space-y-2">
+                              <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wide">Recursos Inclusos:</span>
+                              <div className="flex flex-wrap gap-1.5">
+                                {proj.features.slice(0, 3).map((f, i) => (
+                                  <span key={i} className="px-2 py-0.5 bg-slate-950 rounded text-[9px] text-slate-300 border border-slate-900">
+                                    {f}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+
+                            <div className="pt-2 border-t border-slate-900/60 flex items-center justify-between text-xs gap-4">
+                              <div className="flex flex-wrap gap-1 shrink-0">
+                                {proj.tech.slice(0, 2).map((t, idx) => (
+                                  <span key={idx} className="text-[8px] font-mono text-slate-500">#{t}</span>
+                                ))}
+                              </div>
+                              
+                              <button
+                                onClick={() => handleOpenDemo(proj)}
+                                className="px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white font-bold text-[10px] rounded-lg shadow-md transition-all shrink-0 cursor-pointer"
+                              >
+                                Experimentar Demonstração
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    /* Beautiful Empty State / Vertical Information Card */
+                    <div className="bg-slate-900/20 border border-dashed border-slate-800/80 rounded-3xl p-8 md:p-12 text-center max-w-3xl mx-auto space-y-6">
+                      <div className="mx-auto w-16 h-16 rounded-full bg-slate-950 border border-slate-850 flex items-center justify-center text-slate-500 shadow-inner">
+                        {(() => {
+                          const activeStamp = categoryStamps.find(s => s.id === selectedCategory);
+                          const ActiveIcon = activeStamp ? activeStamp.icon : Sparkles;
+                          return <ActiveIcon className="w-7 h-7 text-sky-400" />;
+                        })()}
+                      </div>
+                      <div className="space-y-2">
+                        <h3 className="text-lg font-bold text-white">Aplicativo {categoryStamps.find(s => s.id === selectedCategory)?.name} Sob Medida</h3>
+                        <p className="text-sm text-slate-400 max-w-lg mx-auto leading-relaxed">
+                          Não possuímos uma demonstração genérica ativa no laboratório para esta vertical neste exato momento, mas criamos soluções de alta fidelidade integradas com Firebase/Firestore 100% personalizadas.
+                        </p>
+                      </div>
+
+                      {/* Displaying target ideas */}
+                      <div className="bg-slate-950/60 border border-slate-900 rounded-2xl p-5 text-left max-w-xl mx-auto space-y-3">
+                        <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">O que desenvolvemos nesta vertical:</span>
+                        <p className="text-xs text-slate-300 leading-relaxed font-sans">
+                          {categoryStamps.find(s => s.id === selectedCategory)?.ideas}
+                        </p>
+                      </div>
+
+                      <div className="pt-2">
+                        <a
+                          href="https://wa.me/5551989445103"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-2 px-5 py-2.5 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-sky-600/15 transition-all cursor-pointer"
+                        >
+                          <MessageCircle className="w-4 h-4" />
+                          Fale Conosco no WhatsApp
+                        </a>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Zipped static files fallback info banner */}
                   {apps.length > 0 && (

@@ -1,0 +1,8 @@
+{
+  "name": "8ª Convenção de Quartetos",
+  "description": "Protótipo de alta fidelidade e navegável para o aplicativo oficial da 8ª Convenção de Quartetos.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,1362 @@
+<!-- index.html — Meu Casamento (PWA offline, 1 valor por mês + aba de orçamentos)
+     Salve este arquivo junto com manifest.json e sw.js na mesma pasta.
+     (Opcional) Adicione icon-192.png e icon-512.png para o ícone do app. -->
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Meu Casamento</title>
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#e91e63">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <style>
+    :root{
+      --bg:#fff7f8;
+      --card:#ffffff;
+      --muted:#6b5a5e;
+      --text:#2b1b20;
+      --line:#f0d7de;
+
+      --accent:#c2185b;
+      --warn:#b26a00;
+      --bad:#c62828;
+      --good:#2e7d32;
+
+      --chip:#fff1f4;
+      --shadow: 0 10px 30px rgba(40, 10, 20, .10);
+      --radius: 18px;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background: radial-gradient(1200px 800px at 10% 0%, #ffe3ea 0%, var(--bg) 55%);
+      color:var(--text);
+    }
+
+    .wrap{max-width:1120px;margin:0 auto;padding:18px}
+
+    header{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:10px 0 14px;
+      flex-wrap:wrap;
+    }
+
+    .brand{
+      display:flex;align-items:center;gap:10px;
+    }
+
+    .logo{
+      width:40px;height:40px;border-radius:12px;
+      background: linear-gradient(135deg, #e91e63, #c2185b);
+      box-shadow: 0 10px 25px rgba(233,30,99,.18);
+      display:grid;place-items:center;
+      font-weight:800;
+      color:#fff;
+    }
+
+    h1{font-size:18px;margin:0}
+    .sub{color:var(--muted);font-size:12px;margin-top:2px}
+    .btns{display:flex;gap:10px;flex-wrap:wrap}
+
+    button, .btn, select{
+      border:1px solid var(--line);
+      background: #ffffff;
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      transition:.15s ease;
+      font-weight:650;
+    }
+
+    button:hover{transform:translateY(-1px);border-color:#e9b7c5}
+
+    button.primary{
+      background: linear-gradient(135deg, #c2185b, #e91e63);
+      border-color: transparent;
+      color:#fff;
+    }
+
+    button.danger{
+      background:#fff3f4;
+      border-color:#f2c3cc;
+    }
+
+    button.ghost{background:transparent}
+
+    .tabs{
+      display:flex;
+      gap:10px;
+      margin:8px 0 14px;
+      flex-wrap:wrap;
+    }
+
+    .tab-btn.active{
+      background: linear-gradient(135deg, #c2185b, #e91e63);
+      color:#fff;
+      border-color: transparent;
+    }
+
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+
+    @media (max-width: 900px){
+      .grid,.grid-2{grid-template-columns:1fr}
+    }
+
+    .card{
+      background: var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow: var(--shadow);
+      padding:14px;
+    }
+
+    .card h2{margin:0 0 10px;font-size:14px;color:#3b2229;letter-spacing:.2px}
+
+    .kpis{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+    }
+
+    .kpis-4{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:10px;
+    }
+
+    @media (max-width: 700px){
+      .kpis,.kpis-4{grid-template-columns:1fr}
+    }
+
+    .kpi{
+      background: #fffafb;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px;
+    }
+
+    .kpi .label{color:var(--muted);font-size:12px}
+    .kpi .value{font-size:20px;font-weight:800;margin-top:6px}
+
+    .row{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+      margin-top:10px;
+      padding-top:10px;border-top:1px solid var(--line);
+    }
+
+    .chip{
+      background: var(--chip);
+      border:1px solid var(--line);
+      color: var(--text);
+      padding:8px 10px;border-radius:999px;
+      font-size:12px;
+      display:inline-flex;gap:8px;align-items:center;
+    }
+
+    .dot{width:9px;height:9px;border-radius:99px;background:var(--good)}
+    .dot.warn{background:var(--warn)}
+    .dot.bad{background:var(--bad)}
+    .statusText{font-weight:750}
+    .small{color:var(--muted);font-size:12px}
+
+    .split{
+      display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;
+    }
+
+    .field{
+      flex:1;
+      min-width:160px;
+    }
+
+    label{display:block;color:var(--muted);font-size:12px;margin:8px 0 6px}
+
+    input, textarea, select{
+      width:100%;
+      padding:11px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:#ffffff;
+      color:var(--text);
+      outline:none;
+      font-weight:650;
+      font-family: inherit;
+      font-size:14px;
+    }
+
+    input:focus, textarea:focus, select:focus{border-color:#e9b7c5}
+
+    .tableWrap{overflow:auto;border-radius:16px;border:1px solid var(--line)}
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:520px;
+      background: #fffafb;
+    }
+
+    th, td{
+      padding:10px 10px;
+      border-bottom:1px solid var(--line);
+      text-align:left;
+      font-size:13px;
+      vertical-align:top;
+    }
+
+    th{color:#3b2229;font-weight:800;background: #fff1f4}
+    td .m{color:#2b1b20;font-weight:750}
+    td .y{color:var(--muted);font-size:12px}
+
+    td input, td select{
+      width:100%;
+      min-width:110px;
+      padding:9px 10px;
+      border-radius:12px;
+    }
+
+    .footerActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+
+    .modal{
+      position:fixed;inset:0;background:rgba(40,10,20,.35);
+      display:none;align-items:center;justify-content:center;
+      padding:16px;
+      z-index:50;
+    }
+
+    .modal.open{display:flex}
+
+    .modal .panel{
+      width:min(760px, 100%);
+      background: #ffffff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow: var(--shadow);
+      padding:14px;
+    }
+
+    .modal header{padding:0 0 10px}
+
+    .twoCols{
+      display:grid;grid-template-columns: 1fr 1fr;gap:12px;
+    }
+
+    @media (max-width: 700px){ .twoCols{grid-template-columns:1fr} }
+
+    textarea{
+      min-height:160px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size:12px;
+    }
+
+    .hint{color:var(--muted);font-size:12px;margin-top:6px}
+
+    .pill{
+      padding:8px 10px;border-radius:999px;border:1px solid var(--line);
+      background:#fffafb;color:#3b2229;font-size:12px;font-weight:750;
+    }
+
+    .inline-fields{
+      display:grid;
+      grid-template-columns: 1.1fr 1.1fr .8fr .8fr .8fr 1fr .8fr auto;
+      gap:10px;
+      align-items:end;
+    }
+
+    @media (max-width: 1000px){
+      .inline-fields{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    .budget-actions{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+    }
+
+    .muted-box{
+      padding:10px 12px;
+      background:#fffafb;
+      border:1px dashed var(--line);
+      border-radius:14px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .text-right{text-align:right}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">MC</div>
+        <div>
+          <h1>Meu Casamento</h1>
+          <div class="sub">Controle mensal do cofrinho + orçamentos do casamento</div>
+        </div>
+      </div>
+      <div class="btns">
+        <button class="ghost" id="btnConfig">Configurações</button>
+        <button class="ghost" id="btnBackup">Backup</button>
+        <button class="danger" id="btnReset" title="Zera todos os lançamentos mensais e orçamentos (mantém config)">Reset</button>
+      </div>
+    </header>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="tabCofrinho">Cofrinho</button>
+      <button class="tab-btn" data-tab="tabOrcamentos">Orçamentos</button>
+    </div>
+
+    <!-- ABA COFRINHO -->
+    <section id="tabCofrinho" class="tab-panel active">
+      <div class="grid">
+        <section class="card">
+          <h2>Painel</h2>
+
+          <div class="kpis">
+            <div class="kpi">
+              <div class="label">Meta total</div>
+              <div class="value" id="kGoal">R$ 0</div>
+              <div class="small" id="kGoalHint"></div>
+            </div>
+            <div class="kpi">
+              <div class="label">Total acumulado</div>
+              <div class="value" id="kTotal">R$ 0</div>
+              <div class="small">inclui valor inicial</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Falta</div>
+              <div class="value" id="kRemaining">R$ 0</div>
+              <div class="small" id="kMonthsLeft">—</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="chip">
+              <span class="dot" id="statusDot"></span>
+              <span class="statusText" id="statusText">—</span>
+            </div>
+            <div class="chip">
+              <span class="pill" id="avgNeeded">Média necessária: —</span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="small" id="expectedLine">Esperado até agora: —</div>
+            <div class="small" id="deltaLine">Diferença: —</div>
+          </div>
+
+          <div class="row">
+            <div class="small" id="catchupLine">—</div>
+            <div class="small">Dica: mantenham o teto em <b>120 convidados</b> e controlem a alimentação.</div>
+          </div>
+        </section>
+
+        <aside class="card">
+          <h2>Plano em 2 fases</h2>
+          <div class="small">
+            <div>Fase 1: <b id="cfgStartLabel">—</b> até <b>Dez/2026</b> • alvo <b id="cfgRate1Label">—</b>/mês</div>
+            <div style="margin-top:6px;">Fase 2: <b>Jan/2027</b> até <b id="cfgWeddingLabel">—</b> • alvo <b id="cfgRate2Label">—</b>/mês</div>
+            <div style="margin-top:10px;" class="hint">
+              Regra do app: 1 valor por mês. Se errar, edite o mês.
+            </div>
+          </div>
+
+          <div class="footerActions">
+            <button class="primary" id="btnGoThisMonth">Ir para mês atual</button>
+            <button class="ghost" id="btnFillZeros">Preencher vazios com 0</button>
+          </div>
+        </aside>
+      </div>
+
+      <section class="card" style="margin-top:14px;">
+        <h2>Registro mensal (1 valor por mês)</h2>
+        <div class="tableWrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Mês</th>
+                <th>Valor lançado</th>
+                <th>Atalho</th>
+              </tr>
+            </thead>
+            <tbody id="monthsTbody"></tbody>
+          </table>
+        </div>
+        <div class="footerActions">
+          <button class="primary" id="btnSaveAll">Salvar tudo</button>
+          <button class="ghost" id="btnClearMonth">Zerar mês selecionado</button>
+        </div>
+        <div class="hint">Sugestão: todo dia 5 do mês, vocês abrem juntos, lançam o valor e olham o status.</div>
+      </section>
+    </section>
+
+    <!-- ABA ORÇAMENTOS -->
+    <section id="tabOrcamentos" class="tab-panel">
+      <div class="grid-2">
+        <section class="card">
+          <h2>Novo orçamento</h2>
+
+          <div class="inline-fields">
+            <div>
+              <label>Categoria</label>
+              <select id="budgetCategory">
+                <option>Alimentação</option>
+                <option>Bebida</option>
+                <option>Vestido</option>
+                <option>Traje do noivo</option>
+                <option>Fotografia</option>
+                <option>Filmagem</option>
+                <option>Decoração</option>
+                <option>Local</option>
+                <option>Cerimonialista</option>
+                <option>Doces</option>
+                <option>Bolo</option>
+                <option>Som / música</option>
+                <option>Convites</option>
+                <option>Lembrancinhas</option>
+                <option>Hospedagem</option>
+                <option>Transporte</option>
+                <option>Outro</option>
+              </select>
+            </div>
+
+            <div>
+              <label>Fornecedor / empresa</label>
+              <input type="text" id="budgetVendor" placeholder="Ex.: Buffet Esperança" />
+            </div>
+
+            <div>
+              <label>Tipo</label>
+              <select id="budgetType">
+                <option value="per_person">Por pessoa</option>
+                <option value="fixed">Fixo</option>
+              </select>
+            </div>
+
+            <div>
+              <label>Valor base (R$)</label>
+              <input type="number" id="budgetBaseValue" min="0" step="0.01" placeholder="49.50" />
+            </div>
+
+            <div>
+              <label>Pessoas</label>
+              <input type="number" id="budgetPeople" min="0" step="1" placeholder="120" />
+            </div>
+
+            <div>
+              <label>Observações</label>
+              <input type="text" id="budgetNotes" placeholder="Inclui refri, 4h de cobertura..." />
+            </div>
+
+            <div>
+              <label>Total calculado</label>
+              <input type="text" id="budgetTotalPreview" value="R$ 0,00" readonly />
+            </div>
+
+            <div class="budget-actions">
+              <button class="primary" id="btnAddBudget">Adicionar</button>
+            </div>
+          </div>
+
+          <div class="hint">
+            Se for “por pessoa”, o app multiplica automaticamente. Se for “fixo”, usa o valor base como total.
+          </div>
+        </section>
+
+        <aside class="card">
+          <h2>Resumo dos orçamentos</h2>
+          <div class="kpis-4">
+            <div class="kpi">
+              <div class="label">Total de cotações</div>
+              <div class="value" id="bCount">0</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Total geral cotado</div>
+              <div class="value" id="bGrandTotal">R$ 0</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Mais barato</div>
+              <div class="value" id="bCheapest">R$ 0</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Mais caro</div>
+              <div class="value" id="bExpensive">R$ 0</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="small" id="bBestSummary">Melhores opções por categoria: —</div>
+          </div>
+          <div class="row">
+            <div class="small" id="bCompareToGoal">Comparação com a meta: —</div>
+          </div>
+        </aside>
+      </div>
+
+      <section class="card" style="margin-top:14px;">
+        <h2>Lista de orçamentos</h2>
+        <div class="tableWrap">
+          <table style="min-width:1080px;">
+            <thead>
+              <tr>
+                <th>Categoria</th>
+                <th>Fornecedor</th>
+                <th>Tipo</th>
+                <th>Valor base</th>
+                <th>Pessoas</th>
+                <th>Total</th>
+                <th>Observações</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="budgetsTbody"></tbody>
+          </table>
+        </div>
+        <div class="footerActions">
+          <button class="ghost" id="btnSeedBudgets">Exemplo rápido</button>
+          <button class="ghost" id="btnClearBudgets">Apagar todos os orçamentos</button>
+        </div>
+        <div class="hint">Use esta aba para comparar empresas, valores estimados e o peso real de cada escolha.</div>
+      </section>
+
+      <section class="card" style="margin-top:14px;">
+        <h2>Melhor cotação por categoria</h2>
+        <div id="bestByCategoryBox" class="muted-box">Nenhuma cotação ainda.</div>
+      </section>
+    </section>
+  </div>
+
+  <!-- MODAL CONFIG -->
+  <div class="modal" id="modalConfig" aria-hidden="true">
+    <div class="panel">
+      <header>
+        <div>
+          <h1 style="margin:0;font-size:16px;">Configurações</h1>
+          <div class="sub">Ajuste só o necessário. Quanto mais simples, mais vocês executam.</div>
+        </div>
+        <div class="btns">
+          <button class="ghost" id="btnCloseConfig">Fechar</button>
+          <button class="primary" id="btnSaveConfig">Salvar</button>
+        </div>
+      </header>
+
+      <div class="twoCols">
+        <div>
+          <label>Meta total (R$)</label>
+          <input type="number" id="cfgGoal" min="0" step="1" />
+        </div>
+        <div>
+          <label>Valor inicial já guardado (R$)</label>
+          <input type="number" id="cfgInitial" min="0" step="1" />
+        </div>
+
+        <div>
+          <label>Início do plano (YYYY-MM)</label>
+          <input type="month" id="cfgStart" />
+        </div>
+        <div>
+          <label>Mês do casamento (YYYY-MM)</label>
+          <input type="month" id="cfgWedding" />
+        </div>
+
+        <div>
+          <label>Alvo mensal 2026 (Fase 1) – R$</label>
+          <input type="number" id="cfgRate1" min="0" step="1" />
+        </div>
+        <div>
+          <label>Alvo mensal 2027+ (Fase 2) – R$</label>
+          <input type="number" id="cfgRate2" min="0" step="1" />
+        </div>
+
+        <div>
+          <label>Margem amarela (ex.: 90 = 90%)</label>
+          <input type="number" id="cfgYellowPct" min="1" max="100" step="1" />
+          <div class="hint">Abaixo disso vira vermelho.</div>
+        </div>
+        <div>
+          <label>Convidados (apenas lembrete)</label>
+          <input type="number" id="cfgGuests" min="0" step="1" />
+        </div>
+      </div>
+
+      <div class="hint">Dica de empacotamento: mantenha o <b>manifest.json</b> e o <b>sw.js</b> junto do index.html para instalar como app.</div>
+    </div>
+  </div>
+
+  <!-- MODAL BACKUP -->
+  <div class="modal" id="modalBackup" aria-hidden="true">
+    <div class="panel">
+      <header>
+        <div>
+          <h1 style="margin:0;font-size:16px;">Backup (Exportar / Importar)</h1>
+          <div class="sub">Copie e cole o JSON. Isso garante que vocês não percam nada.</div>
+        </div>
+        <div class="btns">
+          <button class="ghost" id="btnCloseBackup">Fechar</button>
+          <button class="primary" id="btnDoExport">Exportar</button>
+          <button class="danger" id="btnDoImport">Importar</button>
+        </div>
+      </header>
+
+      <label>JSON</label>
+      <textarea id="backupText" spellcheck="false"></textarea>
+      <div class="hint">Importar substitui dados atuais. Faça export antes por segurança.</div>
+    </div>
+  </div>
+
+<script>
+(() => {
+  const STORAGE_KEY = "meu_casamento_v2";
+
+  const DEFAULTS = {
+    config: {
+      goal: 12000,
+      initial: 1068,
+      start: "2026-03",
+      wedding: "2028-01",
+      rate1: 400,
+      rate2: 600,
+      yellowPct: 90,
+      guests: 120
+    },
+    entries: {},
+    budgets: []
+  };
+
+  const pad2 = n => String(n).padStart(2, "0");
+
+  const money = (v) => {
+    const n = Number(v || 0);
+    return n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
+  };
+
+  const moneyInputToNumber = (v) => {
+    const n = Number(String(v).replace(",", "."));
+    return Number.isFinite(n) ? n : 0;
+  };
+
+  const ymToDate = (ym) => {
+    const [y,m] = ym.split("-").map(Number);
+    return new Date(y, m - 1, 1);
+  };
+
+  const dateToYM = (d) => `${d.getFullYear()}-${pad2(d.getMonth()+1)}`;
+
+  const addMonths = (ym, delta) => {
+    const d = ymToDate(ym);
+    d.setMonth(d.getMonth() + delta);
+    return dateToYM(d);
+  };
+
+  const cmpYM = (a,b) => (a === b) ? 0 : (a < b ? -1 : 1);
+
+  const monthLabel = (ym) => {
+    const d = ymToDate(ym);
+    const fmt = d.toLocaleDateString("pt-BR", { month:"short", year:"2-digit" });
+    return fmt.replace(".", "").toUpperCase();
+  };
+
+  const safeInt = (x) => {
+    const n = Number(x);
+    return Number.isFinite(n) ? Math.max(0, Math.round(n)) : 0;
+  };
+
+  const uid = () => Math.random().toString(36).slice(2,10);
+
+  let state = loadState();
+
+  function loadState(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return structuredClone(DEFAULTS);
+      const parsed = JSON.parse(raw);
+      const merged = structuredClone(DEFAULTS);
+      merged.config = { ...merged.config, ...(parsed.config || {}) };
+      merged.entries = { ...(parsed.entries || {}) };
+      merged.budgets = Array.isArray(parsed.budgets) ? parsed.budgets : [];
+      return merged;
+    }catch{
+      return structuredClone(DEFAULTS);
+    }
+  }
+
+  function saveState(){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  const el = (id) => document.getElementById(id);
+
+  const kGoal = el("kGoal");
+  const kGoalHint = el("kGoalHint");
+  const kTotal = el("kTotal");
+  const kRemaining = el("kRemaining");
+  const kMonthsLeft = el("kMonthsLeft");
+  const statusDot = el("statusDot");
+  const statusText = el("statusText");
+  const avgNeeded = el("avgNeeded");
+  const expectedLine = el("expectedLine");
+  const deltaLine = el("deltaLine");
+  const catchupLine = el("catchupLine");
+
+  const monthsTbody = el("monthsTbody");
+  const budgetsTbody = el("budgetsTbody");
+
+  const cfgStartLabel = el("cfgStartLabel");
+  const cfgWeddingLabel = el("cfgWeddingLabel");
+  const cfgRate1Label = el("cfgRate1Label");
+  const cfgRate2Label = el("cfgRate2Label");
+
+  const modalConfig = el("modalConfig");
+  const modalBackup = el("modalBackup");
+
+  const cfgGoal = el("cfgGoal");
+  const cfgInitial = el("cfgInitial");
+  const cfgStart = el("cfgStart");
+  const cfgWedding = el("cfgWedding");
+  const cfgRate1 = el("cfgRate1");
+  const cfgRate2 = el("cfgRate2");
+  const cfgYellowPct = el("cfgYellowPct");
+  const cfgGuests = el("cfgGuests");
+  const backupText = el("backupText");
+
+  const budgetCategory = el("budgetCategory");
+  const budgetVendor = el("budgetVendor");
+  const budgetType = el("budgetType");
+  const budgetBaseValue = el("budgetBaseValue");
+  const budgetPeople = el("budgetPeople");
+  const budgetNotes = el("budgetNotes");
+  const budgetTotalPreview = el("budgetTotalPreview");
+
+  const bCount = el("bCount");
+  const bGrandTotal = el("bGrandTotal");
+  const bCheapest = el("bCheapest");
+  const bExpensive = el("bExpensive");
+  const bBestSummary = el("bBestSummary");
+  const bCompareToGoal = el("bCompareToGoal");
+  const bestByCategoryBox = el("bestByCategoryBox");
+
+  let selectedYM = null;
+
+  function listMonthsInclusive(startYM, endYM){
+    if(cmpYM(startYM, endYM) > 0) return [];
+    const out = [];
+    let cur = startYM;
+    while(cmpYM(cur, endYM) <= 0){
+      out.push(cur);
+      cur = addMonths(cur, 1);
+    }
+    return out;
+  }
+
+  function monthlyTargetFor(ym){
+    const year = Number(ym.slice(0,4));
+    return (year === 2026) ? state.config.rate1 : state.config.rate2;
+  }
+
+  function sumEntries(){
+    let s = 0;
+    for(const [, val] of Object.entries(state.entries)){
+      s += safeInt(val);
+    }
+    return s;
+  }
+
+  function totalAccumulated(){
+    return safeInt(state.config.initial) + sumEntries();
+  }
+
+  function expectedUntil(ymNow){
+    const start = state.config.start;
+    const end = state.config.wedding;
+    const stop = (cmpYM(ymNow, end) > 0) ? end : ymNow;
+    if(cmpYM(stop, start) < 0) return safeInt(state.config.initial);
+
+    const months = listMonthsInclusive(start, stop);
+    let expectedAdds = 0;
+    for(const ym of months){
+      expectedAdds += monthlyTargetFor(ym);
+    }
+    return safeInt(state.config.initial) + expectedAdds;
+  }
+
+  function monthsRemaining(fromYM){
+    const end = state.config.wedding;
+    if(cmpYM(fromYM, end) > 0) return 0;
+    return listMonthsInclusive(fromYM, end).length;
+  }
+
+  function budgetTotal(item){
+    const baseValue = Number(item.baseValue || 0);
+    const people = Number(item.people || 0);
+    if(item.pricingType === "per_person"){
+      return baseValue * people;
+    }
+    return baseValue;
+  }
+
+  function bestByCategory(){
+    const map = {};
+    state.budgets.forEach(item => {
+      const total = budgetTotal(item);
+      if(!map[item.category] || total < map[item.category].total){
+        map[item.category] = {
+          vendor: item.vendor,
+          total,
+          notes: item.notes || ""
+        };
+      }
+    });
+    return map;
+  }
+
+  function recompute(){
+    const cfg = state.config;
+
+    cfgStartLabel.textContent = monthLabel(cfg.start);
+    cfgWeddingLabel.textContent = monthLabel(cfg.wedding);
+    cfgRate1Label.textContent = money(cfg.rate1);
+    cfgRate2Label.textContent = money(cfg.rate2);
+
+    const nowYM = dateToYM(new Date());
+    const total = totalAccumulated();
+    const goal = safeInt(cfg.goal);
+    const remaining = Math.max(0, goal - total);
+    const mLeft = monthsRemaining(nowYM);
+    const avg = (mLeft > 0) ? Math.ceil(remaining / mLeft) : remaining;
+
+    kGoal.textContent = money(goal);
+    kGoalHint.textContent = `Convidados (lembrete): ${safeInt(cfg.guests)}`;
+    kTotal.textContent = money(total);
+    kRemaining.textContent = money(remaining);
+    kMonthsLeft.textContent = `Meses restantes: ${mLeft}`;
+    avgNeeded.textContent = `Média necessária: ${money(avg)}/mês`;
+
+    const exp = expectedUntil(nowYM);
+    const delta = total - exp;
+    expectedLine.textContent = `Esperado até agora: ${money(exp)}`;
+    deltaLine.textContent = `Diferença: ${delta >= 0 ? "+" : ""}${money(delta)}`;
+
+    const yellowThreshold = Math.floor((cfg.yellowPct / 100) * exp);
+    let level = "good";
+    if(total < yellowThreshold) level = "bad";
+    else if(total < exp) level = "warn";
+
+    statusDot.classList.remove("warn","bad");
+    if(level === "warn") statusDot.classList.add("warn");
+    if(level === "bad") statusDot.classList.add("bad");
+
+    if(level === "good"){
+      statusText.textContent = `Acima do plano`;
+      catchupLine.textContent = `✔️ Mantém. Se quiserem, acumulem folga para imprevistos do buffet.`;
+    } else if(level === "warn"){
+      statusText.textContent = `No limite`;
+      const deficit = Math.max(0, exp - total);
+      const extra = (mLeft > 0) ? Math.ceil(deficit / mLeft) : deficit;
+      catchupLine.textContent = `⚠️ Abaixo por ${money(deficit)}. Para recuperar: +${money(extra)}/mês até ${monthLabel(cfg.wedding)}.`;
+    } else {
+      statusText.textContent = `Abaixo do plano`;
+      const deficit = Math.max(0, exp - total);
+      const extra = (mLeft > 0) ? Math.ceil(deficit / mLeft) : deficit;
+      catchupLine.textContent = `❌ Abaixo por ${money(deficit)}. Para recuperar: +${money(extra)}/mês até ${monthLabel(cfg.wedding)}.`;
+    }
+
+    recomputeBudgets();
+  }
+
+  function recomputeBudgetPreview(){
+    const type = budgetType.value;
+    const baseValue = moneyInputToNumber(budgetBaseValue.value);
+    const people = safeInt(budgetPeople.value || state.config.guests);
+    const total = type === "per_person" ? baseValue * people : baseValue;
+    budgetTotalPreview.value = money(total);
+  }
+
+  function recomputeBudgets(){
+    const items = state.budgets.map(item => budgetTotal(item));
+    const count = state.budgets.length;
+    const grandTotal = items.reduce((a,b) => a+b, 0);
+    const cheapest = count ? Math.min(...items) : 0;
+    const expensive = count ? Math.max(...items) : 0;
+
+    bCount.textContent = String(count);
+    bGrandTotal.textContent = money(grandTotal);
+    bCheapest.textContent = money(cheapest);
+    bExpensive.textContent = money(expensive);
+
+    const bestMap = bestByCategory();
+    const categories = Object.keys(bestMap);
+
+    if(!categories.length){
+      bBestSummary.textContent = "Melhores opções por categoria: —";
+      bestByCategoryBox.textContent = "Nenhuma cotação ainda.";
+    } else {
+      const bestTotal = categories.reduce((acc, cat) => acc + bestMap[cat].total, 0);
+      bBestSummary.textContent = `Melhores opções por categoria: ${money(bestTotal)}`;
+
+      const html = categories
+        .sort((a,b) => a.localeCompare(b, "pt-BR"))
+        .map(cat => {
+          const item = bestMap[cat];
+          const notes = item.notes ? ` • ${item.notes}` : "";
+          return `<div style="padding:8px 0;border-bottom:1px solid var(--line);">
+            <b>${cat}</b>: ${item.vendor || "Sem nome"} — ${money(item.total)}<span class="small">${notes}</span>
+          </div>`;
+        }).join("");
+
+      bestByCategoryBox.innerHTML = html;
+    }
+
+    const goal = safeInt(state.config.goal);
+    if(!categories.length){
+      bCompareToGoal.textContent = "Comparação com a meta: —";
+    } else {
+      const bestTotal = categories.reduce((acc, cat) => acc + bestMap[cat].total, 0);
+      const diff = bestTotal - goal;
+      if(diff > 0){
+        bCompareToGoal.textContent = `Melhor cenário atual está ${money(diff)} acima da meta.`;
+      } else if(diff < 0){
+        bCompareToGoal.textContent = `Melhor cenário atual está ${money(Math.abs(diff))} abaixo da meta.`;
+      } else {
+        bCompareToGoal.textContent = `Melhor cenário atual bate exatamente a meta.`;
+      }
+    }
+  }
+
+  function buildTable(){
+    const { start, wedding } = state.config;
+    const months = listMonthsInclusive(start, wedding);
+
+    monthsTbody.innerHTML = "";
+    const nowYM = dateToYM(new Date());
+
+    months.forEach((ym) => {
+      const tr = document.createElement("tr");
+
+      const tdMonth = document.createElement("td");
+      tdMonth.innerHTML = `<div class="m">${monthLabel(ym)}</div><div class="y">${ym}</div>`;
+
+      const tdVal = document.createElement("td");
+      const input = document.createElement("input");
+      input.type = "number";
+      input.min = "0";
+      input.step = "1";
+      input.value = (state.entries[ym] ?? "");
+      input.placeholder = "0";
+      input.dataset.ym = ym;
+
+      if(ym === nowYM){
+        input.style.borderColor = "#e91e63";
+        input.style.boxShadow = "0 0 0 3px rgba(233,30,99,.12)";
+      }
+
+      input.addEventListener("focus", () => selectedYM = ym);
+      tdVal.appendChild(input);
+
+      const tdAct = document.createElement("td");
+      const btn = document.createElement("button");
+      btn.textContent = "Selecionar";
+      btn.className = "ghost";
+      btn.addEventListener("click", () => {
+        selectedYM = ym;
+        [...monthsTbody.querySelectorAll("button")].forEach(b => b.textContent = "Selecionar");
+        btn.textContent = "Selecionado ✓";
+      });
+
+      tdAct.appendChild(btn);
+
+      tr.appendChild(tdMonth);
+      tr.appendChild(tdVal);
+      tr.appendChild(tdAct);
+
+      monthsTbody.appendChild(tr);
+    });
+  }
+
+  function buildBudgetsTable(){
+    budgetsTbody.innerHTML = "";
+
+    if(!state.budgets.length){
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td colspan="8" class="small">Nenhum orçamento cadastrado ainda.</td>`;
+      budgetsTbody.appendChild(tr);
+      return;
+    }
+
+    state.budgets.forEach((item) => {
+      const tr = document.createElement("tr");
+      const total = budgetTotal(item);
+
+      tr.innerHTML = `
+        <td>${item.category || ""}</td>
+        <td>${item.vendor || ""}</td>
+        <td>${item.pricingType === "per_person" ? "Por pessoa" : "Fixo"}</td>
+        <td>${money(item.baseValue || 0)}</td>
+        <td>${item.pricingType === "per_person" ? safeInt(item.people) : "—"}</td>
+        <td><b>${money(total)}</b></td>
+        <td>${item.notes || "—"}</td>
+        <td>
+          <div class="budget-actions">
+            <button class="ghost" data-edit-budget="${item.id}">Editar</button>
+            <button class="danger" data-del-budget="${item.id}">Excluir</button>
+          </div>
+        </td>
+      `;
+
+      budgetsTbody.appendChild(tr);
+    });
+
+    budgetsTbody.querySelectorAll("[data-del-budget]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-del-budget");
+        state.budgets = state.budgets.filter(item => item.id !== id);
+        saveState();
+        buildBudgetsTable();
+        recomputeBudgets();
+      });
+    });
+
+    budgetsTbody.querySelectorAll("[data-edit-budget]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-edit-budget");
+        const item = state.budgets.find(x => x.id === id);
+        if(!item) return;
+
+        budgetCategory.value = item.category || "Outro";
+        budgetVendor.value = item.vendor || "";
+        budgetType.value = item.pricingType || "fixed";
+        budgetBaseValue.value = item.baseValue ?? "";
+        budgetPeople.value = item.people ?? "";
+        budgetNotes.value = item.notes || "";
+        recomputeBudgetPreview();
+
+        state.budgets = state.budgets.filter(x => x.id !== id);
+        saveState();
+        buildBudgetsTable();
+        recomputeBudgets();
+
+        const panel = document.getElementById("tabOrcamentos");
+        panel.scrollIntoView({ behavior:"smooth", block:"start" });
+      });
+    });
+  }
+
+  function readInputsIntoState(){
+    const inputs = monthsTbody.querySelectorAll("input[data-ym]");
+    inputs.forEach(inp => {
+      const ym = inp.dataset.ym;
+      const v = inp.value.trim();
+      if(v === ""){
+        delete state.entries[ym];
+      } else {
+        state.entries[ym] = safeInt(v);
+      }
+    });
+  }
+
+  function openConfig(){
+    const c = state.config;
+    cfgGoal.value = c.goal;
+    cfgInitial.value = c.initial;
+    cfgStart.value = c.start;
+    cfgWedding.value = c.wedding;
+    cfgRate1.value = c.rate1;
+    cfgRate2.value = c.rate2;
+    cfgYellowPct.value = c.yellowPct;
+    cfgGuests.value = c.guests;
+
+    modalConfig.classList.add("open");
+    modalConfig.setAttribute("aria-hidden","false");
+  }
+
+  function closeConfig(){
+    modalConfig.classList.remove("open");
+    modalConfig.setAttribute("aria-hidden","true");
+  }
+
+  function saveConfig(){
+    const newCfg = {
+      goal: safeInt(cfgGoal.value),
+      initial: safeInt(cfgInitial.value),
+      start: cfgStart.value || state.config.start,
+      wedding: cfgWedding.value || state.config.wedding,
+      rate1: safeInt(cfgRate1.value),
+      rate2: safeInt(cfgRate2.value),
+      yellowPct: Math.max(1, Math.min(100, safeInt(cfgYellowPct.value) || 90)),
+      guests: safeInt(cfgGuests.value)
+    };
+
+    if(cmpYM(newCfg.start, newCfg.wedding) > 0){
+      alert("O início do plano não pode ser depois do mês do casamento.");
+      return;
+    }
+
+    state.config = newCfg;
+    saveState();
+    buildTable();
+    recompute();
+    recomputeBudgetPreview();
+    closeConfig();
+  }
+
+  function openBackup(){
+    backupText.value = "";
+    modalBackup.classList.add("open");
+    modalBackup.setAttribute("aria-hidden","false");
+  }
+
+  function closeBackup(){
+    modalBackup.classList.remove("open");
+    modalBackup.setAttribute("aria-hidden","true");
+  }
+
+  function doExport(){
+    const payload = JSON.stringify(state, null, 2);
+    backupText.value = payload;
+    backupText.focus();
+    backupText.select();
+    try{ document.execCommand("copy"); }catch{}
+  }
+
+  function doImport(){
+    const raw = backupText.value.trim();
+    if(!raw){
+      alert("Cole o JSON antes de importar.");
+      return;
+    }
+    try{
+      const parsed = JSON.parse(raw);
+      if(!parsed.config) throw new Error("JSON inválido");
+
+      const merged = structuredClone(DEFAULTS);
+      merged.config = { ...merged.config, ...(parsed.config || {}) };
+      merged.entries = { ...(parsed.entries || {}) };
+      merged.budgets = Array.isArray(parsed.budgets) ? parsed.budgets : [];
+
+      state = merged;
+      saveState();
+      buildTable();
+      buildBudgetsTable();
+      recompute();
+      recomputeBudgetPreview();
+      closeBackup();
+      alert("Importado com sucesso.");
+    }catch(e){
+      alert("Não consegui importar. Verifique se o JSON está correto.");
+    }
+  }
+
+  function addBudget(){
+    const category = budgetCategory.value;
+    const vendor = budgetVendor.value.trim();
+    const pricingType = budgetType.value;
+    const baseValue = moneyInputToNumber(budgetBaseValue.value);
+    const people = pricingType === "per_person"
+      ? safeInt(budgetPeople.value || state.config.guests)
+      : 0;
+    const notes = budgetNotes.value.trim();
+
+    if(!vendor){
+      alert("Informe o fornecedor / empresa.");
+      return;
+    }
+
+    if(baseValue <= 0){
+      alert("Informe um valor base válido.");
+      return;
+    }
+
+    if(pricingType === "per_person" && people <= 0){
+      alert("Informe a quantidade de pessoas.");
+      return;
+    }
+
+    state.budgets.push({
+      id: uid(),
+      category,
+      vendor,
+      pricingType,
+      baseValue,
+      people,
+      notes
+    });
+
+    saveState();
+    buildBudgetsTable();
+    recomputeBudgets();
+
+    budgetVendor.value = "";
+    budgetBaseValue.value = "";
+    budgetPeople.value = state.config.guests;
+    budgetNotes.value = "";
+    recomputeBudgetPreview();
+  }
+
+  function seedBudgets(){
+    if(state.budgets.length){
+      const ok = confirm("Já existem orçamentos salvos. Deseja adicionar exemplos mesmo assim?");
+      if(!ok) return;
+    }
+
+    state.budgets.push(
+      {
+        id: uid(),
+        category: "Alimentação",
+        vendor: "Buffet Esperança",
+        pricingType: "per_person",
+        baseValue: 49.5,
+        people: state.config.guests,
+        notes: "Inclui refrigerante"
+      },
+      {
+        id: uid(),
+        category: "Fotografia",
+        vendor: "João Fotos",
+        pricingType: "fixed",
+        baseValue: 1800,
+        people: 0,
+        notes: "4h de cobertura"
+      },
+      {
+        id: uid(),
+        category: "Vestido",
+        vendor: "Ateliê Rosa",
+        pricingType: "fixed",
+        baseValue: 950,
+        people: 0,
+        notes: "Aluguel simples"
+      }
+    );
+
+    saveState();
+    buildBudgetsTable();
+    recomputeBudgets();
+  }
+
+  function switchTab(tabId){
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.tab === tabId);
+    });
+
+    document.querySelectorAll(".tab-panel").forEach(panel => {
+      panel.classList.toggle("active", panel.id === tabId);
+    });
+  }
+
+  document.querySelectorAll(".tab-btn").forEach(btn => {
+    btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+  });
+
+  el("btnConfig").addEventListener("click", openConfig);
+  el("btnCloseConfig").addEventListener("click", closeConfig);
+  el("btnSaveConfig").addEventListener("click", saveConfig);
+
+  el("btnBackup").addEventListener("click", openBackup);
+  el("btnCloseBackup").addEventListener("click", closeBackup);
+  el("btnDoExport").addEventListener("click", doExport);
+  el("btnDoImport").addEventListener("click", doImport);
+
+  el("btnSaveAll").addEventListener("click", () => {
+    readInputsIntoState();
+    saveState();
+    recompute();
+    alert("Salvo!");
+  });
+
+  el("btnClearMonth").addEventListener("click", () => {
+    if(!selectedYM){
+      alert("Selecione um mês na tabela.");
+      return;
+    }
+    delete state.entries[selectedYM];
+    saveState();
+    buildTable();
+    recompute();
+  });
+
+  el("btnFillZeros").addEventListener("click", () => {
+    const months = listMonthsInclusive(state.config.start, state.config.wedding);
+    months.forEach(ym => {
+      if(state.entries[ym] === undefined) state.entries[ym] = 0;
+    });
+    saveState();
+    buildTable();
+    recompute();
+  });
+
+  el("btnGoThisMonth").addEventListener("click", () => {
+    const nowYM = dateToYM(new Date());
+    const input = monthsTbody.querySelector(`input[data-ym="${nowYM}"]`);
+    if(input){
+      input.scrollIntoView({ behavior:"smooth", block:"center" });
+      input.focus();
+    } else {
+      alert("O mês atual está fora do intervalo do plano. Ajuste o início/fim nas configurações.");
+    }
+  });
+
+  el("btnReset").addEventListener("click", () => {
+    const ok = confirm("Tem certeza? Isso zera TODOS os lançamentos mensais e TODOS os orçamentos (mantém configurações).");
+    if(!ok) return;
+    state.entries = {};
+    state.budgets = [];
+    saveState();
+    buildTable();
+    buildBudgetsTable();
+    recompute();
+  });
+
+  el("btnAddBudget").addEventListener("click", addBudget);
+  el("btnSeedBudgets").addEventListener("click", seedBudgets);
+  el("btnClearBudgets").addEventListener("click", () => {
+    const ok = confirm("Tem certeza? Isso apaga todos os orçamentos salvos.");
+    if(!ok) return;
+    state.budgets = [];
+    saveState();
+    buildBudgetsTable();
+    recomputeBudgets();
+  });
+
+  budgetType.addEventListener("change", recomputeBudgetPreview);
+  budgetBaseValue.addEventListener("input", recomputeBudgetPreview);
+  budgetPeople.addEventListener("input", recomputeBudgetPreview);
+
+  modalConfig.addEventListener("click", (e) => { if(e.target === modalConfig) closeConfig(); });
+  modalBackup.addEventListener("click", (e) => { if(e.target === modalBackup) closeBackup(); });
+
+  buildTable();
+  buildBudgetsTable();
+  recompute();
+  budgetPeople.value = state.config.guests;
+  recomputeBudgetPreview();
+
+  if("serviceWorker" in navigator){
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js").catch(() => {});
+    });
+  }
+})();
+</script>
+</body>
+</html>
