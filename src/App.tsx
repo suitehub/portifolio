@@ -94,7 +94,24 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState<string>("Financeiro");
   
   // Real Apps loaded from disk
-  const [apps, setApps] = useState<AppItem[]>([]);
+  const [apps, setApps] = useState<AppItem[]>([
+    {
+      id: "8-convencao-de-quartetos",
+      name: "8ª Convenção De Quartetos",
+      archiveName: "8ª-convenção-de-quartetos",
+      entryPath: "apps/8-convencao-de-quartetos/index.html",
+      type: "zip",
+      size: 0
+    },
+    {
+      id: "meu-casamento",
+      name: "Meu Casamento",
+      archiveName: "indexcasamento.html",
+      entryPath: "indexcasamento.html",
+      type: "zip",
+      size: 0
+    }
+  ]);
   const [loadingApps, setLoadingApps] = useState(true);
 
   // Detail Sub-views
@@ -106,9 +123,32 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const getBaseUrl = () => {
+    const loc = window.location;
+    let base = "/";
+    if (loc.hostname.endsWith("github.io")) {
+      const segments = loc.pathname.split("/").filter(Boolean);
+      if (segments.length > 0) {
+        base = `/${segments[0]}/`;
+      }
+    } else {
+      const path = loc.pathname;
+      if (path.endsWith("/")) {
+        base = path;
+      } else {
+        const lastSlashIndex = path.lastIndexOf("/");
+        if (lastSlashIndex > 0) {
+          base = path.slice(0, lastSlashIndex + 1);
+        }
+      }
+    }
+    return base;
+  };
+
   // Fetch apps.json from public directory
   useEffect(() => {
-    fetch("/apps.json")
+    const baseUrl = getBaseUrl();
+    fetch(`${baseUrl}apps.json`)
       .then((res) => {
         if (!res.ok) throw new Error("Static apps.json list not available, trying relative base");
         return res.json();
@@ -124,7 +164,7 @@ export default function App() {
       .catch((err) => {
         console.warn("Falling back to API list:", err.message);
         // Fallback endpoint
-        fetch("/api/apps")
+        fetch(`${baseUrl}api/apps`)
           .then((res) => res.json())
           .then((data) => {
             if (data.success && Array.isArray(data.apps)) {
@@ -868,7 +908,7 @@ export default function App() {
                           {/* Picture area */}
                           <div className="relative h-44 overflow-hidden border-b border-slate-950">
                             <img 
-                              src={proj.image} 
+                              src={proj.image.startsWith("/") ? `${getBaseUrl()}${proj.image.slice(1)}` : proj.image} 
                               alt={proj.name} 
                               referrerPolicy="no-referrer"
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
