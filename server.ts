@@ -292,9 +292,9 @@ async function startServer() {
   // Extract all user archives first
   await extractAllArchives();
 
-  // Serve indexcasamento.html directly from the root of the project
+  // Serve indexcasamento.html directly from the public directory
   app.get("/indexcasamento.html", (req, res) => {
-    res.sendFile(path.join(process.cwd(), "indexcasamento.html"));
+    res.sendFile(path.join(PUBLIC_DIR, "indexcasamento.html"));
   });
 
   // API endpoints
