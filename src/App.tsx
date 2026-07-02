@@ -536,11 +536,6 @@ export default function App() {
                       <p className="text-[11px] text-slate-400 leading-relaxed">
                         Escrevemos códigos sob medida de alto desempenho, eliminando dependências que cobram taxas abusivas e garantindo propriedade intelectual integral para o seu negócio.
                       </p>
-                      <div className="flex justify-center gap-1.5">
-                        <span className="px-2 py-0.5 bg-slate-900 rounded text-[9px] text-slate-400">React Native</span>
-                        <span className="px-2 py-0.5 bg-slate-900 rounded text-[9px] text-slate-400">NodeJS</span>
-                        <span className="px-2 py-0.5 bg-slate-900 rounded text-[9px] text-slate-400">Google Cloud</span>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -1061,7 +1056,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-12 gap-10">
           
           {/* Footer branding */}
-          <div className="md:col-span-4 space-y-4">
+          <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-lg overflow-hidden bg-slate-900 border border-slate-800 flex items-center justify-center shadow-lg">
                 <img src={getAssetUrl("/icone.png")} alt="Suite Hub Icon" className="w-full h-full object-contain p-0.5" referrerPolicy="no-referrer" />
@@ -1079,7 +1074,7 @@ export default function App() {
           </div>
 
           {/* Column Links 1 */}
-          <div className="md:col-span-3 space-y-4">
+          <div className="md:col-span-4 space-y-4">
             <h5 className="text-xs font-extrabold text-white uppercase tracking-wider">Links Rápidos</h5>
             <ul className="space-y-2 text-xs text-slate-500">
               <li>
@@ -1100,19 +1095,8 @@ export default function App() {
             </ul>
           </div>
 
-          {/* Column Links 2 */}
-          <div className="md:col-span-3 space-y-4">
-            <h5 className="text-xs font-extrabold text-white uppercase tracking-wider">Módulos em Destaque</h5>
-            <ul className="space-y-2 text-xs text-slate-500">
-              <li>Pix Dinâmico Integrado</li>
-              <li>WhatsApp Hub CRM</li>
-              <li>Notificações Push inteligentes</li>
-              <li>Painéis Administrativos Completos</li>
-            </ul>
-          </div>
-
           {/* Column contacts details */}
-          <div className="md:col-span-2 space-y-4">
+          <div className="md:col-span-3 space-y-4">
             <h5 className="text-xs font-extrabold text-white uppercase tracking-wider">Software Studio</h5>
             <span className="text-[10px] text-emerald-400 block font-bold uppercase tracking-wider">● ONLINE</span>
             <span className="text-[10px] text-slate-500 block leading-relaxed">Fale agora no chat comercial para acelerar seu protótipo figma de forma 100% gratuita!</span>
@@ -1122,7 +1106,6 @@ export default function App() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-900/60 mt-12 pt-8 text-center text-[10px] text-slate-600 flex flex-col sm:flex-row items-center justify-between gap-4">
           <span>© {new Date().getFullYear()} Suite Hub Software Studio • Todos os direitos reservados.</span>
-          <span>Desenvolvido sob medida com React, Vite e Tailwind CSS v4</span>
         </div>
       </footer>
 

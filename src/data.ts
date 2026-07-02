@@ -223,7 +223,7 @@ export const stepsData: Step[] = [
   {
     number: 6,
     title: "Publicação Oficial",
-    description: "Cuidamos de todo o processo para disponibilizar seu aplicativo nas lojas oficiais (Google Play e App Store)."
+    description: "Cuidamos de todo o processo para disponibilizar seu aplicativo nas lojas oficiais, ou hospedar seu site em domínio personalizado ou disponibilizamos nosso próprio domínio."
   },
   {
     number: 7,
@@ -257,26 +257,6 @@ export const differentialsData: Diferencial[] = [
     title: "Código Limpo e Documentado",
     description: "Sua propriedade intelectual garantida em um código modular de facílima manutenção.",
     icon: "FileCode"
-  },
-  {
-    title: "Leitura Ágil de QR Code",
-    description: "Validação instantânea e credenciamento na portaria de eventos mesmo offline.",
-    icon: "Puzzle"
-  },
-  {
-    title: "Upload de Mídias e Fotos",
-    description: "Envio rápido de fotos para relatórios, vistorias ou mural do evento.",
-    icon: "UploadCloud"
-  },
-  {
-    title: "Painel de Administração Web",
-    description: "Gerenciamento completo das informações do aplicativo através de um painel web intuitivo.",
-    icon: "Sliders"
-  },
-  {
-    title: "Banco de Dados em Tempo Real",
-    description: "Sincronização imediata de dados com a tecnologia líder do Google Firestore.",
-    icon: "ChevronsUp"
   },
   {
     title: "Suporte e Cuidado Ativo",
