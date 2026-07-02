@@ -153,6 +153,13 @@ export default function App() {
     return base;
   };
 
+  const getAssetUrl = (path: string) => {
+    if (!path) return "";
+    const base = getBaseUrl();
+    const cleanPath = path.startsWith("/") ? path.slice(1) : path;
+    return `${base}${cleanPath}`;
+  };
+
   // Fetch apps.json from public directory
   useEffect(() => {
     const baseUrl = getBaseUrl();
@@ -250,7 +257,7 @@ export default function App() {
             className="flex items-center gap-2.5 cursor-pointer group"
           >
             <div className="w-10 h-10 rounded-xl overflow-hidden bg-slate-900 border border-slate-800 flex items-center justify-center shadow-lg shadow-sky-500/10 group-hover:scale-105 transition-all">
-              <img src="/icone.png" alt="Suite Hub Icon" className="w-full h-full object-contain p-1" referrerPolicy="no-referrer" />
+              <img src={getAssetUrl("/icone.png")} alt="Suite Hub Icon" className="w-full h-full object-contain p-1" referrerPolicy="no-referrer" />
             </div>
             <div>
               <span className="text-lg font-black tracking-tight text-white block">Suite Hub</span>
@@ -523,7 +530,7 @@ export default function App() {
                     {/* Aesthetic layout illustration */}
                     <div className="bg-slate-950 p-6 rounded-2xl border border-slate-900 text-center space-y-4">
                       <div className="h-16 flex items-center justify-center mx-auto mb-2">
-                        <img src="/logo.png" alt="Suite Hub Logo" className="max-h-full max-w-[180px] object-contain filter drop-shadow-[0_0_15px_rgba(56,189,248,0.2)]" referrerPolicy="no-referrer" />
+                        <img src={getAssetUrl("/logo.png")} alt="Suite Hub Logo" className="max-h-full max-w-[180px] object-contain filter drop-shadow-[0_0_15px_rgba(56,189,248,0.2)]" referrerPolicy="no-referrer" />
                       </div>
                       <h4 className="text-sm font-bold text-white">Nosso Diferencial Técnico</h4>
                       <p className="text-[11px] text-slate-400 leading-relaxed">
@@ -931,7 +938,7 @@ export default function App() {
                           {/* Picture area */}
                           <div className="relative h-44 overflow-hidden border-b border-slate-950">
                             <img 
-                              src={proj.image.startsWith("/") ? `${getBaseUrl()}${proj.image.slice(1)}` : proj.image} 
+                              src={getAssetUrl(proj.image)} 
                               alt={proj.name} 
                               referrerPolicy="no-referrer"
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -1057,7 +1064,7 @@ export default function App() {
           <div className="md:col-span-4 space-y-4">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-lg overflow-hidden bg-slate-900 border border-slate-800 flex items-center justify-center shadow-lg">
-                <img src="/icone.png" alt="Suite Hub Icon" className="w-full h-full object-contain p-0.5" referrerPolicy="no-referrer" />
+                <img src={getAssetUrl("/icone.png")} alt="Suite Hub Icon" className="w-full h-full object-contain p-0.5" referrerPolicy="no-referrer" />
               </div>
               <span className="text-base font-bold text-white">Suite Hub</span>
             </div>
