@@ -1,6 +1,6 @@
 {
   "name": "Suite Hub",
-  "description": "Site institucional moderno e catálogo de soluções interativas da Suite Hub, com simuladores de aplicativos ativos e gerador de orçamentos para WhatsApp.",
+  "description": "Premium software development studio delivering custom mobile and web applications with Google Cloud and Firebase integrations.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

@@ -108,7 +108,7 @@ async function extractAllArchives() {
   const rootFiles = fs.readdirSync(process.cwd());
   const archives = rootFiles.filter(file => {
     const ext = path.extname(file).toLowerCase();
-    return ext === ".zip" || ext === ".rar";
+    return (ext === ".zip" || ext === ".rar") && file !== "portfólio-interativo.zip";
   });
 
   const tempApps: AppItem[] = [];
@@ -307,6 +307,9 @@ async function startServer() {
 
   // Serve extracted apps under /apps
   app.use("/apps", express.static(EXTRACTED_DIR));
+
+  // Serve public directory directly for static assets (logo, images, etc.)
+  app.use(express.static(PUBLIC_DIR));
 
   // Vite integration
   if (process.env.NODE_ENV !== "production") {

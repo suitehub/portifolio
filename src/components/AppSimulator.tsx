@@ -163,40 +163,32 @@ export function AppSimulator({ project, realApp, onBack }: AppSimulatorProps) {
         base = `/${segments[0]}/`;
       }
     } else {
-      const path = loc.pathname;
-      if (path.endsWith("/")) {
-        base = path;
-      } else {
-        const lastSlashIndex = path.lastIndexOf("/");
-        if (lastSlashIndex > 0) {
-          base = path.slice(0, lastSlashIndex + 1);
-        }
-      }
+      base = "/";
     }
     const cleanRelative = relativePath.startsWith("/") ? relativePath.slice(1) : relativePath;
     return `${base}${cleanRelative}`;
   };
 
   return (
-    <div className="flex flex-col h-full min-h-[85vh] bg-slate-950 rounded-3xl border border-slate-800 overflow-hidden shadow-2xl relative">
+    <div className="flex flex-col h-full min-h-[85vh] glass-card rounded-3xl overflow-hidden shadow-2xl relative glass-reflection">
       
       {/* Simulation Dashboard Header */}
-      <div className="flex flex-col md:flex-row items-center justify-between px-6 py-4 bg-slate-900 border-b border-slate-800 gap-4 z-10">
+      <div className="flex flex-col md:flex-row items-center justify-between px-6 py-4 bg-white/[0.02] border-b border-white/15 gap-4 z-10 backdrop-blur-xl">
         <div className="flex items-center gap-4">
           <button
             onClick={onBack}
-            className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-400 hover:text-white bg-slate-950 border border-slate-800 rounded-lg transition-colors cursor-pointer"
+            className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-400 hover:text-white bg-white/5 border border-white/15 rounded-lg transition-colors cursor-pointer backdrop-blur-sm shadow-inner hover:bg-white/10"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Voltar ao Portfólio</span>
           </button>
-          <div className="h-5 w-[1px] bg-slate-800 hidden md:block" />
+          <div className="h-5 w-[1px] bg-white/15 hidden md:block" />
           <div>
             <div className="flex items-center gap-2">
-              <span className="p-1.5 bg-sky-500/10 text-sky-400 rounded border border-sky-500/20 text-xs font-bold uppercase">
+              <span className="p-1.5 bg-sky-500/10 text-sky-400 rounded border border-sky-500/30 text-xs font-bold uppercase backdrop-blur-sm">
                 {project.category}
               </span>
-              <h2 className="text-base font-bold text-white tracking-tight">{project.name}</h2>
+              <h2 className="text-base font-black text-white tracking-tight">{project.name}</h2>
             </div>
             <p className="text-xs text-slate-400 mt-0.5 line-clamp-1 hidden sm:block">
               {project.description}
@@ -206,13 +198,13 @@ export function AppSimulator({ project, realApp, onBack }: AppSimulatorProps) {
 
         {/* Viewport controls for iframe */}
         {project.demoType === "iframe" && (
-          <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800">
+          <div className="flex items-center gap-1 bg-white/[0.04] p-1 rounded-xl border border-white/15 backdrop-blur-md">
             <button
               onClick={() => setViewport("mobile")}
               className={`p-2 rounded-lg transition-all cursor-pointer ${
                 viewport === "mobile" 
-                  ? "bg-sky-600 text-white shadow" 
-                  : "text-slate-500 hover:text-slate-300"
+                  ? "bg-sky-600/30 text-white border border-sky-500/40 shadow-inner" 
+                  : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
               }`}
               title="Celular"
             >
@@ -222,8 +214,8 @@ export function AppSimulator({ project, realApp, onBack }: AppSimulatorProps) {
               onClick={() => setViewport("tablet")}
               className={`p-2 rounded-lg transition-all cursor-pointer ${
                 viewport === "tablet" 
-                  ? "bg-sky-600 text-white shadow" 
-                  : "text-slate-500 hover:text-slate-300"
+                  ? "bg-sky-600/30 text-white border border-sky-500/40 shadow-inner" 
+                  : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
               }`}
               title="Tablet"
             >
@@ -233,8 +225,8 @@ export function AppSimulator({ project, realApp, onBack }: AppSimulatorProps) {
               onClick={() => setViewport("desktop")}
               className={`p-2 rounded-lg transition-all cursor-pointer ${
                 viewport === "desktop" 
-                  ? "bg-sky-600 text-white shadow" 
-                  : "text-slate-500 hover:text-slate-300"
+                  ? "bg-sky-600/30 text-white border border-sky-500/40 shadow-inner" 
+                  : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
               }`}
               title="Desktop"
             >
@@ -247,20 +239,20 @@ export function AppSimulator({ project, realApp, onBack }: AppSimulatorProps) {
           {project.demoType === "iframe" && (
             <button
               onClick={() => setIframeKey((prev) => prev + 1)}
-              className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors cursor-pointer"
+              className="p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors cursor-pointer border border-white/10"
               title="Recarregar"
             >
               <RotateCcw className="w-4 h-4" />
             </button>
           )}
-          <span className="text-[10px] px-2 py-1 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20 font-mono font-bold">
+          <span className="text-[10px] px-2 py-1 rounded bg-sky-500/10 text-sky-400 border border-white/10 font-mono font-bold backdrop-blur-sm">
             PROTÓTIPO ATIVO
           </span>
         </div>
       </div>
 
       {/* Simulator Stage */}
-      <div className="flex-1 bg-slate-950/80 p-4 md:p-8 flex items-center justify-center overflow-auto relative min-h-[600px]">
+      <div className="flex-1 bg-transparent p-4 md:p-8 flex items-center justify-center overflow-auto relative min-h-[600px]">
         
         {/* Stage Grid Background */}
         <div className="absolute inset-0 bg-[radial-gradient(#0ea5e9_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none" />
@@ -293,12 +285,12 @@ export function AppSimulator({ project, realApp, onBack }: AppSimulatorProps) {
         <motion.div
           layout
           transition={{ type: "spring", stiffness: 350, damping: 30 }}
-          className={`relative border border-slate-800 bg-slate-900 rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden ${
+          className={`relative glass-card-glow flex flex-col overflow-hidden shadow-2xl ${
             project.demoType === "iframe" && viewport === "desktop" 
-              ? "w-full max-w-6xl h-[650px]" 
+              ? "w-full max-w-6xl h-[650px] border-white/15 rounded-[2rem]" 
               : project.demoType === "iframe" && viewport === "tablet"
-              ? "w-[768px] h-[650px] max-w-full"
-              : "w-[360px] h-[640px] rounded-[3rem] border-[10px] border-slate-800 shadow-slate-950/50"
+              ? "w-[768px] h-[650px] max-w-full border-white/15 rounded-[2.5rem]"
+              : "w-[360px] h-[640px] rounded-[3.2rem] border-[12px] border-white/20 shadow-black/80 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)]"
           }`}
         >
           {/* SIMULATOR VIEWS (Clinica and Financeiro customized visual prototypes) */}
@@ -323,26 +315,28 @@ export function AppSimulator({ project, realApp, onBack }: AppSimulatorProps) {
                 <div className="flex-1 flex flex-col justify-between overflow-hidden">
                   
                   {/* Clinic App Header */}
-                  <header className="px-4 py-3 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
+                  <header className="px-4 py-3 bg-white/[0.02] border-b border-white/10 backdrop-blur-xl flex items-center justify-between z-10">
                     <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold text-sm">
-                        H
+                      <div className="w-8 h-8 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold text-xs border border-sky-500/20 shadow-inner">
+                        MC
                       </div>
                       <div>
-                        <h4 className="text-xs font-bold text-white">Med&Clin Assist</h4>
-                        <span className="text-[10px] text-emerald-400 flex items-center gap-1">
-                          <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping" />
+                        <h4 className="text-[11px] font-black text-white tracking-tight">Med&Clin Assist</h4>
+                        <span className="text-[9px] text-emerald-400 flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-sm shadow-emerald-500" />
                           Pronto Atendimento Ativo
                         </span>
                       </div>
                     </div>
-                    <button 
+                    <motion.button 
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                       onClick={() => addNotification("Você possui 1 nova receita médica digital!")} 
-                      className="p-1.5 bg-slate-800 hover:bg-slate-750 text-slate-300 rounded-lg relative"
+                      className="p-1.5 bg-white/5 hover:bg-white/10 text-slate-300 rounded-lg relative border border-white/10 transition-all cursor-pointer"
                     >
                       <Bell className="w-3.5 h-3.5" />
-                      <span className="absolute top-0 right-0 w-2 h-2 bg-rose-500 rounded-full" />
-                    </button>
+                      <span className="absolute top-0 right-0 w-2 h-2 bg-rose-500 rounded-full border border-slate-950" />
+                    </motion.button>
                   </header>
 
                   {/* Clinic Screen Views */}
@@ -378,7 +372,7 @@ export function AppSimulator({ project, realApp, onBack }: AppSimulatorProps) {
                           <div className="grid grid-cols-2 gap-2">
                             <div 
                               onClick={() => setClinicTab("telemed")}
-                              className="p-3 bg-slate-900 border border-slate-800 rounded-xl cursor-pointer hover:border-sky-500/30 transition-all text-center"
+                              className="p-3 bg-white/[0.04] border border-white/15 rounded-xl cursor-pointer hover:border-sky-500/30 transition-all text-center backdrop-blur-md shadow-sm"
                             >
                               <Video className="w-5 h-5 mx-auto text-sky-400 mb-1" />
                               <span className="text-[10px] font-semibold block">Pronto Atendimento</span>
@@ -386,7 +380,7 @@ export function AppSimulator({ project, realApp, onBack }: AppSimulatorProps) {
                             </div>
                             <div 
                               onClick={() => setClinicTab("records")}
-                              className="p-3 bg-slate-900 border border-slate-800 rounded-xl cursor-pointer hover:border-sky-500/30 transition-all text-center"
+                              className="p-3 bg-white/[0.04] border border-white/15 rounded-xl cursor-pointer hover:border-sky-500/30 transition-all text-center backdrop-blur-md shadow-sm"
                             >
                               <FileText className="w-5 h-5 mx-auto text-sky-400 mb-1" />
                               <span className="text-[10px] font-semibold block">Histórico & Receitas</span>
@@ -400,9 +394,9 @@ export function AppSimulator({ project, realApp, onBack }: AppSimulatorProps) {
                           <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wide mb-2">Seus Compromissos</h4>
                           <div className="space-y-2">
                             {appointments.map((appt, i) => (
-                              <div key={i} className="bg-slate-900 border border-slate-800 rounded-xl p-3 flex items-center justify-between text-xs">
+                              <div key={i} className="bg-white/[0.04] border border-white/10 rounded-xl p-3 flex items-center justify-between text-xs backdrop-blur-sm shadow-sm">
                                 <div className="flex items-center gap-2.5">
-                                  <div className="p-2 bg-slate-800 rounded-lg text-sky-400">
+                                  <div className="p-2 bg-white/5 border border-white/10 rounded-lg text-sky-400 shadow-inner">
                                     <Calendar className="w-3.5 h-3.5" />
                                   </div>
                                   <div>
@@ -411,7 +405,7 @@ export function AppSimulator({ project, realApp, onBack }: AppSimulatorProps) {
                                   </div>
                                 </div>
                                 <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${
-                                  appt.status === "Confirmado" ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" : "bg-slate-800 text-slate-400"
+                                  appt.status === "Confirmado" ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" : "bg-white/10 text-slate-400 border border-white/10"
                                 }`}>
                                   {appt.status}
                                 </span>
@@ -434,7 +428,7 @@ export function AppSimulator({ project, realApp, onBack }: AppSimulatorProps) {
                             <select 
                               value={selectedDoctor} 
                               onChange={(e) => setSelectedDoctor(e.target.value)}
-                              className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-sky-500"
+                              className="w-full bg-white/[0.04] border border-white/10 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-sky-500/40 backdrop-blur-md cursor-pointer"
                             >
                               <option>Dra. Ana Cláudia Lemos - Cardiologia</option>
                               <option>Dr. Roberto Santos - Pediatra</option>
@@ -652,7 +646,7 @@ export function AppSimulator({ project, realApp, onBack }: AppSimulatorProps) {
                   </div>
 
                   {/* Clinic Bottom Tab Navigation */}
-                  <nav className="h-12 bg-slate-900 border-t border-slate-800 grid grid-cols-4 select-none z-15">
+                  <nav className="h-12 bg-white/[0.02] border-t border-white/10 grid grid-cols-4 select-none z-15 backdrop-blur-md">
                     {[
                       { id: "home", label: "Início", icon: User },
                       { id: "booking", label: "Agendar", icon: Calendar },
@@ -660,17 +654,26 @@ export function AppSimulator({ project, realApp, onBack }: AppSimulatorProps) {
                       { id: "records", label: "Receitas", icon: FileText },
                     ].map((tab) => {
                       const Icon = tab.icon;
+                      const isActive = clinicTab === tab.id;
                       return (
-                        <button
+                        <motion.button
                           key={tab.id}
+                          whileTap={{ scale: 0.9 }}
                           onClick={() => setClinicTab(tab.id as any)}
-                          className={`flex flex-col items-center justify-center gap-0.5 transition-colors cursor-pointer ${
-                            clinicTab === tab.id ? "text-sky-400" : "text-slate-500 hover:text-slate-300"
+                          className={`flex flex-col items-center justify-center gap-0.5 transition-colors cursor-pointer relative ${
+                            isActive ? "text-sky-400" : "text-slate-500 hover:text-slate-300"
                           }`}
                         >
-                          <Icon className="w-4 h-4" />
-                          <span className="text-[8px] font-semibold">{tab.label}</span>
-                        </button>
+                          {isActive && (
+                            <motion.div 
+                              layoutId="activeClinicIndicator" 
+                              className="absolute inset-0 bg-sky-500/[0.03] z-0"
+                              transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                            />
+                          )}
+                          <Icon className="w-4 h-4 z-10" />
+                          <span className="text-[8px] font-semibold z-10">{tab.label}</span>
+                        </motion.button>
                       );
                     })}
                   </nav>
@@ -682,18 +685,18 @@ export function AppSimulator({ project, realApp, onBack }: AppSimulatorProps) {
                 <div className="flex-1 flex flex-col justify-between overflow-hidden">
                   
                   {/* Finance Header */}
-                  <header className="px-4 py-3 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
+                  <header className="px-4 py-3 bg-white/[0.02] border-b border-white/10 backdrop-blur-xl flex items-center justify-between z-10">
                     <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-emerald-500/15 text-emerald-400 flex items-center justify-center font-bold text-sm">
+                      <div className="w-8 h-8 rounded-full bg-emerald-500/15 text-emerald-400 flex items-center justify-center font-bold text-xs border border-emerald-500/20 shadow-inner">
                         $
                       </div>
                       <div>
-                        <h4 className="text-xs font-bold text-white">Suite Finanças</h4>
+                        <h4 className="text-[11px] font-black text-white tracking-tight">Suite Finanças</h4>
                         <span className="text-[9px] text-slate-400 font-mono">Faturamento do Mês</span>
                       </div>
                     </div>
                     <div className="text-right">
-                      <span className="text-xs font-bold text-emerald-400">R$ {totalRevenue.toLocaleString("pt-BR")},00</span>
+                      <span className="text-xs font-black text-emerald-400">R$ {totalRevenue.toLocaleString("pt-BR")},00</span>
                     </div>
                   </header>
 
@@ -940,24 +943,33 @@ export function AppSimulator({ project, realApp, onBack }: AppSimulatorProps) {
                   </AnimatePresence>
 
                   {/* Finance Bottom Tab Navigation */}
-                  <nav className="h-12 bg-slate-900 border-t border-slate-800 grid grid-cols-3 select-none z-15">
+                  <nav className="h-12 bg-white/[0.02] border-t border-white/10 grid grid-cols-3 select-none z-15 backdrop-blur-md">
                     {[
                       { id: "dashboard", label: "Geral", icon: TrendingUp },
                       { id: "invoices", label: "Cobranças", icon: DollarSign },
                       { id: "ia", label: "IA Previsão", icon: Sparkles },
                     ].map((tab) => {
                       const Icon = tab.icon;
+                      const isActive = financeTab === tab.id;
                       return (
-                        <button
+                        <motion.button
                           key={tab.id}
+                          whileTap={{ scale: 0.9 }}
                           onClick={() => setFinanceTab(tab.id as any)}
-                          className={`flex flex-col items-center justify-center gap-0.5 transition-colors cursor-pointer ${
-                            financeTab === tab.id ? "text-emerald-400" : "text-slate-500 hover:text-slate-300"
+                          className={`flex flex-col items-center justify-center gap-0.5 transition-colors cursor-pointer relative ${
+                            isActive ? "text-emerald-400" : "text-slate-500 hover:text-slate-300"
                           }`}
                         >
-                          <Icon className="w-4 h-4" />
-                          <span className="text-[8px] font-semibold">{tab.label}</span>
-                        </button>
+                          {isActive && (
+                            <motion.div 
+                              layoutId="activeFinanceIndicator" 
+                              className="absolute inset-0 bg-emerald-500/[0.03] z-0"
+                              transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                            />
+                          )}
+                          <Icon className="w-4 h-4 z-10" />
+                          <span className="text-[8px] font-semibold z-10">{tab.label}</span>
+                        </motion.button>
                       );
                     })}
                   </nav>

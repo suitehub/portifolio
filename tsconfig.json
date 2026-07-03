@@ -23,6 +23,15 @@
     "allowImportingTsExtensions": true,
     "noEmit": true
   },
-  "include": ["src", "server.ts", ".env.example"],
-  "exclude": ["node_modules", "dist", "extracted_apps"]
+  "include": [
+    "src/**/*",
+    "server.ts",
+    "vite.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "8ª-convenção-de-quartetos",
+    "App Painel Acadêmico"
+  ]
 }
