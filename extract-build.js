@@ -1168,7 +1168,9 @@ async function build() {
   const rootFiles = fs.readdirSync(process.cwd());
   const archives = rootFiles.filter(file => {
     const ext = path.extname(file).toLowerCase();
-    return (ext === ".zip" || ext === ".rar") && file !== "portfólio-interativo.zip";
+    return (ext === ".zip" || ext === ".rar") && 
+           file !== "portfólio-interativo.zip" && 
+           file !== "suite-hub.zip";
   });
 
   const discoveredApps = [];
