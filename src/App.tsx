@@ -18,6 +18,7 @@ import {
   Puzzle,
   Cpu,
   Sliders,
+  Settings,
   ChevronsUp,
   HeartHandshake,
   Heart,
@@ -233,6 +234,11 @@ export default function App() {
       case "Sliders": return <Sliders className={className} />;
       case "ChevronsUp": return <ChevronsUp className={className} />;
       case "HeartHandshake": return <HeartHandshake className={className} />;
+      case "Church": return <Church className={className} />;
+      case "Stethoscope": return <Stethoscope className={className} />;
+      case "Ticket": return <Ticket className={className} />;
+      case "Building": return <Building className={className} />;
+      case "Settings": return <Settings className={className} />;
       default: return <Sparkles className={className} />;
     }
   };
@@ -344,9 +350,6 @@ export default function App() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between relative">
           
-          {/* Decorative Corner crosshair on header */}
-          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-700 text-xs font-mono select-none hidden xl:block">+ [SH_HUD]</div>
-
           {/* Logo brand */}
           <div 
             onClick={() => { setActiveTab("home"); setSelectedSolution(null); setActiveSimulatorProject(null); scrollToTop(); }}
@@ -359,9 +362,8 @@ export default function App() {
             <div>
               <div className="flex items-center gap-1.5">
                 <span className="text-sm font-display font-black tracking-wider text-white group-hover:text-sky-400 transition-colors">SUITE HUB</span>
-                <span className="text-[7px] px-1 bg-sky-500/10 border border-sky-400/20 rounded text-sky-400 font-mono font-bold">V2.4</span>
               </div>
-              <span className="text-[9px] text-slate-500 font-mono uppercase tracking-widest block leading-tight">Software Studio</span>
+              <span className="text-[9px] text-slate-500 font-sans uppercase tracking-wider block leading-tight">Software Studio</span>
             </div>
           </div>
 
@@ -393,10 +395,10 @@ export default function App() {
 
           {/* Contact Actions Button */}
           <div className="hidden md:flex items-center gap-4 z-10 pr-0 xl:pr-20">
-            <div className="text-right hidden lg:block font-mono">
-              <span className="text-[9px] text-slate-500 block">SYSTEM STATUS</span>
-              <span className="text-[9px] text-emerald-400 font-bold block flex items-center justify-end gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /> OPERATIONAL
+            <div className="text-right hidden lg:block font-sans">
+              <span className="text-[9px] text-slate-500 block uppercase tracking-wider">Atendimento ágil</span>
+              <span className="text-[10px] text-sky-400 font-bold block uppercase tracking-wide">
+                Fale Conosco
               </span>
             </div>
             <a
@@ -461,8 +463,8 @@ export default function App() {
                   <Phone className="w-4 h-4" />
                   Atendimento WhatsApp
                 </a>
-                <div className="flex justify-between items-center px-4 pt-2 text-[9px] text-slate-500 font-mono">
-                  <span>TELEMETRY: ACTIVE</span>
+                <div className="flex justify-between items-center px-4 pt-2 text-[10px] text-slate-500 font-sans">
+                  <span>Atendimento em Tempo Real</span>
                   <span>{systemTime}</span>
                 </div>
               </div>
@@ -847,70 +849,107 @@ export default function App() {
 
                 {/* 3D staggered flip card bento grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {solutionsData.slice(0, 5).map((sol, index) => (
-                    <motion.div
-                      key={sol.id}
-                      {...anim3DCardReveal(index)}
-                      className="group p-6 glass-card rounded-2xl transition-all duration-300 flex flex-col justify-between space-y-6 shadow-2xl relative overflow-hidden glowing-hover-card"
-                    >
-                      {/* Decorative internal high-tech angles */}
-                      <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-white/20" />
-                      <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-white/20" />
+                  {solutionsData.slice(0, 5).map((sol, index) => {
+                    const solTheme = [
+                      { primary: 'text-indigo-400', glow: 'group-hover:from-indigo-500/10 group-hover:to-purple-500/5', border: 'hover:border-indigo-500/40', glowText: 'text-indigo-400/60', bullet: 'bg-indigo-400', shadow: 'group-hover:shadow-[0_0_30px_rgba(99,102,241,0.25)]', iconBg: 'bg-indigo-500/10 border-indigo-500/20' },
+                      { primary: 'text-teal-400', glow: 'group-hover:from-teal-500/10 group-hover:to-cyan-500/5', border: 'hover:border-teal-500/40', glowText: 'text-teal-400/60', bullet: 'bg-teal-400', shadow: 'group-hover:shadow-[0_0_30px_rgba(20,184,166,0.25)]', iconBg: 'bg-teal-500/10 border-teal-500/20' },
+                      { primary: 'text-rose-400', glow: 'group-hover:from-rose-500/10 group-hover:to-pink-500/5', border: 'hover:border-rose-500/40', glowText: 'text-rose-400/60', bullet: 'bg-rose-400', shadow: 'group-hover:shadow-[0_0_30px_rgba(244,63,94,0.25)]', iconBg: 'bg-rose-500/10 border-rose-500/20' },
+                      { primary: 'text-sky-400', glow: 'group-hover:from-sky-500/10 group-hover:to-blue-500/5', border: 'hover:border-sky-500/40', glowText: 'text-sky-400/60', bullet: 'bg-sky-400', shadow: 'group-hover:shadow-[0_0_30px_rgba(14,165,233,0.25)]', iconBg: 'bg-sky-500/10 border-sky-500/20' },
+                      { primary: 'text-amber-400', glow: 'group-hover:from-amber-500/10 group-hover:to-orange-500/5', border: 'hover:border-amber-500/40', glowText: 'text-amber-400/60', bullet: 'bg-amber-400', shadow: 'group-hover:shadow-[0_0_30px_rgba(245,158,11,0.25)]', iconBg: 'bg-amber-500/10 border-amber-500/20' }
+                    ][index % 5];
 
-                      <div className="space-y-4">
-                        {/* Custom visual ring for the emoji icon */}
-                        <div className="w-12 h-12 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-xl shadow-inner relative overflow-hidden group-hover:border-sky-500/40 transition-colors duration-300">
-                          <div className="absolute inset-0 bg-sky-500/5 group-hover:bg-sky-500/20 transition-colors" />
-                          <span className="relative z-10">{getSolutionEmoji(sol.id)}</span>
-                        </div>
+                    return (
+                      <motion.div
+                        key={sol.id}
+                        whileHover={{ y: -8, scale: 1.015, transition: { duration: 0.3 } }}
+                        className={`group p-6 rounded-2xl bg-slate-950/90 border border-white/5 ${solTheme.border} ${solTheme.shadow} transition-all duration-300 flex flex-col justify-between space-y-6 relative overflow-hidden shadow-2xl`}
+                      >
+                        {/* High-fidelity procedural microgrid texture */}
+                        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:14px_14px] [mask-image:radial-gradient(ellipse_at_center,black_75%,transparent_100%)] opacity-70" />
                         
-                        <div className="space-y-1.5">
-                          <h4 className="text-base font-bold text-white group-hover:text-sky-400 transition-colors flex items-center gap-1.5">
-                            {sol.title}
-                          </h4>
-                          <p className="text-xs text-slate-400 leading-relaxed font-sans font-light line-clamp-3">
-                            {sol.description}
-                          </p>
-                        </div>
+                        {/* Interactive dynamic background light bloom */}
+                        <div className={`absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-transparent ${solTheme.glow} transition-all duration-500 -z-10`} />
+                        
+                        {/* Interactive linear neon laser track */}
+                        <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-transparent to-transparent group-hover:via-current group-hover:from-transparent group-hover:to-transparent transition-all duration-700 opacity-60 text-sky-400" />
 
-                        {/* Stutter list key features preview inside home cards */}
-                        <div className="space-y-1 pt-1">
-                          {sol.features.slice(0, 3).map((feat, fIdx) => (
-                            <div key={fIdx} className="flex items-center gap-1.5 text-[10px] text-slate-500">
-                              <span className="w-1 h-1 rounded-full bg-sky-400" />
-                              <span className="truncate">{feat}</span>
+                        {/* Fine technical blueprint corner accents */}
+                        <div className="absolute top-2 left-2 w-1.5 h-1.5 border-t border-l border-white/10 group-hover:border-sky-400/30 transition-colors" />
+                        <div className="absolute top-2 right-2 w-1.5 h-1.5 border-t border-r border-white/10 group-hover:border-sky-400/30 transition-colors" />
+                        <div className="absolute bottom-2 left-2 w-1.5 h-1.5 border-b border-l border-white/10 group-hover:border-sky-400/30 transition-colors" />
+                        <div className="absolute bottom-2 right-2 w-1.5 h-1.5 border-b border-r border-white/10 group-hover:border-sky-400/30 transition-colors" />
+
+                        <div className="space-y-4 relative z-10">
+                          {/* Premium offset layout with custom-styled geometric icon structure */}
+                          <div className="flex items-center justify-between">
+                            <div className={`w-12 h-12 rounded-xl ${solTheme.iconBg} border flex items-center justify-center relative overflow-hidden group-hover:scale-105 transition-transform duration-500`}>
+                              {/* Background organic glass reflection */}
+                              <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.04] to-transparent" />
+                              {getLucideIcon(sol.icon, `w-5 h-5 ${solTheme.primary} group-hover:scale-110 transition-all duration-500`)}
                             </div>
-                          ))}
-                        </div>
-                      </div>
+                          </div>
+                          
+                          <div className="space-y-2">
+                            <h4 className="text-base font-display font-black text-white group-hover:text-white transition-colors duration-300">
+                              {sol.title}
+                            </h4>
+                            <p className="text-xs text-slate-400 leading-relaxed font-sans font-light line-clamp-3 group-hover:text-slate-300 transition-colors duration-300">
+                              {sol.description}
+                            </p>
+                          </div>
 
-                      <div className="pt-2 relative z-10">
-                        <button
-                          onClick={() => handleSolutionCardClick(sol)}
-                          className="w-full py-2.5 bg-white/[0.02] group-hover:bg-sky-600/20 text-slate-400 group-hover:text-white font-bold text-[10px] uppercase tracking-wider rounded-xl border border-white/10 group-hover:border-sky-500/40 transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer backdrop-blur-sm"
-                        >
-                          Ver Detalhes do Catálogo
-                          <ChevronRight className="w-4 h-4 text-sky-400" />
-                        </button>
-                      </div>
-                    </motion.div>
-                  ))}
+                          {/* Technical blueprint list showing features with micro-bullets */}
+                          <div className="space-y-2.5 pt-3 border-t border-white/[0.04]">
+                            <span className="text-[10px] font-sans font-semibold text-slate-500 uppercase tracking-wider block">Principais Recursos</span>
+                            <div className="grid grid-cols-1 gap-1.5">
+                              {sol.features.slice(0, 3).map((feat, fIdx) => (
+                                <div key={fIdx} className="flex items-center gap-2.5 group/feat">
+                                  <div className={`w-1.5 h-1.5 rounded-sm rotate-45 ${solTheme.bullet} opacity-40 group-hover/feat:opacity-100 group-hover/feat:scale-110 transition-all duration-300`} />
+                                  <span className="text-[10px] text-slate-400 font-sans font-normal truncate group-hover/feat:text-white transition-colors duration-200">
+                                    {feat}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="pt-2 relative z-10">
+                          <button
+                            onClick={() => handleSolutionCardClick(sol)}
+                            className="w-full py-3 bg-white/[0.02] hover:bg-white/[0.05] text-slate-300 hover:text-white font-bold text-[10px] uppercase tracking-wider rounded-xl border border-white/10 hover:border-white/20 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer backdrop-blur-sm"
+                          >
+                            Analisar Módulos e FAQ
+                            <ChevronRight className={`w-3.5 h-3.5 ${solTheme.primary} group-hover:translate-x-1 transition-transform`} />
+                          </button>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
 
                   {/* Ultimate custom block placeholder for 100% custom projects (phenomenon bento card) */}
                   <motion.div
-                    {...anim3DCardReveal(5)}
-                    className="p-6 bg-gradient-to-br from-indigo-950/20 to-sky-950/20 border border-sky-500/20 rounded-2xl flex flex-col justify-between space-y-6 relative overflow-hidden group shadow-2xl glowing-hover-card"
+                    whileHover={{ y: -8, scale: 1.015, transition: { duration: 0.3 } }}
+                    className="p-6 bg-gradient-to-br from-[#0c0d1e] via-[#090a14] to-[#04050a] border border-indigo-500/20 hover:border-indigo-500/50 rounded-2xl flex flex-col justify-between space-y-6 relative overflow-hidden group shadow-2xl"
                   >
                     {/* Glowing system halo */}
-                    <div className="absolute -top-12 -right-12 w-32 h-32 bg-sky-500/20 rounded-full blur-2xl animate-pulse" />
+                    <div className="absolute -top-12 -right-12 w-40 h-40 bg-gradient-to-br from-indigo-500/25 to-sky-500/5 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-700" />
                     
-                    <div className="space-y-4">
-                      <div className="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-400/30 flex items-center justify-center text-xl shadow-inner relative z-10">
-                        <Workflow className="w-6 h-6 text-sky-400" />
+                    {/* Abstract tech grid background */}
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(99,102,241,0.08),transparent_50%)] pointer-events-none" />
+
+                    <div className="space-y-4 relative z-10">
+                      <div className="w-14 h-14 rounded-xl bg-indigo-500/10 border border-indigo-400/30 flex items-center justify-center text-xl shadow-inner relative overflow-hidden group-hover:shadow-[0_0_20px_rgba(99,102,241,0.3)] transition-all duration-500">
+                        <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/20 via-transparent to-sky-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full blur-[2px]" />
+                        <Workflow className="w-6 h-6 text-indigo-400 group-hover:scale-110 transition-transform duration-500" />
                       </div>
-                      <div className="space-y-1.5">
-                        <span className="text-[8px] font-mono font-bold text-sky-400 tracking-wider uppercase block">PROJETO ZERO</span>
-                        <h4 className="text-base font-bold text-white">Aplicativo 100% Personalizado</h4>
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-sans font-bold text-indigo-400 tracking-widest uppercase bg-indigo-500/10 px-2.5 py-1 rounded border border-indigo-400/20">
+                            Sob Medida
+                          </span>
+                        </div>
+                        <h4 className="text-lg font-display font-black text-white">Aplicativo 100% Personalizado</h4>
                         <p className="text-xs text-slate-300 leading-relaxed font-sans font-light">
                           Tem uma regra de negócio complexa ou uma ideia de startup inovadora? Desenhamos as interfaces no Figma e desenvolvemos todo o código sob medida.
                         </p>
@@ -921,10 +960,10 @@ export default function App() {
                       href={`https://wa.me/5511972499370?text=${encodeURIComponent("Olá! Tenho uma ideia de app 100% personalizado e gostaria de desenhar o escopo com a Suite Hub.")}`}
                       target="_blank"
                       rel="noreferrer"
-                      className="w-full py-2.5 bg-sky-600/30 group-hover:bg-sky-600 text-white font-bold text-[10px] uppercase tracking-wider rounded-xl border border-sky-400/30 transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer backdrop-blur-sm"
+                      className="w-full py-3 bg-gradient-to-r from-indigo-600/30 to-indigo-600/15 hover:from-indigo-600 hover:to-indigo-500 text-white font-bold text-[10px] uppercase tracking-wider rounded-xl border border-indigo-400/30 hover:shadow-[0_4px_20px_rgba(99,102,241,0.3)] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer backdrop-blur-sm relative z-10"
                     >
                       Estruturar Escopo Grátis
-                      <ArrowUpRight className="w-4 h-4 text-sky-400" />
+                      <ArrowUpRight className="w-4 h-4 text-indigo-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </a>
                   </motion.div>
 
@@ -954,22 +993,60 @@ export default function App() {
                   </p>
                 </header>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
-                  {differentialsData.map((dif, idx) => (
-                    <motion.div 
-                      key={idx} 
-                      {...anim3DCardReveal(idx)}
-                      className="p-5 glass-card rounded-2xl space-y-3.5 transition-all duration-300 shadow-xl overflow-hidden glowing-hover-card flex flex-col justify-between"
-                    >
-                      <div className="space-y-3">
-                        <div className="p-2.5 bg-white/[0.02] border border-white/10 rounded-xl text-sky-400 inline-block backdrop-blur-sm shadow-inner">
-                          {getLucideIcon(dif.icon, "w-5 h-5")}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {differentialsData.map((dif, idx) => {
+                    const diffColors = [
+                      { text: 'text-indigo-400', glow: 'from-indigo-500/10 to-transparent', border: 'hover:border-indigo-500/30' },
+                      { text: 'text-sky-400', glow: 'from-sky-500/10 to-transparent', border: 'hover:border-sky-500/30' },
+                      { text: 'text-teal-400', glow: 'from-teal-500/10 to-transparent', border: 'hover:border-teal-500/30' },
+                      { text: 'text-rose-400', glow: 'from-rose-500/10 to-transparent', border: 'hover:border-rose-500/30' },
+                      { text: 'text-amber-400', glow: 'from-amber-500/10 to-transparent', border: 'hover:border-amber-500/30' },
+                      { text: 'text-violet-400', glow: 'from-violet-500/10 to-transparent', border: 'hover:border-violet-500/30' }
+                    ][idx % 6];
+
+                    return (
+                      <motion.div 
+                        key={idx} 
+                        whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.25 } }}
+                        className={`group p-6 rounded-2xl bg-gradient-to-b from-slate-900/40 to-slate-950/40 border border-white/5 ${diffColors.border} hover:shadow-[0_8px_30px_rgba(56,189,248,0.08)] transition-all duration-300 flex flex-col justify-between relative overflow-hidden shadow-xl`}
+                      >
+                        {/* High-fidelity procedural microgrid texture */}
+                        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:16px_16px] [mask-image:radial-gradient(ellipse_at_center,black_70%,transparent_100%)] opacity-40 pointer-events-none" />
+                        
+                        {/* Animated localized backdrop highlight glow */}
+                        <div className={`absolute -right-8 -bottom-8 w-24 h-24 bg-gradient-to-tr ${diffColors.glow} rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500`} />
+
+                        {/* Large, premium display index tag layered in the background */}
+                        <div className="absolute right-4 top-4 text-7xl font-mono font-black text-white/[0.02] group-hover:text-white/[0.05] group-hover:-translate-y-1 transition-all duration-500 pointer-events-none select-none">
+                          0{idx + 1}
                         </div>
-                        <h4 className="text-[11px] font-bold text-white uppercase tracking-wider font-display leading-tight">{dif.title}</h4>
-                      </div>
-                      <p className="text-[10px] text-slate-400 leading-relaxed font-sans font-light mt-1">{dif.description}</p>
-                    </motion.div>
-                  ))}
+
+                        {/* Technical corner angles */}
+                        <div className="absolute top-2 left-2 w-1.5 h-1.5 border-t border-l border-white/10 group-hover:border-white/25 transition-colors" />
+                        <div className="absolute bottom-2 right-2 w-1.5 h-1.5 border-b border-r border-white/10 group-hover:border-white/25 transition-colors" />
+
+                        <div className="space-y-4 relative z-10">
+                          {/* Premium offset layout with custom-styled geometric icon structure */}
+                          <div className={`w-11 h-11 rounded-xl bg-white/[0.02] border border-white/10 flex items-center justify-center text-slate-300 group-hover:text-white group-hover:bg-slate-900/80 group-hover:border-sky-500/30 transition-all duration-500 shadow-inner relative overflow-hidden`}>
+                            {/* Inner ambient shine */}
+                            <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.03] to-transparent opacity-100 group-hover:opacity-0 transition-opacity" />
+                            {getLucideIcon(dif.icon, `w-4 h-4 ${diffColors.text} group-hover:scale-110 transition-transform duration-500`)}
+                          </div>
+
+                          <div className="space-y-2">
+                            <h4 className="text-sm font-bold text-white group-hover:text-sky-400 uppercase tracking-wider font-display leading-tight transition-colors duration-300">
+                              {dif.title}
+                            </h4>
+                            <p className="text-xs text-slate-400 leading-relaxed font-sans font-light transition-colors duration-300 group-hover:text-slate-300">
+                              {dif.description}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="pt-2" />
+                      </motion.div>
+                    );
+                  })}
                 </div>
 
               </section>
@@ -1099,7 +1176,7 @@ export default function App() {
                 // Standard Grid of solutions catalog
                 <div className="space-y-12">
                   <header className="space-y-3">
-                    <span className="text-xs font-bold text-sky-400 uppercase tracking-widest font-mono">Catálogo Completo v2.4</span>
+                    <span className="text-xs font-bold text-sky-400 uppercase tracking-widest font-sans">Catálogo Completo</span>
                     <h2 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight leading-none">
                       Explore Nosso Catálogo de Soluções
                     </h2>
@@ -1109,34 +1186,58 @@ export default function App() {
                   </header>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {solutionsData.map((sol, index) => (
-                      <motion.div 
-                        key={sol.id} 
-                        {...anim3DCardReveal(index)}
-                        className="glass-card rounded-2xl p-6 flex flex-col justify-between space-y-6 transition-all duration-300 shadow-2xl overflow-hidden relative glowing-hover-card"
-                      >
-                        <div className="space-y-4">
-                          <div className="w-10 h-10 bg-white/[0.03] border border-white/10 rounded-xl flex items-center justify-center text-lg backdrop-blur-md shadow-inner">
-                            {getSolutionEmoji(sol.id)}
-                          </div>
-                          <div className="space-y-1.5">
-                            <h4 className="text-base font-bold text-white group-hover:text-sky-400 transition-colors">{sol.title}</h4>
-                            <p className="text-xs text-slate-400 leading-relaxed font-sans font-light line-clamp-3">
-                              {sol.description}
-                            </p>
-                          </div>
-                        </div>
+                    {solutionsData.map((sol, index) => {
+                      const solTheme = [
+                        { primary: 'text-indigo-400', glow: 'group-hover:from-indigo-500/10 group-hover:to-purple-500/5', border: 'hover:border-indigo-500/40', glowText: 'text-indigo-400/60', shadow: 'group-hover:shadow-[0_0_30px_rgba(99,102,241,0.25)]', iconBg: 'bg-indigo-500/10 border-indigo-500/20' },
+                        { primary: 'text-teal-400', glow: 'group-hover:from-teal-500/10 group-hover:to-cyan-500/5', border: 'hover:border-teal-500/40', glowText: 'text-teal-400/60', shadow: 'group-hover:shadow-[0_0_30px_rgba(20,184,166,0.25)]', iconBg: 'bg-teal-500/10 border-teal-500/20' },
+                        { primary: 'text-rose-400', glow: 'group-hover:from-rose-500/10 group-hover:to-pink-500/5', border: 'hover:border-rose-500/40', glowText: 'text-rose-400/60', shadow: 'group-hover:shadow-[0_0_30px_rgba(244,63,94,0.25)]', iconBg: 'bg-rose-500/10 border-rose-500/20' },
+                        { primary: 'text-sky-400', glow: 'group-hover:from-sky-500/10 group-hover:to-blue-500/5', border: 'hover:border-sky-500/40', glowText: 'text-sky-400/60', shadow: 'group-hover:shadow-[0_0_30px_rgba(14,165,233,0.25)]', iconBg: 'bg-sky-500/10 border-sky-500/20' },
+                        { primary: 'text-amber-400', glow: 'group-hover:from-amber-500/10 group-hover:to-orange-500/5', border: 'hover:border-amber-500/40', glowText: 'text-amber-400/60', shadow: 'group-hover:shadow-[0_0_30px_rgba(245,158,11,0.25)]', iconBg: 'bg-amber-500/10 border-amber-500/20' }
+                      ][index % 5];
 
-                        <div className="border-t border-white/5 pt-4 text-xs">
-                          <button
-                            onClick={() => { setSelectedSolution(sol); scrollToTop(); }}
-                            className="w-full py-2.5 bg-gradient-to-r from-sky-600/80 to-indigo-600/80 hover:from-sky-500 hover:to-indigo-500 text-white font-bold text-[10px] uppercase tracking-wider rounded-xl transition-all duration-300 cursor-pointer shadow-lg"
-                          >
-                            Ver Detalhes do Catálogo
-                          </button>
-                        </div>
-                      </motion.div>
-                    ))}
+                      return (
+                        <motion.div 
+                          key={sol.id} 
+                          whileHover={{ y: -8, scale: 1.015, transition: { duration: 0.3 } }}
+                          className={`group p-6 rounded-2xl bg-slate-950/90 border border-white/5 ${solTheme.border} ${solTheme.shadow} transition-all duration-300 flex flex-col justify-between space-y-6 relative overflow-hidden shadow-2xl`}
+                        >
+                          {/* High-fidelity procedural microgrid texture */}
+                          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:14px_14px] [mask-image:radial-gradient(ellipse_at_center,black_75%,transparent_100%)] opacity-70" />
+                          
+                          {/* Interactive dynamic background light bloom */}
+                          <div className={`absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-transparent ${solTheme.glow} transition-all duration-500 -z-10`} />
+
+                          {/* Fine technical blueprint corner accents */}
+                          <div className="absolute top-2 left-2 w-1.5 h-1.5 border-t border-l border-white/10 group-hover:border-sky-400/30 transition-colors" />
+                          <div className="absolute bottom-2 right-2 w-1.5 h-1.5 border-b border-r border-white/10 group-hover:border-sky-400/30 transition-colors" />
+
+                          <div className="space-y-4 relative z-10">
+                            <div className="flex items-center justify-between">
+                              <div className={`w-10 h-10 rounded-xl ${solTheme.iconBg} border flex items-center justify-center relative overflow-hidden`}>
+                                <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.04] to-transparent" />
+                                {getLucideIcon(sol.icon, `w-4 h-4 ${solTheme.primary}`)}
+                              </div>
+                            </div>
+                            <div className="space-y-1.5">
+                              <h4 className="text-base font-display font-black text-white group-hover:text-white transition-colors duration-300">{sol.title}</h4>
+                              <p className="text-xs text-slate-400 leading-relaxed font-sans font-light line-clamp-3 group-hover:text-slate-300 transition-colors">
+                                {sol.description}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="border-t border-white/5 pt-4 text-xs relative z-10">
+                            <button
+                              onClick={() => { setSelectedSolution(sol); scrollToTop(); }}
+                              className="w-full py-2.5 bg-white/[0.02] hover:bg-white/[0.05] text-slate-300 hover:text-white font-bold text-[10px] uppercase tracking-wider rounded-xl border border-white/10 hover:border-white/20 transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer"
+                            >
+                              Ver Detalhes do Catálogo
+                              <ChevronRight className={`w-3.5 h-3.5 ${solTheme.primary} group-hover:translate-x-1 transition-transform`} />
+                            </button>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -1346,7 +1447,7 @@ export default function App() {
                           <span className="text-[10px] text-slate-500 leading-none block font-sans font-light mt-0.5">Identificamos {apps.length} pacotes de aplicativos estáticos extraídos na sandbox.</span>
                         </div>
                       </div>
-                      <span className="text-[9px] px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono font-bold uppercase">✓ SANDBOX_CONNECTED</span>
+                      <span className="text-[10px] px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-sans font-bold uppercase">✓ Conectado</span>
                     </div>
                   )}
 
@@ -1406,21 +1507,20 @@ export default function App() {
 
           {/* Column contacts details */}
           <div className="md:col-span-3 space-y-4">
-            <h5 className="text-xs font-extrabold text-white uppercase tracking-widest font-mono">Studio Status</h5>
+            <h5 className="text-xs font-extrabold text-white uppercase tracking-widest font-sans">Desenvolvimento</h5>
             <div className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-[10px] text-emerald-400 font-mono font-bold tracking-wider uppercase">● OPERANDO ONLINE</span>
+              <span className="text-[10px] text-emerald-400 font-sans font-bold tracking-wider uppercase">Atendimento Comercial Ativo</span>
             </div>
             <span className="text-[10px] text-slate-500 block leading-relaxed font-sans">Contate nosso atendimento comercial para alinhar seu projeto e acelerar sua entrega sem taxas ocultas.</span>
           </div>
 
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-white/5 mt-12 pt-8 text-center text-[10px] text-slate-600 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-white/5 mt-12 pt-8 text-center text-[10px] text-slate-600 flex flex-col sm:flex-row items-center justify-between gap-4 font-sans">
           <span>© {new Date().getFullYear()} Suite Hub Software Studio • CNPJ sob registro • Todos os direitos reservados.</span>
           <div className="flex items-center gap-4">
-            <span>GMT: {systemTime}</span>
-            <span>PING: 12ms</span>
+            <span>Hora Local: {systemTime}</span>
           </div>
         </div>
       </footer>
