@@ -32,6 +32,10 @@
     "node_modules",
     "dist",
     "8ª-convenção-de-quartetos",
-    "App Painel Acadêmico"
+    "8-convencao-de-quartetos",
+    "App Painel Acadêmico",
+    "app-painel-academico",
+    "**/*convenção*/**/*",
+    "**/*quartetos*/**/*"
   ]
 }

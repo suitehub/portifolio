@@ -1,7 +1,6 @@
 import fs from "fs";
 import path from "path";
 import AdmZip from "adm-zip";
-import { createExtractorFromData } from "node-unrar-js";
 import { execSync } from "child_process";
 
 const PUBLIC_DIR = path.join(process.cwd(), "public");
@@ -922,6 +921,14 @@ function findPackageJsonDirs(dir) {
       if (entry.isDirectory()) {
         results.push(...findPackageJsonDirs(fullPath));
       } else if (entry.name === "package.json") {
+        // Prevent recursive compilation of parent/sibling main apps
+        try {
+          const pkgContent = JSON.parse(fs.readFileSync(fullPath, "utf-8"));
+          if (pkgContent.scripts && pkgContent.scripts.build && pkgContent.scripts.build.includes("extract-build.js")) {
+            console.log(`  [Anti-Recursion] Skipped compiling nested main app at: ${dir}`);
+            continue;
+          }
+        } catch (err) {}
         results.push(dir);
       }
     }
@@ -954,6 +961,7 @@ function removeDirRecursive(dir) {
 }
 
 async function extractRarArchive(archivePath, destDir) {
+  const { createExtractorFromData } = await import("node-unrar-js");
   const buf = fs.readFileSync(archivePath);
   const extractor = await createExtractorFromData({ data: buf });
   const list = extractor.getFileList();
