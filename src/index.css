@@ -223,6 +223,31 @@ body {
   100% { transform: translateX(-50%); }
 }
 
+@keyframes gradient-ribbon {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.gradient-ribbon-text {
+  background: linear-gradient(
+    90deg,
+    #38bdf8 0%,
+    #818cf8 25%,
+    #e879f9 50%,
+    #818cf8 75%,
+    #38bdf8 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-ribbon 5s linear infinite;
+}
+
 @theme {
   --font-sans: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;

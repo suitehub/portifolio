@@ -512,7 +512,7 @@ export default function App() {
                   {/* Majestic Display Title (Outfit font) */}
                   <h1 className="text-4xl sm:text-6xl xl:text-7xl font-display font-black tracking-tight text-white leading-tight">
                     Aplicativos personalizados que transformam ideias em{" "}
-                    <span className="bg-gradient-to-r from-sky-400 via-indigo-400 to-fuchsia-400 bg-clip-text text-transparent drop-shadow-[0_2px_15px_rgba(56,189,248,0.2)]">
+                    <span className="gradient-ribbon-text drop-shadow-[0_2px_15px_rgba(56,189,248,0.2)]">
                       soluções reais.
                     </span>
                   </h1>
