@@ -554,85 +554,144 @@ export default function App() {
                   </div>
                 </motion.div>
 
-                {/* Right block - Floating mockup device surrounded by space rings */}
+                {/* Right block - Photograph with premium organic backdrop moldura */}
                 <motion.div 
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
                   className="lg:col-span-5 flex justify-center relative min-h-[550px] items-center"
                 >
-                  
-                  {/* Concentric rotating orbits (CosmoQ visual engine) */}
-                  <div className="orbit-ring w-[440px] h-[440px] opacity-25" />
-                  <div className="orbit-ring-fast w-[340px] h-[340px] opacity-35" />
-                  <div className="absolute w-80 h-80 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
+                  {/* The organic vertical backdrop moldura - 3D depth and premium alignment */}
+                  <div className="absolute w-[500px] h-[650px] border border-sky-500/40 organic-blob-moldura flex items-center justify-center overflow-hidden">
+                    {/* Concentric organic internal rings morphing in harmony */}
+                    <div className="absolute inset-4 border border-sky-400/20 organic-blob-moldura opacity-60" style={{ animationDelay: '-1.5s' }} />
+                    <div className="absolute inset-8 border border-sky-500/10 organic-blob-moldura opacity-40" style={{ animationDelay: '-3s' }} />
+                    
+                    {/* Bright, high-intensity circular light in the center of the moldura */}
+                    <div className="absolute w-[380px] h-[380px] bg-sky-500/40 rounded-full blur-[90px] pointer-events-none" />
+                  </div>
 
-                  {/* Elegant floating mockup console frame */}
+                  {/* Photograph container with transparent bottom gradient fade */}
+                  <div className="relative w-[420px] h-[600px] flex items-end justify-center overflow-visible">
+                    {/* Highly visible, beautiful bright circular light behind the person */}
+                    <div className="absolute bottom-20 left-1/2 -translate-x-1/2 w-[350px] h-[350px] bg-sky-500/60 rounded-full blur-[90px] pointer-events-none z-0 opacity-100" />
+                    <div className="absolute bottom-32 left-1/2 -translate-x-1/2 w-[220px] h-[220px] bg-sky-400/50 rounded-full blur-[50px] pointer-events-none z-0 opacity-100" />
+
+                    {/* The real user portrait image */}
+                    <motion.img 
+                      src={getAssetUrl("eu.png")} 
+                      alt="Rick Jorge Castro"
+                      referrerPolicy="no-referrer"
+                      className="relative max-h-[580px] w-auto object-contain z-10 filter drop-shadow-[0_15px_35px_rgba(0,0,0,0.65)] select-none portrait-fade-mask"
+                      animate={{ y: [0, -8, 0] }}
+                      transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                  </div>
+
+                  {/* Fictional subtle decorative markings */}
+                  <div className="absolute top-6 right-6 text-sky-500/30 font-mono text-[8px] tracking-widest uppercase pointer-events-none">
+                    PORTRAIT_NODE // Active
+                  </div>
+                  <div className="absolute bottom-6 left-6 text-slate-700/50 font-mono text-[8px] pointer-events-none">
+                    [ SH_PR_2026 ]
+                  </div>
+                </motion.div>
+              </section>
+
+              {/* 6. OVERVIEW / STATS HUD ROW & SIMULATOR (Bento design) */}
+              <motion.div 
+                {...animFadeInUp}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-8 p-8 glass-card rounded-3xl items-center shadow-2xl relative overflow-hidden glass-reflection border border-white/10"
+              >
+                {/* Decorative background grid node line */}
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:100%_12px] pointer-events-none" />
+
+                {/* Left side: 2x2 grid representing the 4 stats (making it a square block: 2 on top, 2 on bottom) */}
+                <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
+                  {[
+                    { value: "100%", label: "DESENVOLVIMENTO SOB MEDIDA", sub: "Sem templates genéricos" },
+                    { value: "07", label: "ETAPAS DO PROCESSO ÁGIL", sub: "Garantia de ponta a ponta" },
+                    { value: "20+", label: "MÓDULOS TECNOLÓGICOS", sub: "Aceleração de entrega" },
+                    { value: "Zero", label: "CUSTOS DE LICENCIAMENTO", sub: "Propriedade intelectual livre" }
+                  ].map((stat, idx) => (
+                    <div key={idx} className="space-y-1.5 p-5 bg-white/[0.02] border border-white/5 hover:border-sky-500/20 rounded-2xl text-center relative z-10 transition-all duration-300">
+                      <div className="text-3xl sm:text-4xl font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-400 tracking-tight neon-glow-text">{stat.value}</div>
+                      <div className="text-[9px] sm:text-[10px] text-slate-300 font-bold uppercase tracking-wider font-mono">{stat.label}</div>
+                      <div className="text-[8px] sm:text-[9px] text-slate-500 font-medium font-sans leading-none">{stat.sub}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Right side: Elegant floating mockup simulator cell phone */}
+                <div className="lg:col-span-5 flex justify-center relative min-h-[480px] items-center relative z-10">
+                  {/* Glowing background behind simulator inside bento */}
+                  <div className="absolute w-72 h-72 bg-sky-500/5 rounded-full blur-3xl pointer-events-none" />
+                  
+                  {/* Floating mockup console frame */}
                   <motion.div 
-                    animate={{ y: [0, -12, 0] }}
+                    animate={{ y: [0, -10, 0] }}
                     transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                     whileHover={{ scale: 1.03, rotateY: 8, rotateX: 4 }}
                     style={{ perspective: 1000 }}
-                    className="w-[285px] h-[530px] bg-[#05050a]/80 border-[5px] border-white/10 rounded-[2.8rem] shadow-[0_25px_60px_rgba(0,0,0,0.8)] relative overflow-hidden flex flex-col justify-between p-4 select-none backdrop-blur-2xl"
+                    className="w-[260px] h-[480px] bg-[#05050a]/90 border-[5px] border-white/10 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.8)] relative overflow-hidden flex flex-col justify-between p-3.5 select-none backdrop-blur-2xl"
                   >
                     {/* Speaker capsule notch */}
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-4.5 bg-slate-900 rounded-b-2xl border-b border-white/5 z-20" />
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-4 bg-slate-900 rounded-b-xl border-b border-white/5 z-20" />
                     
                     {/* Status panel bar */}
-                    <div className="flex justify-between items-center text-[9px] font-mono text-slate-500 pt-1 px-1 z-10">
+                    <div className="flex justify-between items-center text-[8px] font-mono text-slate-500 pt-0.5 px-1 z-10">
                       <span>15:14</span>
                       <span className="text-sky-400">● SH_LTE_CONNECTED</span>
                     </div>
 
                     {/* Simulated mobile screen interface */}
-                    <div className="flex-1 mt-4 flex flex-col justify-between overflow-hidden relative">
-                      
+                    <div className="flex-1 mt-3 flex flex-col justify-between overflow-hidden relative">
                       {/* Grid background inside mock screen */}
-                      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:10px_10px] pointer-events-none" />
+                      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:9px_9px] pointer-events-none" />
 
-                      <div className="space-y-4 relative z-10">
+                      <div className="space-y-3 relative z-10">
                         {/* Custom logo banner inside phone */}
-                        <div className="flex items-center gap-2 border-b border-white/5 pb-2">
-                          <div className="w-7 h-7 bg-sky-600/20 border border-sky-400/30 rounded-lg text-sky-400 flex items-center justify-center text-xs font-bold font-display">S</div>
+                        <div className="flex items-center gap-2 border-b border-white/5 pb-1.5">
+                          <div className="w-6.5 h-6.5 bg-sky-600/20 border border-sky-400/30 rounded-lg text-sky-400 flex items-center justify-center text-[10px] font-bold font-display">S</div>
                           <div>
-                            <span className="text-[10px] font-bold text-white block tracking-wide">Suite Hub Admin</span>
-                            <span className="text-[7px] text-emerald-400 block font-mono font-medium tracking-wider">DATABASE_SYNCED_OK</span>
+                            <span className="text-[9px] font-bold text-white block tracking-wide">Suite Hub Admin</span>
+                            <span className="text-[6.5px] text-emerald-400 block font-mono font-medium tracking-wider">DATABASE_SYNCED_OK</span>
                           </div>
                         </div>
 
                         {/* Fictional operating chart */}
-                        <div className="p-3 bg-white/[0.02] border border-white/10 rounded-xl space-y-2 backdrop-blur-md">
+                        <div className="p-2.5 bg-white/[0.02] border border-white/10 rounded-xl space-y-1.5 backdrop-blur-md">
                           <div className="flex justify-between items-center">
-                            <span className="text-[7px] text-slate-500 font-mono tracking-widest uppercase">Estatísticas da Operação</span>
-                            <span className="text-[8px] text-sky-400 font-bold font-mono">98.2% EFF</span>
+                            <span className="text-[6.5px] text-slate-500 font-mono tracking-widest uppercase">Estatísticas da Operação</span>
+                            <span className="text-[7.5px] text-sky-400 font-bold font-mono">98.2% EFF</span>
                           </div>
-                          <div className="flex justify-between items-end h-14 gap-1.5 px-0.5">
-                            <div className="w-3 h-[30%] bg-sky-600/40 rounded-t-sm" />
-                            <div className="w-3 h-[55%] bg-sky-600/70 rounded-t-sm" />
-                            <div className="w-3 h-[80%] bg-indigo-500 rounded-t-sm" />
-                            <div className="w-3 h-[45%] bg-sky-500 rounded-t-sm" />
-                            <div className="w-3 h-[95%] bg-emerald-500 rounded-t-sm shadow-[0_0_10px_rgba(16,185,129,0.3)]" />
+                          <div className="flex justify-between items-end h-12 gap-1 px-0.5">
+                            <div className="w-2.5 h-[30%] bg-sky-600/40 rounded-t-sm" />
+                            <div className="w-2.5 h-[55%] bg-sky-600/70 rounded-t-sm" />
+                            <div className="w-2.5 h-[80%] bg-indigo-500 rounded-t-sm" />
+                            <div className="w-2.5 h-[45%] bg-sky-500 rounded-t-sm" />
+                            <div className="w-2.5 h-[95%] bg-emerald-500 rounded-t-sm shadow-[0_0_10px_rgba(16,185,129,0.3)]" />
                           </div>
                         </div>
 
                         {/* Simulated list of items inside device */}
-                        <div className="space-y-2">
-                          <span className="text-[7px] text-slate-500 font-mono block uppercase tracking-widest">Painel Operacional</span>
+                        <div className="space-y-1.5">
+                          <span className="text-[6.5px] text-slate-500 font-mono block uppercase tracking-widest">Painel Operacional</span>
                           
-                          <div className="p-2 bg-white/[0.02] border border-white/5 rounded-lg flex justify-between items-center text-[8px] hover:border-sky-500/20 transition-all">
+                          <div className="p-1.5 bg-white/[0.02] border border-white/5 rounded-lg flex justify-between items-center text-[7.5px] hover:border-sky-500/20 transition-all">
                             <div>
                               <span className="font-bold text-slate-200 block">Dra. Ana Cláudia</span>
-                              <span className="text-slate-500 text-[7px] font-mono">Clínicas • Agendamento Ativo</span>
+                              <span className="text-slate-500 text-[6.5px] font-mono">Clínicas • Agendamento Ativo</span>
                             </div>
-                            <span className="px-1.5 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded font-mono font-bold">14:00</span>
+                            <span className="px-1 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded font-mono font-bold">14:00</span>
                           </div>
 
-                          <div className="p-2 bg-white/[0.02] border border-white/5 rounded-lg flex justify-between items-center text-[8px] hover:border-sky-500/20 transition-all">
+                          <div className="p-1.5 bg-white/[0.02] border border-white/5 rounded-lg flex justify-between items-center text-[7.5px] hover:border-sky-500/20 transition-all">
                             <div>
                               <span className="font-bold text-slate-200 block">Credenciamento RSVP</span>
-                              <span className="text-slate-500 text-[7px] font-mono">Eventos • Leitor de QR Code</span>
+                              <span className="text-slate-500 text-[6.5px] font-mono">Eventos • Leitor QR Code</span>
                             </div>
-                            <span className="px-1.5 py-0.5 bg-sky-500/10 text-sky-400 border border-sky-500/20 rounded font-mono font-bold">ACTIVE</span>
+                            <span className="px-1 py-0.5 bg-sky-500/10 text-sky-400 border border-sky-500/20 rounded font-mono font-bold">ACTIVE</span>
                           </div>
                         </div>
                       </div>
@@ -640,58 +699,16 @@ export default function App() {
                       {/* Main bottom launcher click */}
                       <button 
                         onClick={() => { setActiveTab("portfolio"); scrollToTop(); }}
-                        className="w-full py-2.5 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white font-bold text-[9px] uppercase tracking-wider rounded-lg transition-all shadow-md hover:shadow-sky-500/20 cursor-pointer z-10"
+                        className="w-full py-2 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white font-bold text-[8.5px] uppercase tracking-wider rounded-lg transition-all shadow-md hover:shadow-sky-500/20 cursor-pointer z-10"
                       >
                         Abrir Laboratório de Demos
                       </button>
                     </div>
 
                     {/* Fictional Home pill indicator */}
-                    <div className="w-20 h-1 bg-slate-800 rounded-full mx-auto mt-2" />
+                    <div className="w-16 h-1 bg-slate-800 rounded-full mx-auto mt-1.5" />
                   </motion.div>
-
-                  {/* Absolute Cyber Badge Card floating */}
-                  <motion.div 
-                    animate={{ y: [0, -10, 0] }}
-                    transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                    className="absolute -bottom-4 -right-2 bg-[#05050a]/90 border border-white/10 p-3.5 rounded-2xl shadow-[0_10px_35px_rgba(0,0,0,0.5)] flex items-center gap-3 max-w-[190px] backdrop-blur-xl hover:border-sky-500/30 transition-all duration-300"
-                  >
-                    <span className="p-2.5 bg-sky-500/10 text-sky-400 border border-sky-500/20 rounded-xl shadow-inner">
-                      <Zap className="w-5 h-5 animate-pulse" />
-                    </span>
-                    <div>
-                      <span className="text-[9px] text-slate-500 font-mono block tracking-widest">DEMOS</span>
-                      <span className="text-[11px] font-bold text-white block mt-0.5 font-display">Simuladores Ativos</span>
-                    </div>
-                  </motion.div>
-
-                  {/* Fictional Crosshairs */}
-                  <div className="absolute top-10 left-10 text-slate-700 font-mono text-[9px] select-none pointer-events-none">+ SEC_A9</div>
-                  <div className="absolute bottom-12 left-4 text-slate-700 font-mono text-[9px] select-none pointer-events-none">+ SH_GND</div>
-
-                </motion.div>
-              </section>
-
-              {/* 6. OVERVIEW / STATS HUD ROW (Bento design) */}
-              <motion.div 
-                {...animFadeInUp}
-                className="grid grid-cols-2 lg:grid-cols-4 gap-4 p-6 glass-card rounded-3xl text-center shadow-2xl relative overflow-hidden glass-reflection border border-white/10"
-              >
-                {/* Decorative background grid node line */}
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:100%_12px] pointer-events-none" />
-
-                {[
-                  { value: "100%", label: "DESENVOLVIMENTO SOB MEDIDA", sub: "Sem templates genéricos" },
-                  { value: "07", label: "ETAPAS DO PROCESSO ÁGIL", sub: "Garantia de ponta a ponta" },
-                  { value: "20+", label: "MÓDULOS TECNOLÓGICOS", sub: "Aceleração de entrega" },
-                  { value: "Zero", label: "CUSTOS DE LICENCIAMENTO", sub: "Propriedade intelectual livre" }
-                ].map((stat, idx) => (
-                  <div key={idx} className="space-y-1.5 py-3 border-r border-white/5 last:border-0 relative z-10 px-2">
-                    <div className="text-3xl sm:text-4xl font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-400 tracking-tight neon-glow-text">{stat.value}</div>
-                    <div className="text-[9px] sm:text-[10px] text-slate-300 font-bold uppercase tracking-wider font-mono">{stat.label}</div>
-                    <div className="text-[8px] sm:text-[9px] text-slate-500 font-medium font-sans leading-none">{stat.sub}</div>
-                  </div>
-                ))}
+                </div>
               </motion.div>
 
               {/* 7. SOBRE SECTION WITH PULSING SVG NODE NETWORK DIAGRAM */}
