@@ -591,9 +591,9 @@ export default function App() {
                         const attempt = parseInt(target.getAttribute("data-attempt") || "0", 10);
                         const fallbacks = [
                           getAssetUrl("eu.png"),
-                          getAssetUrl("/eu.png"),
-                          "./eu.png",
-                          "/eu.png",
+                          getAssetUrl("eu.png"),
+                          "eu.png",
+                          "eu.png",
                           "eu.png"
                         ];
                         if (attempt < fallbacks.length) {
