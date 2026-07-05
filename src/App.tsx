@@ -55,6 +55,7 @@ import {
 import { AppSimulator } from "./components/AppSimulator";
 import { SolutionDetails } from "./components/SolutionDetails";
 import StickyProcess from "./components/StickyProcess";
+import euImage from "./assets/eu.png";
 
 // High-tech category stamps for the interactive demo hub
 const categoryStamps = [
@@ -579,7 +580,7 @@ export default function App() {
 
                     {/* The real user portrait image */}
                     <motion.img 
-                      src={getAssetUrl("eu.png")} 
+                      src={euImage} 
                       alt="Rick Jorge Castro"
                       referrerPolicy="no-referrer"
                       className="relative max-h-[580px] w-auto object-contain z-10 filter drop-shadow-[0_15px_35px_rgba(0,0,0,0.65)] select-none portrait-fade-mask"
