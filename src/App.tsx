@@ -55,7 +55,7 @@ import {
 import { AppSimulator } from "./components/AppSimulator";
 import { SolutionDetails } from "./components/SolutionDetails";
 import StickyProcess from "./components/StickyProcess";
-import euImage from "./assets/eu.png";
+import euImage from "./eu.png";
 
 // High-tech category stamps for the interactive demo hub
 const categoryStamps = [
