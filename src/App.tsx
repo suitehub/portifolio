@@ -586,6 +586,21 @@ export default function App() {
                       className="relative max-h-[580px] w-auto object-contain z-10 filter drop-shadow-[0_15px_35px_rgba(0,0,0,0.65)] select-none portrait-fade-mask"
                       animate={{ y: [0, -8, 0] }}
                       transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        const attempt = parseInt(target.getAttribute("data-attempt") || "0", 10);
+                        const fallbacks = [
+                          getAssetUrl("eu.png"),
+                          getAssetUrl("/eu.png"),
+                          "./eu.png",
+                          "/eu.png",
+                          "eu.png"
+                        ];
+                        if (attempt < fallbacks.length) {
+                          target.setAttribute("data-attempt", String(attempt + 1));
+                          target.src = fallbacks[attempt];
+                        }
+                      }}
                     />
                   </div>
 
