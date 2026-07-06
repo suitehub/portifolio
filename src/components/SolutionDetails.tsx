@@ -90,7 +90,7 @@ export function SolutionDetails({ solution, onBack }: SolutionDetailsProps) {
 
             <div className="flex flex-wrap gap-3">
               <a
-                href={`https://wa.me/5511972499370?text=${encodeURIComponent(`Olá! Gostaria de solicitar um protótipo gratuito para o projeto de ${solution.title} com a Suite Hub.`)}`}
+                href={`https://wa.me/5511959760647?text=${encodeURIComponent(`Olá! Gostaria de solicitar um protótipo gratuito para o projeto de ${solution.title} com a Suite Hub.`)}`}
                 target="_blank"
                 rel="noreferrer"
                 className="px-5 py-3 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl shadow-lg transition-all cursor-pointer inline-flex items-center gap-1.5"
@@ -98,7 +98,7 @@ export function SolutionDetails({ solution, onBack }: SolutionDetailsProps) {
                 Solicitar Protótipo Gratuito
               </a>
               <a
-                href={`https://wa.me/5511972499370?text=${encodeURIComponent(`Olá! Tenho interesse em saber mais sobre o ${solution.title} desenvolvido pela Suite Hub.`)}`}
+                href={`https://wa.me/5511959760647?text=${encodeURIComponent(`Olá! Tenho interesse em saber mais sobre o ${solution.title} desenvolvido pela Suite Hub.`)}`}
                 target="_blank"
                 rel="noreferrer"
                 className="px-5 py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 font-bold text-xs rounded-xl transition-all cursor-pointer inline-flex items-center backdrop-blur-md"
@@ -245,7 +245,7 @@ export function SolutionDetails({ solution, onBack }: SolutionDetailsProps) {
           <p className="text-xs text-slate-400">Solicite um orçamento e descubra como podemos transformar sua ideia em um software profissional.</p>
         </div>
         <a
-          href={`https://wa.me/5511972499370?text=${encodeURIComponent(`Olá! Quero dar início ao projeto do aplicativo: ${solution.title}.`)}`}
+          href={`https://wa.me/5511959760647?text=${encodeURIComponent(`Olá! Quero dar início ao projeto do aplicativo: ${solution.title}.`)}`}
           target="_blank"
           rel="noreferrer"
           className="px-6 py-3 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl shadow-lg transition-all shrink-0 cursor-pointer inline-flex items-center"

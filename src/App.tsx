@@ -419,7 +419,7 @@ export default function App() {
               </span>
             </div>
             <a
-              href={`https://wa.me/5511972499370?text=${encodeURIComponent("Olá! Gostaria de conversar sobre um projeto com a Suite Hub.")}`}
+              href={`https://wa.me/5511959760647?text=${encodeURIComponent("Olá! Gostaria de conversar sobre um projeto com a Suite Hub.")}`}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 px-4.5 py-2.5 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white font-bold text-[11px] uppercase tracking-wider rounded-xl shadow-lg shadow-sky-950/40 hover:shadow-sky-500/25 border border-sky-400/20 hover:scale-103 transition-all duration-300 cursor-pointer"
@@ -472,7 +472,7 @@ export default function App() {
               ))}
               <div className="pt-4 border-t border-white/5 space-y-2">
                 <a
-                  href={`https://wa.me/5511972499370?text=${encodeURIComponent("Olá! Gostaria de falar com o atendimento da Suite Hub.")}`}
+                  href={`https://wa.me/5511959760647?text=${encodeURIComponent("Olá! Gostaria de falar com o atendimento da Suite Hub.")}`}
                   target="_blank"
                   rel="noreferrer"
                   className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl"
@@ -551,7 +551,7 @@ export default function App() {
                     <motion.a
                       whileHover={{ scale: 1.03, y: -2 }}
                       whileTap={{ scale: 0.98 }}
-                      href={`https://wa.me/5511972499370?text=${encodeURIComponent("Olá! Gostaria de solicitar um protótipo gratuito para meu projeto com a Suite Hub.")}`}
+                      href={`https://wa.me/5511959760647?text=${encodeURIComponent("Olá! Gostaria de solicitar um protótipo gratuito para meu projeto com a Suite Hub.")}`}
                       target="_blank"
                       rel="noreferrer"
                       className="w-full sm:w-auto px-7 py-4 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-sky-500/15 hover:shadow-sky-500/25 transition-all duration-300 flex items-center justify-center gap-2 border border-sky-400/20 cursor-pointer"
@@ -1199,7 +1199,7 @@ export default function App() {
                     </div>
 
                     <a
-                      href={`https://wa.me/5511972499370?text=${encodeURIComponent("Olá! Tenho uma ideia de projeto 100% personalizado e gostaria de desenvolvê-lo com a Suite Hub.")}`}
+                      href={`https://wa.me/5511959760647?text=${encodeURIComponent("Olá! Tenho uma ideia de projeto 100% personalizado e gostaria de desenvolvê-lo com a Suite Hub.")}`}
                       target="_blank"
                       rel="noreferrer"
                       className="w-full py-3 bg-gradient-to-r from-indigo-600/30 to-indigo-600/15 hover:from-indigo-600 hover:to-indigo-500 text-white font-bold text-[10px] uppercase tracking-wider rounded-xl border border-indigo-400/30 hover:shadow-[0_4px_20px_rgba(99,102,241,0.3)] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer backdrop-blur-sm relative z-10"
@@ -1453,7 +1453,7 @@ export default function App() {
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto pt-4 relative z-10">
                   <a
-                    href={`https://wa.me/5511972499370?text=${encodeURIComponent("Olá! Gostaria de solicitar um protótipo gratuito para meu aplicativo personalizado com a Suite Hub.")}`}
+                    href={`https://wa.me/5511959760647?text=${encodeURIComponent("Olá! Gostaria de solicitar um protótipo gratuito para meu aplicativo personalizado com a Suite Hub.")}`}
                     target="_blank"
                     rel="noreferrer"
                     className="w-full sm:w-auto px-7 py-3.5 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-sky-600/20 transition-all duration-300 cursor-pointer inline-flex items-center justify-center gap-1.5 border border-sky-400/10"
@@ -1461,7 +1461,7 @@ export default function App() {
                     Solicitar Protótipo Gratuito
                   </a>
                   <a
-                    href={`https://wa.me/5511972499370?text=${encodeURIComponent("Olá! Gostaria de falar no WhatsApp com a Suite Hub.")}`}
+                    href={`https://wa.me/5511959760647?text=${encodeURIComponent("Olá! Gostaria de falar no WhatsApp com a Suite Hub.")}`}
                     target="_blank"
                     rel="noreferrer"
                     className="w-full sm:w-auto px-7 py-3.5 bg-white/[0.02] hover:bg-white/[0.08] border border-white/10 text-slate-300 font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 inline-flex items-center justify-center gap-2 backdrop-blur-md hover:text-white"
@@ -1750,7 +1750,7 @@ export default function App() {
 
                       <div className="pt-2">
                         <a
-                          href={`https://wa.me/5511972499370?text=${encodeURIComponent(`Olá! Gostaria de falar sobre o desenvolvimento de um aplicativo na vertical de ${categoryStamps.find(s => s.id === selectedCategory)?.name} com a Suite Hub.`)}`}
+                          href={`https://wa.me/5511959760647?text=${encodeURIComponent(`Olá! Gostaria de falar sobre o desenvolvimento de um aplicativo na vertical de ${categoryStamps.find(s => s.id === selectedCategory)?.name} com a Suite Hub.`)}`}
                           target="_blank"
                           rel="noreferrer"
                           className="inline-flex items-center gap-2 px-5 py-2.5 bg-sky-600 hover:bg-sky-500 text-white font-extrabold text-[10px] uppercase tracking-wider rounded-xl shadow-lg transition-all cursor-pointer"
@@ -1804,7 +1804,7 @@ export default function App() {
               Transformamos ideias em Landing Pages, Sistemas, Aplicativos e SaaS personalizados. Desenvolvemos soluções sob medida para automatizar processos, fortalecer marcas e impulsionar o crescimento de negócios, organizações e projetos.
             </p>
             <div className="flex items-center gap-3 text-slate-500 text-xs font-mono">
-              <a href="https://wa.me/5511972499370" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">WhatsApp Comercial</a>
+              <a href="https://wa.me/5511959760647" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">WhatsApp Comercial</a>
             </div>
           </div>
 
@@ -1828,7 +1828,7 @@ export default function App() {
                 </button>
               </li>
               <li>
-                <a href="https://wa.me/5511972499370?text=Ol%C3%A1!%20Gostaria%20de%20falar%20com%20o%20atendimento%20da%20Suite%20Hub." target="_blank" rel="noreferrer" className="hover:text-white transition-colors cursor-pointer text-left font-sans font-light inline-block">
+                <a href="https://wa.me/5511959760647?text=Ol%C3%A1!%20Gostaria%20de%20falar%20com%20o%20atendimento%20da%20Suite%20Hub." target="_blank" rel="noreferrer" className="hover:text-white transition-colors cursor-pointer text-left font-sans font-light inline-block">
                   Falar Conosco
                 </a>
               </li>

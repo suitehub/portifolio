@@ -188,8 +188,48 @@ function StepBlock({ step, index, activeStep, setActiveStep, registerRef }: Step
             </div>
           )}
 
-          {/* Step 2: PLANEJAMENTO */}
+          {/* Step 2: PROTÓTIPO */}
           {index === 1 && (
+            <div className="relative flex items-center justify-center w-full h-full max-h-[220px] py-2">
+              <div className="w-[120px] h-[190px] bg-[#050508] border-[3px] border-white/10 rounded-[1rem] relative overflow-hidden flex flex-col justify-between p-1.5 shadow-2xl">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-2 bg-slate-900 rounded-b-md border-b border-white/5 z-20" />
+                <div className="flex-1 mt-2 flex flex-col justify-between relative overflow-hidden">
+                  <div className="space-y-1 relative z-10 pt-0.5">
+                    <div className="flex items-center justify-between border-b border-white/5 pb-0.5">
+                      <span className="text-[6px] font-bold text-white">SuiteApp</span>
+                      <Sparkles className="w-1.5 h-1.5 text-fuchsia-400 animate-spin" />
+                    </div>
+                    <motion.div 
+                      animate={{ 
+                        scale: [1, 0.96, 1],
+                        borderColor: ["rgba(255,255,255,0.1)", "rgba(232,121,249,0.6)", "rgba(255,255,255,0.1)"]
+                      }}
+                      transition={{ repeat: Infinity, duration: 2.2, repeatDelay: 1 }}
+                      className="p-1 bg-white/[0.02] border border-white/10 rounded-md space-y-0.5 text-left"
+                    >
+                      <div className="h-0.5 w-5 bg-fuchsia-500/30 rounded" />
+                      <div className="h-0.5 w-8 bg-slate-600/30 rounded" />
+                    </motion.div>
+                  </div>
+                  <div className="h-4.5 bg-fuchsia-600/20 border border-fuchsia-500/30 rounded-md flex items-center justify-center text-[6px] font-bold text-fuchsia-400 uppercase tracking-widest relative overflow-hidden">
+                    Testar_
+                  </div>
+                </div>
+                <motion.div 
+                   animate={{ 
+                    x: [12, 4, 12], 
+                    y: [80, 50, 80],
+                    scale: [1, 0.85, 1]
+                  }}
+                  transition={{ repeat: Infinity, duration: 2.2, repeatDelay: 1 }}
+                  className="absolute bottom-1/3 right-1/4 w-3 h-3 bg-fuchsia-400 rounded-full border border-white/30 shadow-lg pointer-events-none z-30"
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Step 3: PLANEJAMENTO */}
+          {index === 2 && (
             <div className="relative grid grid-cols-2 gap-3 w-full max-w-[280px] p-3 bg-[#030305]/60 border border-indigo-500/10 rounded-xl shadow-inner my-4">
               <div className="absolute inset-0 bg-indigo-500/[0.02] border border-indigo-500/20 rounded-xl pointer-events-none" />
               
@@ -226,46 +266,6 @@ function StepBlock({ step, index, activeStep, setActiveStep, registerRef }: Step
                   </div>
                 </div>
                 <span className="px-1 py-0.5 bg-emerald-500/10 border border-emerald-500/20 rounded text-[6px] font-mono text-emerald-400 font-bold">SECURE</span>
-              </div>
-            </div>
-          )}
-
-          {/* Step 3: PROTÓTIPO */}
-          {index === 2 && (
-            <div className="relative flex items-center justify-center w-full h-full max-h-[220px] py-2">
-              <div className="w-[120px] h-[190px] bg-[#050508] border-[3px] border-white/10 rounded-[1rem] relative overflow-hidden flex flex-col justify-between p-1.5 shadow-2xl">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-2 bg-slate-900 rounded-b-md border-b border-white/5 z-20" />
-                <div className="flex-1 mt-2 flex flex-col justify-between relative overflow-hidden">
-                  <div className="space-y-1 relative z-10 pt-0.5">
-                    <div className="flex items-center justify-between border-b border-white/5 pb-0.5">
-                      <span className="text-[6px] font-bold text-white">SuiteApp</span>
-                      <Sparkles className="w-1.5 h-1.5 text-fuchsia-400 animate-spin" />
-                    </div>
-                    <motion.div 
-                      animate={{ 
-                        scale: [1, 0.96, 1],
-                        borderColor: ["rgba(255,255,255,0.1)", "rgba(232,121,249,0.6)", "rgba(255,255,255,0.1)"]
-                      }}
-                      transition={{ repeat: Infinity, duration: 2.2, repeatDelay: 1 }}
-                      className="p-1 bg-white/[0.02] border border-white/10 rounded-md space-y-0.5 text-left"
-                    >
-                      <div className="h-0.5 w-5 bg-fuchsia-500/30 rounded" />
-                      <div className="h-0.5 w-8 bg-slate-600/30 rounded" />
-                    </motion.div>
-                  </div>
-                  <div className="h-4.5 bg-fuchsia-600/20 border border-fuchsia-500/30 rounded-md flex items-center justify-center text-[6px] font-bold text-fuchsia-400 uppercase tracking-widest relative overflow-hidden">
-                    Testar_
-                  </div>
-                </div>
-                <motion.div 
-                   animate={{ 
-                    x: [12, 4, 12], 
-                    y: [80, 50, 80],
-                    scale: [1, 0.85, 1]
-                  }}
-                  transition={{ repeat: Infinity, duration: 2.2, repeatDelay: 1 }}
-                  className="absolute bottom-1/3 right-1/4 w-3 h-3 bg-fuchsia-400 rounded-full border border-white/30 shadow-lg pointer-events-none z-30"
-                />
               </div>
             </div>
           )}
