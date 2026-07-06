@@ -1038,7 +1038,7 @@ export default function App() {
                       onClick={() => { setActiveTab("portfolio"); scrollToTop(); }}
                       className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-sky-500/40 text-xs font-bold text-sky-400 hover:text-white transition-all cursor-pointer backdrop-blur-sm"
                     >
-                      <span>Ver Depoimentos de Parceiros</span>
+                      <span>Explorar Nossas Demonstrações</span>
                       <ChevronRight className="w-4 h-4 text-sky-400" />
                     </button>
                   </div>
@@ -1293,52 +1293,133 @@ export default function App() {
 
               </section>
 
-              {/* 11. DEPOIMENTOS DE PARCEIROS (Editorial Vibe) */}
-              <section id="depoimentos" className="space-y-12 relative">
+              {/* 11. EXPLORE NOSSAS DEMONSTRAÇÕES (High fidelity interactive preview) */}
+              <section id="demonstracoes" className="space-y-12 relative py-4">
                 
                 {/* Horizontal line */}
                 <div className="absolute top-[-50px] left-0 right-0 grid-line-x opacity-10" />
 
-                <header className="text-center max-w-3xl mx-auto space-y-3">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold uppercase tracking-wider">
-                    Depoimentos de Sucesso
+                <header className="text-center max-w-3xl mx-auto space-y-4">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold uppercase tracking-wider">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    Laboratório Interativo
                   </div>
-                  <h2 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight">
-                    O que dizem os nossos parceiros
+                  <h2 className="text-3xl sm:text-5xl font-display font-black text-white tracking-tight leading-tight">
+                    Explore nossas demonstrações
                   </h2>
                   <p className="text-slate-400 text-sm sm:text-base leading-relaxed font-sans font-light">
-                    Confira relatos reais de líderes religiosos, médicos e gestores de tecnologia que escalaram com a Suite Hub.
+                    Conheça algumas das soluções desenvolvidas pela Suite Hub. Navegue pelas demonstrações, descubra funcionalidades e veja na prática como nossos sistemas podem transformar ideias em soluções reais.
                   </p>
                 </header>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {testimonialsData.map((test, index) => (
+                {/* Staggered cards for demonstrations */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-4">
+                  {mockPortfolioProjects.map((project, index) => (
                     <motion.div 
-                      key={test.id} 
+                      key={project.id} 
                       {...animFadeInUp}
-                      className="p-6 glass-card rounded-2xl flex flex-col justify-between space-y-6 relative shadow-xl overflow-hidden glowing-hover-card"
+                      className="group p-5 bg-slate-950/40 border border-white/5 hover:border-emerald-500/30 rounded-2xl flex flex-col justify-between space-y-5 relative shadow-xl overflow-hidden transition-all duration-300 backdrop-blur-md"
                     >
-                      {/* Subtle quoting watermarks */}
-                      <span className="absolute top-3 right-6 text-sky-500/5 text-7xl font-serif select-none pointer-events-none">“</span>
+                      {/* Subtle gradient background glow on card hover */}
+                      <div className="absolute -inset-px bg-gradient-to-br from-emerald-500/10 to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none" />
                       
-                      <p className="text-[11px] sm:text-xs text-slate-300 leading-relaxed italic font-sans font-light relative z-10">
-                        "{test.content}"
-                      </p>
- 
-                      <div className="flex items-center gap-3 border-t border-white/5 pt-4 z-10 relative">
-                        <img 
-                          src={test.avatar} 
-                          alt={test.name} 
-                          referrerPolicy="no-referrer"
-                          className="w-10 h-10 organic-blob-moldura object-cover border border-white/10 shadow-md"
-                        />
-                        <div>
-                          <span className="text-xs font-bold text-white block font-display">{test.name}</span>
-                          <span className="text-[9px] text-slate-500 font-mono uppercase tracking-wider block">{test.role} • {test.company}</span>
+                      <div className="space-y-4 relative z-10">
+                        {/* Mock browser header */}
+                        <div className="flex items-center justify-between border-b border-white/5 pb-3">
+                          <div className="flex items-center gap-1.5">
+                            <span className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
+                            <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
+                            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/60" />
+                          </div>
+                          <span className="text-[10px] text-slate-500 font-mono tracking-wider uppercase bg-white/5 px-2 py-0.5 rounded-md">
+                            {project.category}
+                          </span>
                         </div>
+
+                        {/* Image wrapper with high-tech hover zoom and modern corner frame styling */}
+                        <div className="relative aspect-video rounded-xl overflow-hidden border border-white/10 bg-slate-900 shadow-inner group-hover:border-emerald-500/20 transition-colors duration-300">
+                          <img 
+                            src={getAssetUrl(project.image)} 
+                            alt={project.name} 
+                            referrerPolicy="no-referrer"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-60" />
+                          
+                          {/* Live pulse indicator in the corner */}
+                          <div className="absolute bottom-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-950/85 border border-emerald-500/30 backdrop-blur-sm">
+                            <div className="relative flex h-2 w-2">
+                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                            </div>
+                            <span className="text-[9px] text-emerald-400 font-mono font-bold tracking-widest uppercase">DEMO ATIVA</span>
+                          </div>
+                        </div>
+
+                        <div className="space-y-2">
+                          <h3 className="text-lg font-bold text-white font-display group-hover:text-emerald-400 transition-colors">
+                            {project.name}
+                          </h3>
+                          <p className="text-xs text-slate-400 leading-relaxed font-sans font-light line-clamp-3">
+                            {project.description}
+                          </p>
+                        </div>
+
+                        {/* Key features of this demo */}
+                        <div className="pt-2 space-y-1.5">
+                          <span className="text-[9px] text-slate-500 font-mono tracking-widest uppercase block">Destaques da Solução:</span>
+                          <div className="flex flex-wrap gap-1.5">
+                            {project.features.slice(0, 3).map((feat, fIdx) => (
+                              <span key={fIdx} className="text-[10px] text-slate-300 bg-white/[0.03] border border-white/5 px-2 py-0.5 rounded-md font-sans">
+                                ✓ {feat}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Action trigger button */}
+                      <div className="relative z-10 pt-2">
+                        <button
+                          onClick={() => {
+                            setActiveTab("portfolio");
+                            setActiveSimulatorProject(project);
+                            scrollToTop();
+                          }}
+                          className="w-full py-2.5 px-4 bg-white/[0.02] group-hover:bg-emerald-500/10 border border-white/5 group-hover:border-emerald-500/20 text-slate-300 group-hover:text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                        >
+                          <Cpu className="w-4 h-4 text-emerald-400 group-hover:rotate-45 transition-transform duration-500" />
+                          <span>Testar Aplicativo</span>
+                        </button>
                       </div>
                     </motion.div>
                   ))}
+                </div>
+
+                {/* Highly noticeable, creative center call-to-action button to the portfolio tab */}
+                <div className="flex flex-col items-center justify-center pt-8 text-center space-y-4">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    className="relative p-0.5 rounded-2xl overflow-hidden bg-gradient-to-r from-emerald-500 via-sky-500 to-indigo-600 shadow-[0_0_30px_rgba(16,185,129,0.15)] group"
+                  >
+                    <button
+                      onClick={() => {
+                        setActiveTab("portfolio");
+                        setActiveSimulatorProject(null);
+                        scrollToTop();
+                      }}
+                      className="px-8 py-4 bg-[#030306] hover:bg-slate-950 text-white font-extrabold text-xs uppercase tracking-widest rounded-[14px] transition-all duration-300 flex items-center gap-3 cursor-pointer select-none"
+                    >
+                      <Sparkles className="w-4 h-4 text-emerald-400 animate-spin" style={{ animationDuration: '3s' }} />
+                      <span>Conhecer Portfólio & Demonstrações</span>
+                      <ArrowRight className="w-4 h-4 text-sky-400 group-hover:translate-x-1.5 transition-transform" />
+                    </button>
+                  </motion.div>
+                  <p className="text-[10px] text-slate-500 font-mono uppercase tracking-wider">
+                    Sistemas 100% interativos simulados direto no seu navegador
+                  </p>
                 </div>
 
               </section>
