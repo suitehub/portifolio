@@ -149,16 +149,24 @@ export default function App() {
 
   const getBaseUrl = () => {
     const loc = window.location;
-    let base = "/";
-    if (loc.hostname.endsWith("github.io")) {
-      const segments = loc.pathname.split("/").filter(Boolean);
-      if (segments.length > 0) {
-        base = `/${segments[0]}/`;
-      }
-    } else {
-      base = "/";
+    const path = loc.pathname;
+    
+    // Split pathname into segments and remove empty ones
+    const segments = path.split("/").filter(Boolean);
+    
+    // If there are no segments, we are at the root
+    if (segments.length === 0) return "/";
+    
+    // If the last segment is a file (contains a dot like index.html), remove it
+    if (segments[segments.length - 1].includes(".")) {
+      segments.pop();
     }
-    return base;
+    
+    // If there are no segments left, return root
+    if (segments.length === 0) return "/";
+    
+    // Otherwise, build the base URL from the remaining directory segments
+    return `/${segments.join("/")}/`;
   };
 
   const getAssetUrl = (path: string) => {
@@ -588,7 +596,7 @@ export default function App() {
 
                     {/* The real user portrait image */}
                     <motion.img 
-                      src={getAssetUrl("./eu.png")} 
+                      src={getAssetUrl("/eu.png")} 
                       alt="Rick Jorge Castro"
                       referrerPolicy="no-referrer"
                       className="relative max-h-[580px] w-auto object-contain z-10 filter drop-shadow-[0_15px_35px_rgba(0,0,0,0.65)] select-none portrait-fade-mask"
@@ -599,8 +607,6 @@ export default function App() {
                         const attempt = parseInt(target.getAttribute("data-attempt") || "0", 10);
                         const fallbacks = [
                           getAssetUrl("eu.png"),
-                          getAssetUrl("/eu.png"),
-                          "./eu.png",
                           "/eu.png",
                           "eu.png"
                         ];
