@@ -696,7 +696,7 @@ export default function App() {
 
                       <div className="mt-5 space-y-1 relative z-10">
                         <span className="text-4xl md:text-5xl font-display font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indigo-300 to-indigo-400 drop-shadow-[0_2px_10px_rgba(56,189,248,0.15)] block">
-                          12
+                          +20
                         </span>
                         <h3 className="text-sm font-semibold text-slate-100 uppercase tracking-wider font-mono">
                           Projetos desenvolvidos

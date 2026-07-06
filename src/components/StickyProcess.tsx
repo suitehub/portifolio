@@ -22,6 +22,7 @@ interface Step {
   icon: any;
   color: string;
   logs: string[];
+  highlights: string[];
 }
 
 interface StepBlockProps {
@@ -32,6 +33,38 @@ interface StepBlockProps {
   setActiveStep: (index: number) => void;
   registerRef: (el: any, index: number) => void;
 }
+
+const getStepTagStyles = (num: number) => {
+  switch (num) {
+    case 1: return { text: "text-sky-400", border: "border-sky-500/20", bg: "bg-sky-500/5", dot: "bg-sky-400" };
+    case 2: return { text: "text-purple-400", border: "border-purple-500/20", bg: "bg-purple-500/5", dot: "bg-purple-400" };
+    case 3: return { text: "text-pink-400", border: "border-pink-500/20", bg: "bg-pink-500/5", dot: "bg-pink-400" };
+    case 4: return { text: "text-amber-500", border: "border-amber-500/20", bg: "bg-amber-500/5", dot: "bg-amber-500" };
+    case 5: return { text: "text-emerald-400", border: "border-emerald-500/20", bg: "bg-emerald-500/5", dot: "bg-emerald-400" };
+    case 6: return { text: "text-violet-400", border: "border-violet-500/20", bg: "bg-violet-500/5", dot: "bg-violet-400" };
+    case 7: return { text: "text-cyan-400", border: "border-cyan-500/20", bg: "bg-cyan-500/5", dot: "bg-cyan-400" };
+    default: return { text: "text-sky-400", border: "border-sky-500/20", bg: "bg-sky-500/5", dot: "bg-sky-400" };
+  }
+};
+
+const parseHighlight = (text: string) => {
+  let colorClass = "bg-emerald-500 shadow-[0_0_8px_#10b981]";
+  let cleanText = text;
+  if (text.startsWith("🟢")) {
+    colorClass = "bg-[#22c55e] shadow-[0_0_8px_#22c55e]";
+    cleanText = text.substring(2).trim();
+  } else if (text.startsWith("🟣")) {
+    colorClass = "bg-[#a855f7] shadow-[0_0_8px_#a855f7]";
+    cleanText = text.substring(2).trim();
+  } else if (text.startsWith("🔵")) {
+    colorClass = "bg-[#3b82f6] shadow-[0_0_8px_#3b82f6]";
+    cleanText = text.substring(2).trim();
+  } else if (text.startsWith("🟠")) {
+    colorClass = "bg-[#f97316] shadow-[0_0_8px_#f97316]";
+    cleanText = text.substring(2).trim();
+  }
+  return { colorClass, cleanText };
+};
 
 function StepBlock({ step, index, activeStep, setActiveStep, registerRef }: StepBlockProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -54,6 +87,8 @@ function StepBlock({ step, index, activeStep, setActiveStep, registerRef }: Step
     }
   });
 
+  const tagStyles = getStepTagStyles(step.number);
+
   return (
     <motion.div
       ref={(el) => {
@@ -66,7 +101,8 @@ function StepBlock({ step, index, activeStep, setActiveStep, registerRef }: Step
       {/* LEFT COLUMN: Step content & description */}
       <div className="lg:col-span-5 flex flex-col justify-center space-y-4">
         
-        <div className={`inline-flex self-start items-center gap-2 px-2.5 py-0.5 rounded-md text-[10px] font-mono font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r ${step.color} border border-sky-500/10 bg-sky-500/5`}>
+        <div className={`inline-flex self-start items-center gap-2 px-3.5 py-1 rounded-md text-[10px] font-mono font-bold tracking-widest ${tagStyles.text} ${tagStyles.border} ${tagStyles.bg} border`}>
+          <span className={`w-1.5 h-1.5 rounded-full ${tagStyles.dot} animate-pulse`} />
           ETAPA 0{step.number} • {step.tag}
         </div>
         
@@ -78,33 +114,39 @@ function StepBlock({ step, index, activeStep, setActiveStep, registerRef }: Step
           {step.description}
         </p>
 
-        <div className="pt-2 flex flex-wrap gap-3 text-[10px] font-mono text-slate-500">
-          <span className="flex items-center gap-1">
-            <CheckCircle2 className="w-3.5 h-3.5 text-sky-400" /> Sincronização Ágil
-          </span>
-          <span className="flex items-center gap-1">
-            <CheckCircle2 className="w-3.5 h-3.5 text-indigo-400" /> Qualidade Garantida
-          </span>
+        <div className="pt-2 flex flex-wrap gap-x-6 gap-y-1.5 text-xs font-mono font-medium text-slate-100">
+          {step.highlights.map((hl, hlIdx) => {
+            const { colorClass, cleanText } = parseHighlight(hl);
+            return (
+              <span key={hlIdx} className="flex items-center gap-2">
+                <span className={`w-2 h-2 rounded-full ${colorClass}`} />
+                <span>{cleanText}</span>
+              </span>
+            );
+          })}
         </div>
 
         {/* Live Terminal logs at the bottom */}
-        <div className="bg-[#050508]/85 border border-white/5 rounded-xl p-3 font-mono text-[9px] text-slate-400 space-y-1 h-24 overflow-hidden flex flex-col justify-end relative shadow-inner">
-          <div className="absolute top-1.5 left-2.5 flex items-center justify-between right-2.5 border-b border-white/5 pb-1">
-            <span className="text-[7px] text-slate-500 flex items-center gap-1">
-              <Terminal className="w-2.5 h-2.5 text-sky-400 animate-pulse" /> SYSTEM LOGS_
+        <div className="bg-[#050508]/85 border border-white/5 rounded-xl p-4 font-mono text-[10px] text-slate-400 space-y-2 relative shadow-inner mt-4">
+          <div className="flex items-center justify-between pb-1.5 border-b border-white/5">
+            <span className="text-[8px] text-slate-500 flex items-center gap-1.5">
+              <Terminal className="w-3 h-3 text-sky-400 animate-pulse" /> SYSTEM LOGS_
             </span>
-            <span className="text-[7px] text-sky-400/80">LATENCY_OK</span>
+            <span className="text-[8px] text-sky-400/80 font-bold">LATENCY_OK</span>
           </div>
-          <div className="space-y-1 pt-3">
-            {step.logs.map((log, lIdx) => (
-              <div 
-                key={lIdx}
-                className={`truncate ${lIdx === step.logs.length - 1 ? "text-sky-400 font-bold" : "text-slate-500"}`}
-              >
-                <span className="text-slate-600 mr-1.5">&gt;</span>
-                {log}
-              </div>
-            ))}
+          <div className="space-y-1.5 pt-1">
+            {step.logs.map((log, lIdx) => {
+              const isLast = lIdx === step.logs.length - 1;
+              return (
+                <div 
+                  key={lIdx}
+                  className={`truncate flex items-center gap-2 ${isLast ? "text-sky-400 font-bold" : "text-slate-500"}`}
+                >
+                  <span className="text-slate-600 shrink-0">&gt;</span>
+                  <span>{log}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -357,95 +399,102 @@ export default function StickyProcess() {
       icon: MessageSquare,
       color: "from-sky-400 to-blue-500",
       logs: [
-        "SYSTEM: Iniciando mapeamento de requisitos...",
-        "STATUS: Entrevistas com stakeholders agendadas",
-        "INPUT: Analisando processos e fluxos atuais",
-        "SUCCESS: Escopo preliminar formatado com sucesso"
-      ]
+        "Etapa 1",
+        "✓ Reunião realizada",
+        "✓ Objetivos definidos",
+        "✓ Escopo inicial aprovado"
+      ],
+      highlights: ["🟢 Você participa", "🟢 Tudo alinhado"]
     },
     {
       number: 2,
-      tag: "ARCHITECT",
-      title: "Planejamento e Escopo",
-      description: "Modelamos a arquitetura de dados escalável no Google Firestore e definimos a espinha dorsal de microsserviços. Otimizamos a infraestrutura para custo próximo a zero e latência mínima.",
-      icon: Compass,
-      color: "from-indigo-400 to-purple-500",
-      logs: [
-        "SYSTEM: Modelando coleções do Firestore...",
-        "RULES: Configurando regras de segurança do banco",
-        "API: Estruturando rotas do servidor Express",
-        "COMPLETED: Arquitetura técnica aprovada!"
-      ]
-    },
-    {
-      number: 3,
       tag: "UI/UX DESIGN",
       title: "Protótipo Navegável",
-      description: "Desenhamos as interfaces de alta fidelidade no Figma. Criamos protótipos interativos para você clicar, testar os fluxos, simular a jornada de uso e validar o visual antes de escrever a primeira linha de código.",
+      description: "Criamos um protótipo interativo para que você visualize, clique, teste, simule a jornada e aprove a experiência do sistema para sugestão ou alterações antes do desenvolvimento começar. (Essa demonstração não possui custo e é sem compromisso)",
       icon: Layers,
       color: "from-fuchsia-400 to-pink-500",
       logs: [
-        "DESIGN: Iniciando layout no Figma...",
-        "FONT: Carregando fontes Inter & Space Grotesk",
-        "UI: Renderizando componentes de alta fidelidade",
-        "PREVIEW: Protótipo clicável gerado e pronto!"
-      ]
+        "Etapa 2",
+        "✓ Protótipo criado",
+        "✓ Fluxos validados",
+        "✓ Layout aprovado"
+      ],
+      highlights: ["🔵 Veja antes de desenvolver", "🔵 Aprove com segurança"]
+    },
+    {
+      number: 3,
+      tag: "ARCHITECT",
+      title: "Planejamento e Escopo",
+      description: "Organizamos todas as funcionalidades, definimos o escopo do projeto e planejamos a estrutura necessária para garantir um desenvolvimento organizado e eficiente. Enviamos um documento com toda a estrutura do projeto e o orçamento.",
+      icon: Compass,
+      color: "from-indigo-400 to-purple-500",
+      logs: [
+        "Etapa 3",
+        "✓ Funcionalidades mapeadas",
+        "✓ Estrutura planejada",
+        "✓ Cronograma definido"
+      ],
+      highlights: ["🟣 Sem surpresas", "🟣 Tudo planejado"]
     },
     {
       number: 4,
       tag: "ENGINEERING",
       title: "Desenvolvimento Ágil",
-      description: "Nossos engenheiros transformam os protótipos aprovados em código TypeScript limpo, modular e ultraleve. Implementamos o frontend responsivo e o sincronizamos com o Firestore em tempo real.",
+      description: "Após a aprovação do protótipo, iniciamos o desenvolvimento do sistema utilizando tecnologias modernas, garantindo desempenho, segurança e escalabilidade.",
       icon: Terminal,
       color: "from-amber-400 to-orange-500",
       logs: [
-        "COMPILING: npm run build:applet...",
-        "VITE: Hot Module Replacement ativo no dev",
-        "MODULES: Login, Dashboard, Chat carregados",
-        "SYNC: Banco de dados sincronizado em 15ms"
-      ]
+        "Etapa 4",
+        "✓ Desenvolvimento iniciado",
+        "✓ Funcionalidades implementadas",
+        "✓ Integrações concluídas"
+      ],
+      highlights: ["🟠 Desenvolvimento sob medida", "🟠 Acompanhamento constante"]
     },
     {
       number: 5,
       tag: "QUALITY ASSURANCE",
       title: "Testes de Homologação",
-      description: "Submetemos o software a rigorosas rotinas de QA. Testamos segurança, responsividade em múltiplos aparelhos, simulações de carga e comportamento offline para garantir robustez absoluta.",
+      description: "Antes da entrega, realizamos diversos testes para garantir que todas as funcionalidades estejam funcionando corretamente em diferentes dispositivos, testamos a segurança, comportamento e simulações para garantir robustez absoluta.",
       icon: Activity,
       color: "from-emerald-400 to-teal-500",
       logs: [
-        "TESTS: Executando suite de testes de segurança...",
-        "MOBILE: Simulando iOS 17 e Android 14 - OK",
-        "LATENCY: Tempo de resposta médio: 42ms - PASS",
-        "SUCCESS: 100% dos testes operacionais validados!"
-      ]
+        "Etapa 5",
+        "✓ Testes realizados",
+        "✓ Ajustes aplicados",
+        "✓ Sistema homologado"
+      ],
+      highlights: ["🟢 Tudo testado", "🟢 Pronto para uso"]
     },
     {
       number: 6,
       tag: "DEPLOYMENT",
       title: "Publicação Oficial",
-      description: "Cuidamos de todo o processo burocrático e técnico para lançar seu app na Apple App Store, Google Play Store ou realizar o deploy em servidores Cloud Run de alta disponibilidade.",
+      description: "Publicamos sua solução e realizamos toda a configuração necessária, de acordo com a sua preferência para que ela esteja disponível e funcionando com segurança.",
       icon: Rocket,
       color: "from-violet-500 to-purple-600",
       logs: [
-        "BUILD: Gerando bundles de produção .ipa e .apk...",
-        "METADATA: Configurando capturas e descrições",
-        "DEPLOY: Enviando para aprovação das lojas",
-        "LIVE: Aplicativo publicado com sucesso!"
-      ]
+        "Etapa 6",
+        "✓ Publicação realizada",
+        "✓ Domínio configurado",
+        "✓ Sistema online"
+      ],
+      highlights: ["🟣 Publicação realizada", "🟣 Sistema disponível"]
     },
     {
       number: 7,
       tag: "EVOLUTION",
       title: "Suporte e Evolução",
-      description: "Após o lançamento, nossa equipe monitora métricas e performance. Oferecemos suporte técnico contínuo para atualizações e implementação de novas funcionalidades sob demanda.",
+      description: "Após a entrega, continuamos acompanhando o projeto com suporte técnico, melhorias e novas funcionalidades conforme a evolução da sua necessidade. (Consulte o prazo de suporte)",
       icon: ShieldCheck,
       color: "from-cyan-400 to-sky-500",
       logs: [
-        "MONITOR: Ativando telemetria de produção...",
-        "UPTIME: 99.99% disponível no Cloud Run",
-        "SECURITY: Monitoramento de conexões ativo",
-        "EVOLUTION: Backlog de novas melhorias aberto"
-      ]
+        "Etapa 7",
+        "✓ Suporte ativo",
+        "✓ Melhorias contínuas",
+        "✓ Novas versões disponíveis"
+      ],
+      highlights: ["🔵 Suporte especializado", "🔵 Melhorias contínuas"]
     }
   ];
 
@@ -491,7 +540,7 @@ export default function StickyProcess() {
           </h2>
         </div>
         <p className="text-slate-400 text-xs sm:text-sm max-w-md font-sans font-light leading-relaxed">
-          Nossa metodologia de 7 etapas combina transparência absoluta, prototipagem ágil e engenharia de software premium. Role para ver o processo avançar.
+          Nossa metodologia de 7 etapas garante que cada projeto seja desenvolvido com planejamento, transparência e acompanhamento em todas as fases. Role para conhecer nosso processo.
         </p>
       </div>
 
