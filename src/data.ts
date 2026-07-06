@@ -3,175 +3,175 @@ import { Solution, ModuleItem, Project, Testimonial, Step, Diferencial } from ".
 export const solutionsData: Solution[] = [
   {
     id: "igrejas",
-    title: "Aplicativo para Igrejas",
+    title: "Sistema para Igrejas",
     icon: "Church",
-    description: "Conecte sua comunidade, gerencie eventos, compartilhe sermões, devocionais e estudos bíblicos integrados diretamente com o Google Firestore.",
-    targetAudience: "Igrejas, ministérios, conselhos e comunidades religiosas.",
+    description: "Centralize eventos, estudos bíblicos, comunicação e atividades da igreja em uma plataforma moderna, organizada e fácil de utilizar.",
+    targetAudience: "Conecte sua igreja em um único lugar.",
     features: [
-      "Acervo de sermões, áudios e vídeos integrados",
-      "Bíblia online com planos de leitura e devocionais diários",
-      "Gestão de células, pequenos grupos e liderança",
-      "Mural de pedidos de oração, intercessão e notícias",
-      "Notificações push em tempo real para avisos importantes",
-      "Cadastro e controle de membros integrado"
+      "Gestão de eventos e programações",
+      "Biblioteca de sermões, estudos e materiais",
+      "Comunicação integrada com a comunidade",
+      "Mural de avisos e notificações importantes",
+      "Acompanhamento de pequenos grupos ou células",
+      "Painel administrativo simples para lideranças"
     ],
     benefits: [
-      "Aumento do engajamento dos membros no dia a dia",
-      "Centralização da comunicação oficial da igreja",
-      "Inclusão digital de idosos com interface simplificada",
-      "Organização digital dos pequenos grupos (células)",
-      "Sincronização imediata de conteúdo pastoral"
+      "Aproximação e engajamento real da sua comunidade",
+      "Centralização de toda a comunicação oficial",
+      "Acesso simplificado e amigável para todas as idades",
+      "Gestão otimizada e organizada das programações",
+      "Disponibilização rápida de materiais pastorais"
     ],
     modules: ["login", "perfis", "dashboard", "chat", "agenda", "calendario", "notificacoes", "upload", "painel-admin", "controle-usuarios"],
-    integrations: ["Google Firestore"],
+    integrations: ["Painel Web Suite Hub"],
     faqs: [
       {
-        question: "Como funciona a segurança e privacidade?",
-        answer: "Utilizamos a infraestrutura de segurança de dados do Google Firestore, garantindo que as informações dos membros fiquem estritamente privadas."
+        question: "Como funciona o acesso dos membros?",
+        answer: "Cada membro pode fazer um cadastro simples para acompanhar as programações, ler estudos e receber comunicados diretamente no celular."
       },
       {
-        question: "Podemos separar o conteúdo por redes ou faixas etárias?",
-        answer: "Sim! É possível organizar grupos de oração, células e canais de notificações específicos para jovens, casais, liderança, etc."
+        question: "Podemos separar o conteúdo por grupos ou ministérios?",
+        answer: "Sim! É possível direcionar avisos e materiais específicos para jovens, casais, lideranças ou outros ministérios da comunidade."
       },
       {
-        question: "O app é publicado oficial no Google Play e App Store?",
-        answer: "Com certeza! Fazemos todo o processo de publicação nas contas oficiais da sua organização."
+        question: "O aplicativo é publicado nas lojas oficiais?",
+        answer: "Sim! Realizamos e acompanhamos todo o processo de publicação oficial no Google Play e na App Store."
       }
     ]
   },
   {
     id: "clinicas",
-    title: "Aplicativo para Clínicas",
+    title: "Sistema para Clínicas",
     icon: "Stethoscope",
-    description: "Simplifique o agendamento de consultas de pacientes, acompanhe escalas médicas e acesse prontuários digitais com rapidez e segurança no banco de dados.",
-    targetAudience: "Clínicas médicas, consultórios odontológicos, psicólogos e profissionais da saúde.",
+    description: "Organize atendimentos, reduza faltas e acompanhe seus pacientes por meio de uma plataforma rápida, segura e intuitiva.",
+    targetAudience: "Mais organização e menos faltas nas consultas.",
     features: [
-      "Agendamento interativo de consultas online 24h",
-      "Lembretes de consultas para pacientes via push e WhatsApp",
-      "Histórico de prontuários digitais estruturado no Firestore",
-      "Controle de escalas e horários disponíveis dos profissionais",
-      "Painel administrativo para controle das secretárias e recepção",
+      "Agendamento inteligente",
+      "Confirmações automáticas via WhatsApp",
+      "Histórico completo de pacientes",
+      "Controle de escalas dos profissionais de saúde",
+      "Painel administrativo para controle da recepção",
       "Perfis completos de pacientes com histórico de visitas"
     ],
     benefits: [
-      "Redução drástica nas faltas de pacientes com lembretes automáticos",
-      "Otimização do fluxo de trabalho da recepção",
-      "Fácil acesso ao histórico de saúde em um só lugar",
-      "Segurança de dados médicos centralizados de forma segura",
-      "Comunicação direta e humanizada com o paciente"
+      "Redução drástica no índice de faltas com avisos automáticos",
+      "Otimização do tempo de atendimento da recepção",
+      "Fácil acesso ao histórico de saúde em poucos cliques",
+      "Total segurança e confidencialidade dos dados",
+      "Atendimento ao paciente de forma muito mais ágil"
     ],
-    modules: ["login", "cadastro", "perfis", "dashboard", "chat", "agenda", "calendario", "notificacoes", "upload", "painel-admin", "controle-usuarios"],
-    integrations: ["Google Firestore"],
+    modules: ["login", "cadastro", "perfis", "dashboard", "chat", "agenda", "calendario", "notificacoes", "upload", "painel-admin", "controle-usuarios", "secretaria-ia"],
+    integrations: ["Notificações Inteligentes"],
     faqs: [
       {
-        question: "Como os dados dos pacientes são salvos?",
-        answer: "Os dados de saúde e cadastros são armazenados de forma isolada e segura no Google Firestore, seguindo rigorosos padrões de conformidade e privacidade."
+        question: "Como os dados dos pacientes são armazenados?",
+        answer: "Todas as informações e históricos de atendimento são mantidos sob rígidos padrões de segurança digital e privacidade de dados."
       },
       {
-        question: "É possível gerenciar múltiplos profissionais na mesma clínica?",
-        answer: "Sim! Cada médico ou profissional tem sua agenda individualizada integrada a um painel geral de recepção."
+        question: "É possível gerenciar mais de um profissional?",
+        answer: "Com certeza! Cada médico ou terapeuta conta com uma agenda individualizada, totalmente conectada ao controle central da clínica."
       }
     ]
   },
   {
     id: "eventos",
-    title: "Aplicativo para Eventos",
+    title: "Plataforma para Eventos",
     icon: "Ticket",
-    description: "Ideal para casamentos, congressos e feiras. Ofereça confirmação de presença (RSVP), credenciamento via QR Code e mural interativo de fotos.",
-    targetAudience: "Produtores de congressos, casamentos, organizadores de festivais e feiras de negócios.",
+    description: "Gerencie inscrições, credenciamento, confirmação de presença e interação com os participantes em uma única plataforma.",
+    targetAudience: "Organize seu evento do início ao fim.",
     features: [
-      "Confirmação de presença online (RSVP) em tempo real",
-      "Credenciamento rápido de participantes através de leitor QR Code",
-      "Mural interativo de fotos para convidados publicarem memórias",
-      "Programação oficial do evento com lista de palestras e atividades",
-      "Localização integrada para guiar os convidados facilmente",
-      "Lista de presentes ou informações detalhadas do evento"
+      "Inscrições online",
+      "Credenciamento por QR Code",
+      "Mural interativo de fotos",
+      "Programação completa do evento atualizada em tempo real",
+      "Informações gerais, mapas e localização para convidados",
+      "Controle ativo de listas de RSVP e convidados"
     ],
     benefits: [
-      "Eliminação de filas e credenciamento ágil na portaria",
-      "Engajamento dos participantes com publicação de fotos e enquetes",
-      "Controle exato da lista de convidados e confirmados",
-      "Visualização rápida de estatísticas de comparecimento",
-      "Sincronização offline-first para credenciamento"
+      "Credenciamento ultrarrápido na portaria sem filas",
+      "Maior interação do público através de feed de fotos",
+      "Visão exata e em tempo real dos confirmados e presentes",
+      "Estatísticas imediatas de comparecimento e satisfação",
+      "Sincronização inteligente de dados durante a entrada"
     ],
     modules: ["login", "cadastro", "perfis", "dashboard", "chat", "agenda", "calendario", "qrcode", "notificacoes", "upload", "painel-admin", "controle-usuarios"],
-    integrations: ["Google Firestore"],
+    integrations: ["Validador de QR Code"],
     faqs: [
       {
-        question: "O credenciamento funciona sem internet estável?",
-        answer: "Sim! O sistema pode validar a lista de QR Codes localmente e sincronizar as presenças no Google Firestore assim que a conexão for restabelecida."
+        question: "O credenciamento exige internet estável o tempo todo?",
+        answer: "Não! A validação de ingressos por QR Code funciona de forma integrada para garantir um fluxo rápido mesmo se houver oscilação de sinal."
       },
       {
-        question: "Como funciona o mural de fotos dos convidados?",
-        answer: "Os convidados tiram fotos pelo app ou fazem upload de imagens que aparecem imediatamente em um feed compartilhado do evento."
+        question: "Como funciona o mural de fotos interativo?",
+        answer: "Os participantes podem enviar suas fotos diretamente pelo aplicativo, criando um mural coletivo de recordações em tempo real."
       }
     ]
   },
   {
     id: "empresarial",
-    title: "Aplicativo Empresarial",
+    title: "Sistema Empresarial",
     icon: "Building",
-    description: "Digitalize a operação de vistorias, ordens de serviço e checklists de equipes externas com fotos e coordenadas geográficas.",
-    targetAudience: "Empresas com equipes externas, prestadoras de serviço, vistorias e assistência técnica.",
+    description: "Centralize a operação da sua empresa em uma única plataforma. Automatize tarefas, acompanhe indicadores e tome decisões com mais rapidez e segurança.",
+    targetAudience: "Tecnologia desenvolvida para impulsionar o seu negócio.",
     features: [
-      "Abertura e controle de Ordens de Serviço (OS) em campo",
-      "Checklists operacionais com obrigatoriedade de fotos de vistoria",
-      "Geolocalização das vistorias registradas na hora",
-      "Assinatura do cliente coletada diretamente na tela do celular",
-      "Feed de notícias internas e avisos corporativos importantes",
-      "Painel web completo para administradores acompanharem o progresso"
+      "Gestão de processos",
+      "Controle de equipes",
+      "Indicadores e relatórios",
+      "Assinatura digital direta na tela do celular",
+      "Central de notícias e comunicados para colaboradores",
+      "Painel web completo para análise e gestão de relatórios"
     ],
     benefits: [
-      "Eliminação total de blocos de papel e preenchimento manual",
-      "Garantia fotográfica e de localização de que o serviço foi prestado",
-      "Acompanhamento em tempo real das equipes externas no mapa",
-      "Histórico de vistorias e relatórios centralizados de forma segura",
-      "Aumento drástico da produtividade das equipes de campo"
+      "Fim do papel e dos controles manuais ineficientes",
+      "Garantia fotográfica e de localização das atividades de campo",
+      "Acompanhamento em tempo real do progresso das tarefas",
+      "Histórico completo de serviços prestados e relatórios consolidados",
+      "Aumento imediato de eficiência operacional e foco da equipe"
     ],
     modules: ["login", "cadastro", "perfis", "dashboard", "chat", "agenda", "qrcode", "notificacoes", "upload", "painel-admin", "controle-usuarios"],
-    integrations: ["Google Firestore"],
+    integrations: ["Assinatura Digital"],
     faqs: [
       {
-        question: "Como o técnico trabalha em locais sem sinal de celular?",
-        answer: "O aplicativo permite preencher relatórios, tirar fotos e colher assinaturas offline. Assim que houver conexão, tudo é enviado ao Google Firestore."
+        question: "Os técnicos conseguem preencher relatórios onde não há sinal?",
+        answer: "Sim! O sistema permite trabalhar offline normalmente. Os dados e fotos são sincronizados automaticamente assim que houver conexão."
       },
       {
-        question: "O painel administrativo é acessível pelo computador?",
-        answer: "Com certeza! Os administradores têm um painel web completo para criar tarefas, delegar OS e monitorar os relatórios enviados."
+        question: "O gestor acompanha o andamento pelo computador?",
+        answer: "Sim! Disponibilizamos um painel administrativo web completo para acompanhamento de ordens de serviço e checklists de qualquer lugar."
       }
     ]
   },
   {
     id: "personalizado",
-    title: "Aplicativo Personalizado",
+    title: "Projeto 100% Personalizado",
     icon: "Settings",
-    description: "Desenhamos e codificamos seu aplicativo do absoluto zero utilizando banco de dados escalável Google Firestore e design exclusivo.",
-    targetAudience: "Startups, empreendedores e negócios com fluxos operacionais únicos.",
+    description: "Não encontrou uma solução ideal? Desenvolvemos Landing Pages, Sistemas, Aplicativos e SaaS totalmente personalizados, planejados exclusivamente para atender às necessidades do seu projeto.",
+    targetAudience: "Desenvolvemos o projeto perfeito para a sua empresa.",
     features: [
-      "Arquitetura sob medida baseada no Google Firestore",
-      "Design de interface (UI/UX) único alinhado com sua marca",
-      "Componentes interativos desenvolvidos sob demanda",
-      "Código limpo, documentado, modular e 100% de sua propriedade",
-      "Acesso completo ao painel de administração web",
-      "Sincronização e atualizações constantes"
+      "Planejamento exclusivo para regras de negócio específicas",
+      "Design de interface (UI/UX) premium focado na usabilidade",
+      "Componentes e módulos desenhados sob medida para seu fluxo",
+      "Código de alta fidelidade e de sua inteira propriedade",
+      "Gerenciador administrativo web customizado",
+      "Liberdade total para evoluir e criar novas funcionalidades"
     ],
     benefits: [
-      "Solução perfeitamente alinhada com seu diferencial competitivo",
-      "Sem cobrança de licenciamento por usuários ou taxas abusivas",
-      "Design moderno que gera alta credibilidade no mercado",
-      "Facilidade extrema para acrescentar novos recursos no futuro",
-      "Acompanhamento dedicado de ponta a ponta na criação"
+      "Solução perfeitamente moldada ao diferencial competitivo do seu negócio",
+      "Sem cobrança de licenciamento por usuário ou anuidades abusivas",
+      "Interface moderna de alto impacto visual que gera valor à sua marca",
+      "Fácil expansão e scalabilidade contínua",
+      "Acompanhamento e consultoria dedicados em todas as fases do projeto"
     ],
     modules: ["login", "cadastro", "perfis", "dashboard", "chat", "agenda", "calendario", "qrcode", "notificacoes", "upload", "painel-admin", "controle-usuarios"],
-    integrations: ["Google Firestore"],
+    integrations: ["API & Integrações customizadas"],
     faqs: [
       {
-        question: "Qual o banco de dados utilizado?",
-        answer: "Utilizamos o Google Firestore, garantindo escalabilidade automática, segurança avançada de ponta e sincronização em tempo real."
+        question: "O código-fonte pertence a quem?",
+        answer: "O código-fonte é 100% de sua propriedade legal e intelectual, garantindo total liberdade e segurança para sua empresa."
       },
       {
-        question: "A Suite Hub oferece suporte após a publicação?",
-        answer: "Sim! Disponibilizamos suporte técnico ativo para garantir que seu aplicativo continue funcionando perfeitamente."
+        question: "Como funciona o suporte técnico após a entrega?",
+        answer: "Fornecemos suporte técnico ativo e acompanhamento pós-lançamento para garantir a evolução contínua da sua aplicação."
       }
     ]
   }
@@ -191,7 +191,8 @@ export const modulesData: ModuleItem[] = [
   { id: "upload", name: "Upload de Arquivos", icon: "UploadCloud", category: "features", description: "Armazenamento de fotos de vistorias, devocionais ou perfis no Firestore." },
   { id: "painel-admin", name: "Painel Administrativo", icon: "Sliders", category: "advanced", description: "Sistema web para administradores controlarem conteúdos e cadastros." },
   { id: "controle-usuarios", name: "Controle de Usuários", icon: "Users", category: "core", description: "Níveis de acesso diferenciados (admin, operador, cliente)." },
-  { id: "analytics", name: "Métricas de Uso", icon: "BarChart3", category: "advanced", description: "Monitoramento simples de acessos e telas mais visitadas no app." }
+  { id: "analytics", name: "Métricas de Uso", icon: "BarChart3", category: "advanced", description: "Monitoramento simples de acessos e telas mais visitadas no app." },
+  { id: "secretaria-ia", name: "Secretária IA", icon: "Bot", category: "integrations", description: "Integração de Inteligência Artificial para recolher informações, receber dicas e ter o controle total de fluxos por ela." }
 ];
 
 export const stepsData: Step[] = [
@@ -203,65 +204,65 @@ export const stepsData: Step[] = [
   {
     number: 2,
     title: "Planejamento e Escopo",
-    description: "Definimos as funcionalidades fundamentais, telas essenciais e a estrutura de dados no Firestore."
+    description: "Organizamos todas as funcionalidades, definimos o escopo do projeto e planejamos a estrutura necessária para garantir um desenvolvimento organizado e eficiente. Enviamos um documento com toda a estrutura do projeto e o orçamento."
   },
   {
     number: 3,
     title: "Protótipo Navegável",
-    description: "Desenhamos as telas do aplicativo para você clicar, testar o fluxo e ajustar tudo visualmente antes do código."
+    description: "Criamos um protótipo interativo para que você visualize, clique, teste, simule a jornada e aprove a experiência do sistema para sugestão ou alterações antes do desenvolvimento começar. (Essa demonstração não possui custo e é sem compromisso)"
   },
   {
     number: 4,
     title: "Desenvolvimento Ágil",
-    description: "Nossos programadores codificam o aplicativo de forma limpa, rápida e otimizada com Firebase Firestore."
+    description: "Após a aprovação do protótipo, iniciamos o desenvolvimento do sistema utilizando tecnologias modernas, garantindo desempenho, segurança e escalabilidade."
   },
   {
     number: 5,
     title: "Testes de Homologação",
-    description: "Realizamos testes rigorosos de funcionamento, usabilidade em diferentes aparelhos e correções finais."
+    description: "Antes da entrega, realizamos diversos testes para garantir que todas as funcionalidades estejam funcionando corretamente em diferentes dispositivos, testamos a segurança, comportamento e simulações para garantir robustez absoluta."
   },
   {
     number: 6,
     title: "Publicação Oficial",
-    description: "Cuidamos de todo o processo para disponibilizar seu aplicativo nas lojas oficiais, ou hospedar seu site em domínio personalizado ou disponibilizamos nosso próprio domínio."
+    description: "Publicamos sua solução e realizamos toda a configuração necessária, de acordo com a sua preferência para que ela esteja disponível e funcionando com segurança."
   },
   {
     number: 7,
     title: "Suporte e Evolução",
-    description: "Oferecemos suporte técnico ativo para garantir estabilidade e realizar melhorias contínuas."
+    description: "Após a entrega, continuamos acompanhando o projeto com suporte técnico, melhorias e novas funcionalidades conforme a evolução da sua necessidade. (Consulte o prazo de suporte)"
   }
 ];
 
 export const differentialsData: Diferencial[] = [
   {
-    title: "Desenvolvimento Sob Medida",
-    description: "Aplicativos alinhados com a sua marca e processos de negócio, sem templates genéricos.",
-    icon: "CodeXml"
+    title: "Valide sua ideia antes de investir",
+    description: "Protótipo navegável gratuito para testar e aprovar seu projeto.",
+    icon: "Rocket"
   },
   {
-    title: "Design de Interface Limpo",
-    description: "Aparência elegante, fluida e extremamente fácil de usar por qualquer tipo de público.",
-    icon: "Palette"
+    title: "Aumente sua produtividade",
+    description: "Automatize tarefas e economize horas de trabalho.",
+    icon: "LineChart"
   },
   {
-    title: "Desempenho Otimizado",
-    description: "Telas leves com carregamento instantâneo, transições fluidas e economia de bateria.",
-    icon: "Gauge"
+    title: "Fature mais",
+    description: "Desenvolvemos soluções que ajudam seu negócio a vender mais e atender melhor seus clientes.",
+    icon: "Coins"
   },
   {
-    title: "Segurança com Firestore",
-    description: "Regras rígidas de segurança no banco de dados e controle seguro de acessos.",
-    icon: "ShieldAlert"
+    title: "Fortaleça sua marca",
+    description: "Interfaces modernas que transmitem profissionalismo e geram confiança.",
+    icon: "Star"
   },
   {
-    title: "Código Limpo e Documentado",
-    description: "Sua propriedade intelectual garantida em um código modular de facílima manutenção.",
-    icon: "FileCode"
+    title: "Invista com segurança",
+    description: "Seu sistema é desenvolvido exclusivamente para você, sem depender de plataformas limitadas.",
+    icon: "Lock"
   },
   {
-    title: "Suporte e Cuidado Ativo",
-    description: "Acompanhamento próximo pós-lançamento para que seu app esteja sempre no ar e seguro.",
-    icon: "HeartHandshake"
+    title: "Conte conosco depois da entrega",
+    description: "Continuamos acompanhando o crescimento da sua solução.",
+    icon: "Phone"
   }
 ];
 
@@ -306,7 +307,7 @@ export const mockPortfolioProjects: Project[] = [
     features: ["Cofrinho de Economias", "Comparação de Orçamentos", "Melhor Opção por Categoria", "Exportação/Importação JSON"],
     demoType: "iframe",
     iframeAppId: "meu-casamento",
-    image: "/casamento.PNG"
+    image: "/casamento-1.PNG"
   },
   {
     id: "evento-musical-app",
