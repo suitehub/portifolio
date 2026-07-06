@@ -1720,12 +1720,10 @@ export default function App() {
               <span className="text-base font-display font-black text-white tracking-wider">SUITE HUB</span>
             </div>
             <p className="text-xs text-slate-400 leading-relaxed font-sans font-light max-w-sm">
-              Desenvolvemos aplicativos personalizados de alta performance para negócios digitais, igrejas, clínicas e startups que buscam a excelência em engenharia de software sob medida.
+              Transformamos ideias em Landing Pages, Sistemas, Aplicativos e SaaS personalizados. Desenvolvemos soluções sob medida para automatizar processos, fortalecer marcas e impulsionar o crescimento de negócios, organizações e projetos.
             </p>
             <div className="flex items-center gap-3 text-slate-500 text-xs font-mono">
-              <a href="https://wa.me/5511972499370" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">WhatsApp</a>
-              <span>•</span>
-              <a href="mailto:contato@suitehub.com" className="hover:text-white transition-colors">contato@suitehub.com</a>
+              <a href="https://wa.me/5511972499370" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">WhatsApp Comercial</a>
             </div>
           </div>
 
@@ -1740,33 +1738,36 @@ export default function App() {
               </li>
               <li>
                 <button onClick={() => { setActiveTab("solutions"); setSelectedSolution(null); scrollToTop(); }} className="hover:text-white transition-colors cursor-pointer text-left font-sans font-light">
-                  Catálogo de Soluções
+                  Soluções
                 </button>
               </li>
               <li>
                 <button onClick={() => { setActiveTab("portfolio"); setActiveSimulatorProject(null); scrollToTop(); }} className="hover:text-white transition-colors cursor-pointer text-left font-sans font-light">
-                  Portfólio & Demonstrações
+                  Portfólio & Demos
                 </button>
+              </li>
+              <li>
+                <a href="https://wa.me/5511972499370?text=Ol%C3%A1!%20Gostaria%20de%20falar%20com%20o%20atendimento%20da%20Suite%20Hub." target="_blank" rel="noreferrer" className="hover:text-white transition-colors cursor-pointer text-left font-sans font-light inline-block">
+                  Falar Conosco
+                </a>
               </li>
             </ul>
           </div>
 
           {/* Column contacts details */}
           <div className="md:col-span-3 space-y-4">
-            <h5 className="text-xs font-extrabold text-white uppercase tracking-widest font-sans">Desenvolvimento</h5>
-            <div className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-[10px] text-emerald-400 font-sans font-bold tracking-wider uppercase">Atendimento Comercial Ativo</span>
-            </div>
-            <span className="text-[10px] text-slate-500 block leading-relaxed font-sans">Contate nosso atendimento comercial para alinhar seu projeto e acelerar sua entrega sem taxas ocultas.</span>
+            <h5 className="text-xs font-extrabold text-white uppercase tracking-widest font-sans">Nosso Compromisso</h5>
+            <p className="text-xs text-slate-400 leading-relaxed font-sans font-light">
+              Desenvolver soluções modernas, intuitivas e preparadas para crescer junto com o seu projeto.
+            </p>
           </div>
 
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-white/5 mt-12 pt-8 text-center text-[10px] text-slate-600 flex flex-col sm:flex-row items-center justify-between gap-4 font-sans">
-          <span>© {new Date().getFullYear()} Suite Hub Software Studio • CNPJ sob registro • Todos os direitos reservados.</span>
-          <div className="flex items-center gap-4">
-            <span>Hora Local: {systemTime}</span>
+          <span>© 2026 Suite Hub Software Studio. Todos os direitos reservados.</span>
+          <div className="flex items-center gap-4 text-slate-500 font-medium">
+            <span>Transformando ideias em soluções digitais.</span>
           </div>
         </div>
       </footer>
