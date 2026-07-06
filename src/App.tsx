@@ -41,7 +41,9 @@ import {
   ArrowUpRight,
   Terminal,
   Activity,
-  Workflow
+  Workflow,
+  Rocket,
+  Coins
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { AppItem, Solution, Project } from "./types";
@@ -240,6 +242,13 @@ export default function App() {
       case "Ticket": return <Ticket className={className} />;
       case "Building": return <Building className={className} />;
       case "Settings": return <Settings className={className} />;
+      case "Zap": return <Zap className={className} />;
+      case "LineChart": return <LineChart className={className} />;
+      case "Star": return <Star className={className} />;
+      case "Lock": return <Lock className={className} />;
+      case "Phone": return <Phone className={className} />;
+      case "Rocket": return <Rocket className={className} />;
+      case "Coins": return <Coins className={className} />;
       default: return <Sparkles className={className} />;
     }
   };
@@ -503,44 +512,44 @@ export default function App() {
                   transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                   className="lg:col-span-7 space-y-6 text-center lg:text-left relative z-10"
                 >
-                  {/* Glowing custom pill badge */}
-                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-500/10 border border-sky-400/20 text-sky-400 text-xs font-semibold tracking-wider uppercase shadow-[0_0_15px_rgba(56,189,248,0.1)] backdrop-blur-md">
-                    <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse" />
-                    <Sparkles className="w-3.5 h-3.5 text-sky-400" />
-                    DESENVOLVIMENTO DE APPS PREMIUM
-                  </div>
-                  
                   {/* Majestic Display Title (Outfit font) */}
-                  <h1 className="text-4xl sm:text-6xl xl:text-7xl font-display font-black tracking-tight text-white leading-tight">
-                    Aplicativos personalizados que transformam ideias em{" "}
+                  <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-5xl xl:text-5xl font-display font-black tracking-tight text-white leading-tight max-w-2xl mx-auto lg:mx-0 text-balance">
+                    Sistemas, Aplicativos, Landing Pages e SaaS que transformam ideias em{" "}
                     <span className="gradient-ribbon-text drop-shadow-[0_2px_15px_rgba(56,189,248,0.2)]">
                       soluções reais.
                     </span>
                   </h1>
 
                   <p className="text-slate-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed font-sans font-light">
-                    Na Suite Hub, desenvolvemos aplicativos modernos para empresas, igrejas, clínicas, eventos e profissionais que desejam digitalizar processos e crescer através de engenharia de software de ponta.
+                    Na Suite Hub, desenvolvemos Landing Pages, Sistemas, Aplicativos e SaaS personalizados para transformar ideias em soluções digitais modernas, eficientes e escaláveis. Automatize processos, melhore a gestão e tenha uma solução desenvolvida para a sua necessidade.
                   </p>
 
                   {/* High-end micro-features row */}
-                  <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 text-[10px] text-slate-500 font-mono pt-2">
-                    <span className="flex items-center gap-1"><CheckCircle className="w-3 h-3 text-sky-400" /> SEM CUSTO DE LICENÇA</span>
-                    <span>•</span>
-                    <span className="flex items-center gap-1"><CheckCircle className="w-3 h-3 text-sky-400" /> FIRESTORE ESCALÁVEL</span>
-                    <span>•</span>
-                    <span className="flex items-center gap-1"><CheckCircle className="w-3 h-3 text-sky-400" /> DESIGN EXCLUSIVO</span>
+                  <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-2 gap-y-1.5 text-[9px] md:text-[10px] text-slate-500 font-mono pt-2">
+                    <span className="flex items-center gap-1.5 whitespace-nowrap"><CheckCircle className="w-3 h-3 text-sky-400 shrink-0" /> SOLUÇÕES PERSONALIZADAS</span>
+                    <span className="text-slate-700 select-none hidden sm:inline">•</span>
+                    <span className="flex items-center gap-1.5 whitespace-nowrap"><CheckCircle className="w-3 h-3 text-sky-400 shrink-0" /> TECNOLOGIA ESCALÁVEL</span>
+                    <span className="text-slate-700 select-none hidden sm:inline">•</span>
+                    <span className="flex items-center gap-1.5 whitespace-nowrap"><CheckCircle className="w-3 h-3 text-sky-400 shrink-0" /> DESENVOLVIMENTO SOB MEDIDA</span>
+                    <span className="text-slate-700 select-none hidden sm:inline">•</span>
+                    <span className="flex items-center gap-1.5 whitespace-nowrap"><CheckCircle className="w-3 h-3 text-sky-400 shrink-0" /> SUPORTE ESPECIALIZADO</span>
                   </div>
 
-                  <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                  <p className="text-slate-300 text-xs sm:text-sm font-semibold tracking-wide pt-4 max-w-xl mx-auto lg:mx-0 text-balance leading-relaxed">
+                    Solicite um protótipo gratuito e descubra como podemos <br className="hidden sm:inline" />
+                    transformar sua ideia em um software profissional.
+                  </p>
+
+                  <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
                     <motion.a
                       whileHover={{ scale: 1.03, y: -2 }}
                       whileTap={{ scale: 0.98 }}
-                      href={`https://wa.me/5511972499370?text=${encodeURIComponent("Olá! Gostaria de solicitar um orçamento para meu projeto com a Suite Hub.")}`}
+                      href={`https://wa.me/5511972499370?text=${encodeURIComponent("Olá! Gostaria de solicitar um protótipo gratuito para meu projeto com a Suite Hub.")}`}
                       target="_blank"
                       rel="noreferrer"
                       className="w-full sm:w-auto px-7 py-4 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-sky-500/15 hover:shadow-sky-500/25 transition-all duration-300 flex items-center justify-center gap-2 border border-sky-400/20 cursor-pointer"
                     >
-                      Solicitar Orçamento via WhatsApp
+                      Solicitar Protótipo Gratuito
                       <ArrowRight className="w-4 h-4" />
                     </motion.a>
                     
@@ -614,6 +623,176 @@ export default function App() {
                 </motion.div>
               </section>
 
+              {/* SPECTACULAR DYNAMIC NODE FLOW (PREMIUM VISUAL IMPACT) */}
+              <motion.div 
+                {...animFadeInUp}
+                className="py-12 md:py-16 relative overflow-hidden"
+              >
+                {/* Horizontal Wave Path SVG (visible on md+) */}
+                <div className="absolute inset-0 w-full h-full hidden md:block pointer-events-none opacity-20 select-none z-0">
+                  <svg className="w-full h-full" viewBox="0 0 1200 200" fill="none" preserveAspectRatio="none">
+                    <path 
+                      d="M 100 100 Q 300 40 Q 600 160 Q 900 40 Q 1100 100" 
+                      stroke="url(#neon-line-grad)" 
+                      strokeWidth="2.5" 
+                      strokeDasharray="8 6"
+                      fill="none" 
+                    />
+                    <path 
+                      d="M 100 100 Q 300 40 Q 600 160 Q 900 40 Q 1100 100" 
+                      stroke="#38bdf8" 
+                      strokeWidth="1.2" 
+                      fill="none" 
+                      className="animate-pulse"
+                    />
+                    <defs>
+                      <linearGradient id="neon-line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#38bdf8" />
+                        <stop offset="50%" stopColor="#6366f1" />
+                        <stop offset="100%" stopColor="#38bdf8" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+
+                {/* Vertical Wave Path SVG (visible on mobile only) */}
+                <div className="absolute inset-0 w-full h-full md:hidden pointer-events-none opacity-15 select-none z-0">
+                  <svg className="w-full h-full" viewBox="0 0 100 800" fill="none" preserveAspectRatio="none">
+                    <path 
+                      d="M 50 0 L 50 800" 
+                      stroke="url(#neon-vertical-grad)" 
+                      strokeWidth="2" 
+                      strokeDasharray="6 4"
+                      fill="none" 
+                    />
+                    <defs>
+                      <linearGradient id="neon-vertical-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor="#38bdf8" />
+                        <stop offset="100%" stopColor="#6366f1" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+
+                <div className="max-w-7xl mx-auto px-4 relative z-10">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-4 lg:gap-8 text-center">
+                    
+                    {/* Node 1 */}
+                    <motion.div 
+                      whileHover={{ y: -8 }}
+                      className="flex flex-col items-center group relative"
+                    >
+                      {/* Floating node connector point */}
+                      <div className="absolute top-[48px] w-2 h-2 rounded-full bg-sky-400 shadow-[0_0_8px_#38bdf8] hidden md:block" />
+                      
+                      {/* Floating Glowing Ring */}
+                      <div className="w-16 h-16 rounded-full bg-slate-950/80 border border-sky-500/30 group-hover:border-sky-400 group-hover:shadow-[0_0_25px_rgba(56,189,248,0.35)] flex items-center justify-center transition-all duration-300 relative z-10">
+                        <div className="absolute inset-1.5 rounded-full bg-gradient-to-br from-sky-500/10 to-indigo-500/10 opacity-60" />
+                        <Briefcase className="w-6.5 h-6.5 text-sky-400 group-hover:text-sky-300 group-hover:scale-110 transition-all duration-300" />
+                        <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+                        </span>
+                      </div>
+
+                      <div className="mt-5 space-y-1 relative z-10">
+                        <span className="text-4xl md:text-5xl font-display font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indigo-300 to-indigo-400 drop-shadow-[0_2px_10px_rgba(56,189,248,0.15)] block">
+                          12
+                        </span>
+                        <h3 className="text-sm font-semibold text-slate-100 uppercase tracking-wider font-mono">
+                          Projetos desenvolvidos
+                        </h3>
+                        <p className="text-xs text-slate-400 max-w-[200px] mx-auto leading-relaxed font-sans font-light">
+                          Entregas sólidas e de alto impacto tecnológico
+                        </p>
+                      </div>
+                    </motion.div>
+
+                    {/* Node 2 */}
+                    <motion.div 
+                      whileHover={{ y: -8 }}
+                      className="flex flex-col items-center group relative"
+                    >
+                      {/* Floating node connector point */}
+                      <div className="absolute top-[48px] w-2 h-2 rounded-full bg-indigo-400 shadow-[0_0_8px_#6366f1] hidden md:block" />
+
+                      {/* Floating Glowing Ring */}
+                      <div className="w-16 h-16 rounded-full bg-slate-950/80 border border-indigo-500/30 group-hover:border-indigo-400 group-hover:shadow-[0_0_25px_rgba(99,102,241,0.35)] flex items-center justify-center transition-all duration-300 relative z-10">
+                        <div className="absolute inset-1.5 rounded-full bg-gradient-to-br from-indigo-500/10 to-sky-500/10 opacity-60" />
+                        <Cpu className="w-6.5 h-6.5 text-indigo-400 group-hover:text-indigo-300 group-hover:scale-110 transition-all duration-300" />
+                      </div>
+
+                      <div className="mt-5 space-y-1 relative z-10">
+                        <span className="text-4xl md:text-5xl font-display font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-sky-300 to-sky-400 drop-shadow-[0_2px_10px_rgba(99,102,241,0.15)] block">
+                          100%
+                        </span>
+                        <h3 className="text-sm font-semibold text-slate-100 uppercase tracking-wider font-mono">
+                          Soluções personalizadas
+                        </h3>
+                        <p className="text-xs text-slate-400 max-w-[200px] mx-auto leading-relaxed font-sans font-light">
+                          Zero templates, tudo projetado sob medida
+                        </p>
+                      </div>
+                    </motion.div>
+
+                    {/* Node 3 */}
+                    <motion.div 
+                      whileHover={{ y: -8 }}
+                      className="flex flex-col items-center group relative"
+                    >
+                      {/* Floating node connector point */}
+                      <div className="absolute top-[48px] w-2 h-2 rounded-full bg-sky-400 shadow-[0_0_8px_#38bdf8] hidden md:block" />
+
+                      {/* Floating Glowing Ring */}
+                      <div className="w-16 h-16 rounded-full bg-slate-950/80 border border-sky-500/30 group-hover:border-sky-400 group-hover:shadow-[0_0_25px_rgba(56,189,248,0.35)] flex items-center justify-center transition-all duration-300 relative z-10">
+                        <div className="absolute inset-1.5 rounded-full bg-gradient-to-br from-sky-500/10 to-indigo-500/10 opacity-60" />
+                        <Layers className="w-6.5 h-6.5 text-sky-400 group-hover:text-sky-300 group-hover:scale-110 transition-all duration-300" />
+                      </div>
+
+                      <div className="mt-5 space-y-1 relative z-10">
+                        <span className="text-4xl md:text-5xl font-display font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indigo-300 to-indigo-400 drop-shadow-[0_2px_10px_rgba(56,189,248,0.15)] block">
+                          4
+                        </span>
+                        <h3 className="text-sm font-semibold text-slate-100 uppercase tracking-wider font-mono">
+                          Especialidades
+                        </h3>
+                        <p className="text-xs text-slate-400 max-w-[210px] mx-auto leading-relaxed font-sans font-light">
+                          (Landing Pages, Sistemas, Apps e SaaS)
+                        </p>
+                      </div>
+                    </motion.div>
+
+                    {/* Node 4 */}
+                    <motion.div 
+                      whileHover={{ y: -8 }}
+                      className="flex flex-col items-center group relative"
+                    >
+                      {/* Floating node connector point */}
+                      <div className="absolute top-[48px] w-2 h-2 rounded-full bg-indigo-400 shadow-[0_0_8px_#6366f1] hidden md:block" />
+
+                      {/* Floating Glowing Ring */}
+                      <div className="w-16 h-16 rounded-full bg-slate-950/80 border border-indigo-500/30 group-hover:border-indigo-400 group-hover:shadow-[0_0_25px_rgba(99,102,241,0.35)] flex items-center justify-center transition-all duration-300 relative z-10">
+                        <div className="absolute inset-1.5 rounded-full bg-gradient-to-br from-indigo-500/10 to-sky-500/10 opacity-60" />
+                        <HeartHandshake className="w-6.5 h-6.5 text-indigo-400 group-hover:text-indigo-300 group-hover:scale-110 transition-all duration-300" />
+                      </div>
+
+                      <div className="mt-5 space-y-1 relative z-10">
+                        <span className="text-4xl md:text-5xl font-display font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-sky-300 to-sky-400 drop-shadow-[0_2px_10px_rgba(99,102,241,0.15)] block">
+                          Suporte
+                        </span>
+                        <h3 className="text-sm font-semibold text-slate-100 uppercase tracking-wider font-mono">
+                          completo após a entrega
+                        </h3>
+                        <p className="text-xs text-slate-400 max-w-[200px] mx-auto leading-relaxed font-sans font-light">
+                          Acompanhamento contínuo e evolução constante
+                        </p>
+                      </div>
+                    </motion.div>
+
+                  </div>
+                </div>
+              </motion.div>
+
               {/* 6. OVERVIEW / STATS HUD ROW & SIMULATOR (Bento design) */}
               <motion.div 
                 {...animFadeInUp}
@@ -622,18 +801,18 @@ export default function App() {
                 {/* Decorative background grid node line */}
                 <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:100%_12px] pointer-events-none" />
 
-                {/* Left side: 2x2 grid representing the 4 stats (making it a square block: 2 on top, 2 on bottom) */}
+                {/* Left side: 2x2 grid representing the 4 key highlights (making it a square block: 2 on top, 2 on bottom) */}
                 <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
                   {[
-                    { value: "100%", label: "DESENVOLVIMENTO SOB MEDIDA", sub: "Sem templates genéricos" },
-                    { value: "07", label: "ETAPAS DO PROCESSO ÁGIL", sub: "Garantia de ponta a ponta" },
-                    { value: "20+", label: "MÓDULOS TECNOLÓGICOS", sub: "Aceleração de entrega" },
-                    { value: "Zero", label: "CUSTOS DE LICENCIAMENTO", sub: "Propriedade intelectual livre" }
+                    { value: "07", label: "ETAPAS DO PROCESSO", sub: "Do briefing à entrega." },
+                    { value: "Briefing", label: "ENTENDIMENTO DO PROJETO", sub: "Cada solução começa entendendo a sua necessidade." },
+                    { value: "Interface", label: "FOCADA EM RESULTADOS", sub: "Projetada para fortalecer sua marca, facilitar o uso e impulsionar o crescimento do seu negócio." },
+                    { value: "IA", label: "INTEGRAÇÕES INTELIGENTES", sub: "Implementamos recursos de Inteligência Artificial para automatizar processos, aumentar a produtividade e tornar sua solução ainda mais eficiente." }
                   ].map((stat, idx) => (
-                    <div key={idx} className="space-y-1.5 p-5 bg-white/[0.02] border border-white/5 hover:border-sky-500/20 rounded-2xl text-center relative z-10 transition-all duration-300">
+                    <div key={idx} className="space-y-2.5 p-6 bg-white/[0.02] border border-white/5 hover:border-sky-500/20 rounded-2xl text-center flex flex-col justify-center items-center relative z-10 transition-all duration-300">
                       <div className="text-3xl sm:text-4xl font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-400 tracking-tight neon-glow-text">{stat.value}</div>
                       <div className="text-[9px] sm:text-[10px] text-slate-300 font-bold uppercase tracking-wider font-mono">{stat.label}</div>
-                      <div className="text-[8px] sm:text-[9px] text-slate-500 font-medium font-sans leading-none">{stat.sub}</div>
+                      <div className="text-xs text-slate-400 font-sans font-light leading-relaxed max-w-xs">{stat.sub}</div>
                     </div>
                   ))}
                 </div>
@@ -816,7 +995,7 @@ export default function App() {
                           Arquitetura de Alto Desempenho
                         </h4>
                         <p className="text-[10px] text-slate-400 leading-relaxed font-sans font-light">
-                          Escrevemos códigos nativos integrados com Google Firestore, eliminando servidores caros, mantendo seu app leve, ultrarrápido e com custo de infraestrutura quase nulo.
+                          Desenvolvemos soluções seguras, rápidas e escaláveis para garantir estabilidade, desempenho e crescimento contínuo da sua aplicação.
                         </p>
                       </div>
 
@@ -842,10 +1021,10 @@ export default function App() {
 
                   <div className="space-y-4 text-slate-300 text-sm sm:text-base leading-relaxed font-sans font-light">
                     <p>
-                      Desenvolvemos aplicativos personalizados para empresas, igrejas, clínicas, feiras e startups que buscam modernizar sua operação, acelerar fluxos e garantir a melhor usabilidade aos seus públicos.
+                      Desenvolvemos soluções digitais personalizadas para empresas, igrejas, clínicas, eventos, startups e diversos outros segmentos que buscam modernizar suas operações, otimizar processos e oferecer a melhor experiência aos seus públicos.
                     </p>
-                    <p className="text-slate-400">
-                      Cada projeto é desenhado e programado do absoluto zero. Não dependemos de criadores de templates engessados ou plataformas low-code que cobram anuidades abusivas. Você terá acesso completo ao código-fonte, garantindo a **propriedade intelectual exclusiva** do seu produto.
+                    <p className="text-slate-400 text-xs sm:text-sm">
+                      Cada solução é planejada, projetada e desenvolvida do absoluto zero. Não utilizamos templates engessados nem plataformas limitadas. Entregamos seu sistema totalmente funcional, publicado em nosso domínio ou em um domínio personalizado, pronto para uso. Além disso, você mantém total propriedade sobre a solução, com código-fonte organizado, escalável e seguro, garantindo liberdade para evoluir o projeto sempre que desejar.
                     </p>
                   </div>
 
@@ -876,7 +1055,7 @@ export default function App() {
                     Nossas Soluções Sob Medida
                   </h2>
                   <p className="text-slate-400 text-sm sm:text-base leading-relaxed font-sans font-light">
-                    Explore nossas baselines pré-construídas para acelerar sua entrega ou encomende um projeto totalmente novo.
+                    Conheça algumas das soluções que já desenvolvemos e descubra como elas podem ser adaptadas à sua necessidade. Se preferir, criamos um projeto totalmente personalizado do absoluto zero.
                   </p>
                 </header>
 
@@ -913,13 +1092,33 @@ export default function App() {
                         <div className="absolute bottom-2 right-2 w-1.5 h-1.5 border-b border-r border-white/10 group-hover:border-sky-400/30 transition-colors" />
 
                         <div className="space-y-4 relative z-10">
-                          {/* Premium offset layout with custom-styled geometric icon structure */}
+                          {/* Premium offset layout with custom-styled geometric icon structure and badges */}
                           <div className="flex items-center justify-between">
                             <div className={`w-12 h-12 rounded-xl ${solTheme.iconBg} border flex items-center justify-center relative overflow-hidden group-hover:scale-105 transition-transform duration-500`}>
                               {/* Background organic glass reflection */}
                               <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.04] to-transparent" />
                               {getLucideIcon(sol.icon, `w-5 h-5 ${solTheme.primary} group-hover:scale-110 transition-all duration-500`)}
                             </div>
+                            {sol.id === "igrejas" && (
+                              <span className="text-[9px] font-sans font-bold text-sky-400 bg-sky-500/10 border border-sky-400/20 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                                Mais Procurado
+                              </span>
+                            )}
+                            {sol.id === "clinicas" && (
+                              <span className="text-[9px] font-sans font-bold text-teal-400 bg-teal-500/10 border border-teal-400/20 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                                Personalizável
+                              </span>
+                            )}
+                            {sol.id === "eventos" && (
+                              <span className="text-[9px] font-sans font-bold text-rose-400 bg-rose-500/10 border border-rose-400/20 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                                Mais Completo
+                              </span>
+                            )}
+                            {sol.id === "empresarial" && (
+                              <span className="text-[9px] font-sans font-bold text-amber-400 bg-amber-500/10 border border-amber-400/20 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                                Ideal para Pequenos Negócios
+                              </span>
+                            )}
                           </div>
                           
                           <div className="space-y-2">
@@ -929,6 +1128,11 @@ export default function App() {
                             <p className="text-xs text-slate-400 leading-relaxed font-sans font-light line-clamp-3 group-hover:text-slate-300 transition-colors duration-300">
                               {sol.description}
                             </p>
+                            {sol.targetAudience && (
+                              <div className={`text-[10px] ${solTheme.primary} font-medium italic font-sans mt-1.5 opacity-90`}>
+                                ✨ {sol.targetAudience}
+                              </div>
+                            )}
                           </div>
 
                           {/* Technical blueprint list showing features with micro-bullets */}
@@ -952,7 +1156,7 @@ export default function App() {
                             onClick={() => handleSolutionCardClick(sol)}
                             className="w-full py-3 bg-white/[0.02] hover:bg-white/[0.05] text-slate-300 hover:text-white font-bold text-[10px] uppercase tracking-wider rounded-xl border border-white/10 hover:border-white/20 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer backdrop-blur-sm"
                           >
-                            Analisar Módulos e FAQ
+                            Conhecer Solução
                             <ChevronRight className={`w-3.5 h-3.5 ${solTheme.primary} group-hover:translate-x-1 transition-transform`} />
                           </button>
                         </div>
@@ -982,20 +1186,20 @@ export default function App() {
                             Sob Medida
                           </span>
                         </div>
-                        <h4 className="text-lg font-display font-black text-white">Aplicativo 100% Personalizado</h4>
+                        <h4 className="text-lg font-display font-black text-white">Projeto 100% Personalizado</h4>
                         <p className="text-xs text-slate-300 leading-relaxed font-sans font-light">
-                          Tem uma regra de negócio complexa ou uma ideia de startup inovadora? Desenhamos as interfaces no Figma e desenvolvemos todo o código sob medida.
+                          Não encontrou uma solução ideal? Desenvolvemos Landing Pages, Sistemas, Aplicativos e SaaS totalmente personalizados, planejados exclusivamente para atender às necessidades do seu projeto.
                         </p>
                       </div>
                     </div>
 
                     <a
-                      href={`https://wa.me/5511972499370?text=${encodeURIComponent("Olá! Tenho uma ideia de app 100% personalizado e gostaria de desenhar o escopo com a Suite Hub.")}`}
+                      href={`https://wa.me/5511972499370?text=${encodeURIComponent("Olá! Tenho uma ideia de projeto 100% personalizado e gostaria de desenvolvê-lo com a Suite Hub.")}`}
                       target="_blank"
                       rel="noreferrer"
                       className="w-full py-3 bg-gradient-to-r from-indigo-600/30 to-indigo-600/15 hover:from-indigo-600 hover:to-indigo-500 text-white font-bold text-[10px] uppercase tracking-wider rounded-xl border border-indigo-400/30 hover:shadow-[0_4px_20px_rgba(99,102,241,0.3)] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer backdrop-blur-sm relative z-10"
                     >
-                      Estruturar Escopo Grátis
+                      Solicitar Projeto Personalizado
                       <ArrowUpRight className="w-4 h-4 text-indigo-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </a>
                   </motion.div>
@@ -1147,24 +1351,28 @@ export default function App() {
 
                 <div className="space-y-4 relative z-10">
                   <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-sky-500/10 border border-sky-400/20 text-sky-400 text-[10px] font-bold tracking-widest uppercase font-mono">
-                    PRODUÇÃO COMERCIAL ATIVA
+                    COMECE SEU PROJETO HOJE MESMO
                   </div>
                   <h2 className="text-3xl sm:text-5xl xl:text-6xl font-display font-black text-white tracking-tight max-w-4xl mx-auto leading-tight">
-                    Sua ideia merece um aplicativo de alta fidelidade.
+                    Chegou a hora de transformar sua ideia em realidade.
                   </h2>
                   <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed font-sans font-light">
-                    Desenvolva seu aplicativo personalizado com quem entende de alta performance, design de interface impecável e custos de infraestrutura inteligentes.
+                    Da ideia ao lançamento, desenvolvemos soluções sob medida que fortalecem sua marca, melhoram a experiência dos seus clientes e impulsionam o crescimento do seu negócio.
                   </p>
                 </div>
 
+                <p className="text-slate-300 text-xs sm:text-sm font-semibold tracking-wide pt-4 max-w-xl mx-auto text-center relative z-10 text-balance">
+                  Solicite um orçamento e descubra como podemos transformar sua ideia em um software profissional.
+                </p>
+
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto pt-4 relative z-10">
                   <a
-                    href={`https://wa.me/5511972499370?text=${encodeURIComponent("Olá! Gostaria de solicitar um orçamento para meu aplicativo personalizado com a Suite Hub.")}`}
+                    href={`https://wa.me/5511972499370?text=${encodeURIComponent("Olá! Gostaria de solicitar um protótipo gratuito para meu aplicativo personalizado com a Suite Hub.")}`}
                     target="_blank"
                     rel="noreferrer"
                     className="w-full sm:w-auto px-7 py-3.5 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-sky-600/20 transition-all duration-300 cursor-pointer inline-flex items-center justify-center gap-1.5 border border-sky-400/10"
                   >
-                    Solicitar Orçamento
+                    Solicitar Protótipo Gratuito
                   </a>
                   <a
                     href={`https://wa.me/5511972499370?text=${encodeURIComponent("Olá! Gostaria de falar no WhatsApp com a Suite Hub.")}`}
@@ -1264,7 +1472,7 @@ export default function App() {
                               onClick={() => { setSelectedSolution(sol); scrollToTop(); }}
                               className="w-full py-2.5 bg-white/[0.02] hover:bg-white/[0.05] text-slate-300 hover:text-white font-bold text-[10px] uppercase tracking-wider rounded-xl border border-white/10 hover:border-white/20 transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer"
                             >
-                              Ver Detalhes do Catálogo
+                              Conhecer Solução
                               <ChevronRight className={`w-3.5 h-3.5 ${solTheme.primary} group-hover:translate-x-1 transition-transform`} />
                             </button>
                           </div>

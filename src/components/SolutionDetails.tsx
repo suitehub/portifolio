@@ -90,12 +90,12 @@ export function SolutionDetails({ solution, onBack }: SolutionDetailsProps) {
 
             <div className="flex flex-wrap gap-3">
               <a
-                href={`https://wa.me/5511972499370?text=${encodeURIComponent(`Olá! Gostaria de fazer um orçamento para o projeto de ${solution.title} desenvolvido pela Suite Hub.`)}`}
+                href={`https://wa.me/5511972499370?text=${encodeURIComponent(`Olá! Gostaria de solicitar um protótipo gratuito para o projeto de ${solution.title} com a Suite Hub.`)}`}
                 target="_blank"
                 rel="noreferrer"
                 className="px-5 py-3 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl shadow-lg transition-all cursor-pointer inline-flex items-center gap-1.5"
               >
-                Solicitar Orçamento via WhatsApp
+                Solicitar Protótipo Gratuito
               </a>
               <a
                 href={`https://wa.me/5511972499370?text=${encodeURIComponent(`Olá! Tenho interesse em saber mais sobre o ${solution.title} desenvolvido pela Suite Hub.`)}`}
@@ -242,7 +242,7 @@ export function SolutionDetails({ solution, onBack }: SolutionDetailsProps) {
       <div className="bg-white/5 border border-white/10 rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 backdrop-blur-xl shadow-2xl">
         <div className="space-y-1">
           <h4 className="text-base font-bold text-white tracking-tight">Pronto para digitalizar seu negócio?</h4>
-          <p className="text-xs text-slate-400">Leve de 6 a 8 semanas para colocar sua solução na Google Play e App Store.</p>
+          <p className="text-xs text-slate-400">Solicite um orçamento e descubra como podemos transformar sua ideia em um software profissional.</p>
         </div>
         <a
           href={`https://wa.me/5511972499370?text=${encodeURIComponent(`Olá! Quero dar início ao projeto do aplicativo: ${solution.title}.`)}`}
