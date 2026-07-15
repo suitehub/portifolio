@@ -521,14 +521,14 @@ export default function App() {
                 >
                   {/* Majestic Display Title (Outfit font) */}
                   <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-5xl xl:text-5xl font-display font-black tracking-tight text-white leading-tight max-w-2xl mx-auto lg:mx-0 text-balance">
-                    Sistemas, Aplicativos, Landing Pages e SaaS que transformam ideias em{" "}
+                    Sistemas, Aplicativos, Sites e SaaS que transformam ideias em{" "}
                     <span className="gradient-ribbon-text drop-shadow-[0_2px_15px_rgba(56,189,248,0.2)]">
                       soluções reais.
                     </span>
                   </h1>
 
                   <p className="text-slate-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed font-sans font-light">
-                    Na Suite Hub, desenvolvemos Landing Pages, Sistemas, Aplicativos e SaaS personalizados para transformar ideias em soluções digitais modernas, eficientes e escaláveis. Automatize processos, melhore a gestão e tenha uma solução desenvolvida para a sua necessidade.
+                    Na Suite Hub, desenvolvemos Sites, Sistemas, Aplicativos e SaaS personalizados para transformar ideias em soluções digitais modernas, eficientes e escaláveis. Automatize processos, melhore a gestão e tenha uma solução desenvolvida para a sua necessidade.
                   </p>
 
                   {/* High-end micro-features row */}
@@ -762,7 +762,7 @@ export default function App() {
                           Especialidades
                         </h3>
                         <p className="text-xs text-slate-400 max-w-[210px] mx-auto leading-relaxed font-sans font-light">
-                          (Landing Pages, Sistemas, Apps e SaaS)
+                          (Sites, Sistemas, Apps e SaaS)
                         </p>
                       </div>
                     </motion.div>
@@ -1193,7 +1193,7 @@ export default function App() {
                         </div>
                         <h4 className="text-lg font-display font-black text-white">Projeto 100% Personalizado</h4>
                         <p className="text-xs text-slate-300 leading-relaxed font-sans font-light">
-                          Não encontrou uma solução ideal? Desenvolvemos Landing Pages, Sistemas, Aplicativos e SaaS totalmente personalizados, planejados exclusivamente para atender às necessidades do seu projeto.
+                          Não encontrou uma solução ideal? Desenvolvemos Sites, Sistemas, Aplicativos e SaaS totalmente personalizados, planejados exclusivamente para atender às necessidades do seu projeto.
                         </p>
                       </div>
                     </div>
@@ -1801,7 +1801,7 @@ export default function App() {
               <span className="text-base font-display font-black text-white tracking-wider">SUITE HUB</span>
             </div>
             <p className="text-xs text-slate-400 leading-relaxed font-sans font-light max-w-sm">
-              Transformamos ideias em Landing Pages, Sistemas, Aplicativos e SaaS personalizados. Desenvolvemos soluções sob medida para automatizar processos, fortalecer marcas e impulsionar o crescimento de negócios, organizações e projetos.
+              Transformamos ideias em Sites, Sistemas, Aplicativos e SaaS personalizados. Desenvolvemos soluções sob medida para automatizar processos, fortalecer marcas e impulsionar o crescimento de negócios, organizações e projetos.
             </p>
             <div className="flex items-center gap-3 text-slate-500 text-xs font-mono">
               <a href="https://wa.me/5511959760647" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">WhatsApp Comercial</a>

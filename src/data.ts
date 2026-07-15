@@ -145,7 +145,7 @@ export const solutionsData: Solution[] = [
     id: "personalizado",
     title: "Projeto 100% Personalizado",
     icon: "Settings",
-    description: "Não encontrou uma solução ideal? Desenvolvemos Landing Pages, Sistemas, Aplicativos e SaaS totalmente personalizados, planejados exclusivamente para atender às necessidades do seu projeto.",
+    description: "Não encontrou uma solução ideal? Desenvolvemos Sites, Sistemas, Aplicativos e SaaS totalmente personalizados, planejados exclusivamente para atender às necessidades do seu projeto.",
     targetAudience: "Desenvolvemos o projeto perfeito para a sua empresa.",
     features: [
       "Planejamento exclusivo para regras de negócio específicas",
